@@ -22,6 +22,7 @@ class CreateProductosTable extends Migration
             $table->bigInteger('cantidad');
             $table->decimal('precio',6,2);
             $table->text('descripcion');
+            $table->text('presentacion');
 
             $table->foreign('cod_proveedor_fk')
                   ->references('cod_proveedor')
