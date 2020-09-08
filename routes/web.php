@@ -11,6 +11,15 @@
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
+
+//Route::get('crearProductos','ProductoController@create');
+Route::resource('Productos','ProductoController');
