@@ -25,6 +25,15 @@
     <!-- Styles -->
     <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style> 
+        .AlertaMsg{ 
+            font-weight: bold; 
+            color: red;              
+            font-size: 12px;              
+            /* visibility: hidden; */ 
+        display: none;  
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -285,3 +294,5 @@
 </body>
 
 </html>
+<script src="{{ asset('js/validaciones.js') }}" defer></script>
+

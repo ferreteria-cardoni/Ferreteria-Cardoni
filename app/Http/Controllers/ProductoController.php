@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormProductoIngresar;
 use Illuminate\Http\Request;
 use App\producto;
 use App\proveedor;
@@ -39,7 +40,7 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormProductoIngresar $request)
     {
         //Registro de la tabla de productos
         $Productos = new producto;
