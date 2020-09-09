@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FormProductoIngresar;
 use Illuminate\Http\Request;
 use App\producto;
+use App\proveedor;
+use App\marca_producto;
+use App\marca;
 
 class ProductoController extends Controller
 {
@@ -25,7 +28,10 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('productos.crearProductos');
+         $proveedor = proveedor::all();
+         $marca = marca::all();
+    
+         return view('productos.crearProductos', compact('proveedor','marca'));
     }
 
     /**
@@ -36,11 +42,32 @@ class ProductoController extends Controller
      */
     public function store(FormProductoIngresar $request)
     {
+        //Registro de la tabla de productos
         $Productos = new producto;
-       /* $Productos->nombre = $Request->nombre;
+        $Productos->cod_producto = $request->idproducto;
+        $Productos->cod_proveedor_fk=$request->idproveedor;
+        $Productos->nombre = $request->idnombre;
+        $Productos->marca = $request->idmarca;
+        $Productos->cantidad = $request->idcantidad;
+        $Productos->precio = $request->idprecio;
+        $Productos->descripcion = $request->iddescripcion;
+        $Productos->presentacion = $request->idpresentacion;
         $Productos->save();
-*/
 
+        //Obetencion del codigo del ultimo producto registrado
+        $Productos = producto::where('precio','>',1)->orderBy('created_at','desc')->take(1)->first();
+
+        //Obtencion del codigo de la marca correspondiente al producto anterior.
+        $Marcas = marca::where('nombre_marca', $Productos->marca)->orderBy('created_at','desc')->take(1)->first();
+
+        //Registro en la tabla "marca_productos" de cod_marca_fk y cod_producto_fk.
+        $Marca = new marca_producto();
+        $Marca->cod_producto_fk = $Productos->cod_producto;
+        $Marca->cod_marca_fk = $Marcas->cod_marca;
+        $Marca->save();
+
+        //Mostrar vista
+        return redirect()->route('login')->with('datos','Registro Exitoso');
     }
 
     /**
