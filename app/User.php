@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $primaryKey = 'id';
+    
+    public function empleado()
+    {
+        return $this->belongsTo(empleado::class,'cod_empleado_fk');
+    }
+
+
 }

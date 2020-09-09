@@ -18,7 +18,7 @@ class CreateEmpleadosTable extends Migration
             $table->unsignedbigInteger('cod_rol_fk');
             $table->string('nombre', 30);
             $table->string('apellido', 40);
-            $table->string('dui', 9);
+            $table->string('dui', 9)->unique();
             $table->string('edad', 3);
             $table->char('sexo');
             $table->timestamps();
