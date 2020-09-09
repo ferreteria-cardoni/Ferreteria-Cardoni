@@ -1,5 +1,7 @@
 <?php
-
+use App\producto;
+use App\marca_producto;
+use App\marca;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,15 +13,10 @@
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-//Route::get('crearProductos','ProductoController@create');
 Route::resource('Productos','ProductoController');
+
+
