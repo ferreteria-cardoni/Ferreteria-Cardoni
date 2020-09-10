@@ -19,8 +19,9 @@ class ProductoController extends Controller
     public function index()
     {
         
+        return view('Productos.vistaproducto');
+       
     }
-
     /**
      * Show the form for creating a new resource.
      *
