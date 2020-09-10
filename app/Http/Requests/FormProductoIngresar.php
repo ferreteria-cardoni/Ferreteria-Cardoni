@@ -30,6 +30,7 @@ class FormProductoIngresar extends FormRequest
             'idcantidad' => 'required|numeric',
             'idprecio' => 'required|numeric',
             'idproveedor' => 'required',
+            'idproducto'=>'required',
             
         ];
     }
@@ -42,6 +43,7 @@ class FormProductoIngresar extends FormRequest
             'idcantidad.required' => 'El Campo Cantidad debe tener almenos un valor de 0',
             'idprecio.required' => 'El Campo Precio no puede tener un valor inferior a 0.01',
             'idproveedor.required' => 'Se debe seleccionar almenos una opcione del Campo Proveedor',
+            'idproducto.required' => 'Consulte el catalogo por el codigo del producto',
             
         ];
     }

@@ -8,6 +8,7 @@ const PresentacionP = document.querySelector('#idpresentacion');
 const CantidadP = document.querySelector('#idcantidad');
 const PrecioP = document.querySelector('#idprecio');
 const ProveedorP = document.querySelector('#idproveedor');
+const IdProductoP = document.querySelector('#idproducto');
 
 
 
@@ -133,6 +134,25 @@ var valdui = new RegExp('[0-9]{8}-[0-9]{1}');
             document.getElementById("msgidproveedor").style.display = "none";
             document.getElementById("msgidproveedor").innerHTML = ""
             ProveedorP.style.borderColor = "";
+            
+            
+        }
+        
+    })
+    IdProductoP.addEventListener('blur', () => {
+
+        if (IdProductoP.value == "") {
+            document.getElementById("msgidproducto").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidproducto").style.display = "block";
+            IdProductoP.style.borderColor = "red";
+            
+        }
+
+        
+        else {
+            document.getElementById("msgidproducto").style.display = "none";
+            document.getElementById("msgidproducto").innerHTML = ""
+            IdProductoP.style.borderColor = "";
             
             
         }
