@@ -24,7 +24,7 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-1">
 				      <label>ID</label>
-				      <input type="text" class="form-control" name="idproducto" id="idproducto" placeholder="Nº">
+				      <input type="text" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ old('idnombre') }}">
               <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
 				    </div>
 				    
