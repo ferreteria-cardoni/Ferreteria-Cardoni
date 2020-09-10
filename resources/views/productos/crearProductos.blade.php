@@ -35,7 +35,7 @@
 				    </div>
             
 				      <div class="form-group col-md-5">
-      					<label>Proveedor</label>
+      					<label>Marca</label>
       						<select name="idmarca" class="form-control">
 	        					<option selected>No seleccionado</option>
 	        					@foreach($marca as $marcaiten)
