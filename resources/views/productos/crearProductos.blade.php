@@ -24,8 +24,8 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-1">
 				      <label>ID</label>
-				      <input type="text" class="form-control" name="idproducto" id="idproducto" placeholder="Nº">
-              <span id="msgidmarca" name="msgid" class="AlertaMsg"></span>
+				      <input type="text" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ old('idnombre') }}">
+              <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
 				    </div>
 				    
 				    <div class="form-group col-md-6">
@@ -35,8 +35,8 @@
 				    </div>
             
 				      <div class="form-group col-md-5">
-      					<label>Proveedor</label>
-      						<select name="idmarca" class="form-control">
+      					<label>Marca</label>
+      						<select name="idmarca" id="idmarca" class="form-control">
 	        					<option selected>No seleccionado</option>
 	        					@foreach($marca as $marcaiten)
 	        					<option value="{{$marcaiten->nombre_marca}}">{{$marcaiten->nombre_marca}}</option>
@@ -45,13 +45,6 @@
                 <span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
     				</div>
 				  </div>
-          
-				  <div class="form-group">
-				    <label>Descripción</label>
-					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Martillo doble con mango de goma" value="{{ old('iddescripcion') }}"></textarea>
-					  <span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
-				  </div>
-
 				  <div class="form-row">
 				  	<div class="form-group col-md-6">
 				      <label>Presentación</label>
@@ -82,6 +75,11 @@
                 <span id="msgidproveedor" name="msgidproveedor" class="AlertaMsg"></span>
     				</div>
 				  </div><br>
+				  <div class="form-group">
+				    <label>Descripción</label>
+					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Martillo doble con mango de goma" value="{{ old('iddescripcion') }}"></textarea>
+					  <span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
+				  </div>
 				  <button type="submit" class="btn btn-primary">Registrar Producto</button>
 				</form>
 			</body>
