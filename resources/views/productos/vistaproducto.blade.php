@@ -1,15 +1,25 @@
 @extends('layouts.app')
 
+@section('alert')
+<div class="container">
+      @if (session('datos'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+    {{session('datos')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+@endif
+@endsection
+
+
+
+
 @section('content')
-	<!DOCTYPE html>
-		<html>
-			<head>
-				<title></title>
-			</head>
-			<body>
-				<center><h3>Vista de Inventario</h3></center><br>
+
+	<center><h3>Vista de Inventario</h3></center><br>
 			
-                <table class="table">
+<table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -19,26 +29,15 @@
     </tr>
   </thead>
   <tbody>
+    @foreach($productos as $ItemP)
     <tr>
-      <th scope="row">1</th>
-      <td></td>
-      <td></td>
-      <td></td>
+      <th scope="row">{{$ItemP->cod_producto}}</th>
+      <td>{{$ItemP->nombre}}</td>
+      <td>{{$ItemP->cantidad}}</td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td></td>
-      <td> </td>
-      <td></td>
-    </tr>
+     @endforeach
   </tbody>
+  
 </table>
-			</body>
-		</html>
+<div class="row"><div class="mx-auto">{{$productos->links()}}</div></div>		
 @endsection
