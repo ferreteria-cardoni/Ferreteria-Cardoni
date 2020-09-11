@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class producto extends Model
 {
     protected $primaryKey = 'cod_producto';
+
+    public $incrementing = false;
     
     public function proveedor()
     {

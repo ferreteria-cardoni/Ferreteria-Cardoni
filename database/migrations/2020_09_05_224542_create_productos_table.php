@@ -18,7 +18,6 @@ class CreateProductosTable extends Migration
             $table->unsignedbigInteger('cod_proveedor_fk');
 
             $table->string('nombre', 100);
-            $table->string('marca', 25);
             $table->bigInteger('cantidad');
             $table->decimal('precio',6,2);
             $table->text('descripcion');

@@ -18,9 +18,10 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        
+        $productos = producto::paginate(10);
+       return view('productos.vistaproducto', compact('productos'));
+    
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -42,32 +43,34 @@ class ProductoController extends Controller
      */
     public function store(FormProductoIngresar $request)
     {
+
+
+        $findProductos = producto::find($request->idproducto);        
+        if ($findProductos) {
+            return redirect()->route('Productos.create')->with('datos','El producto que ingreso ya esta registrado');
+        }else{
+
+
         //Registro de la tabla de productos
         $Productos = new producto;
         $Productos->cod_producto = $request->idproducto;
         $Productos->cod_proveedor_fk=$request->idproveedor;
         $Productos->nombre = $request->idnombre;
-        $Productos->marca = $request->idmarca;
         $Productos->cantidad = $request->idcantidad;
         $Productos->precio = $request->idprecio;
         $Productos->descripcion = $request->iddescripcion;
         $Productos->presentacion = $request->idpresentacion;
         $Productos->save();
 
-        //Obetencion del codigo del ultimo producto registrado
-        $Productos = producto::where('precio','>',1)->orderBy('created_at','desc')->take(1)->first();
-
-        //Obtencion del codigo de la marca correspondiente al producto anterior.
-        $Marcas = marca::where('nombre_marca', $Productos->marca)->orderBy('created_at','desc')->take(1)->first();
-
         //Registro en la tabla "marca_productos" de cod_marca_fk y cod_producto_fk.
         $Marca = new marca_producto();
-        $Marca->cod_producto_fk = $Productos->cod_producto;
-        $Marca->cod_marca_fk = $Marcas->cod_marca;
+        $Marca->cod_producto_fk = $request->idproducto;
+        $Marca->cod_marca_fk = $request->idmarca;
         $Marca->save();
-
+      
         //Mostrar vista
-        return redirect()->route('login')->with('datos','Registro Exitoso');
+        return redirect()->route('Productos.index')->with('datos','Registro Exitoso');
+        }
     }
 
     /**

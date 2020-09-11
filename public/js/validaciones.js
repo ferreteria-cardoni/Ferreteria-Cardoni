@@ -8,6 +8,7 @@ const PresentacionP = document.querySelector('#idpresentacion');
 const CantidadP = document.querySelector('#idcantidad');
 const PrecioP = document.querySelector('#idprecio');
 const ProveedorP = document.querySelector('#idproveedor');
+const IdProductoP = document.querySelector('#idproducto');
 
 
 
@@ -17,6 +18,7 @@ var solotexto = new RegExp('[a-zA-Z\s]+$');
 var valtel = new RegExp('[0-9]{8}');
 var valcorreos = new RegExp('[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.([a-zA-Z]{2,4})+');
 var valdui = new RegExp('[0-9]{8}-[0-9]{1}');
+var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
 
 
 //funciones
@@ -133,6 +135,29 @@ var valdui = new RegExp('[0-9]{8}-[0-9]{1}');
             document.getElementById("msgidproveedor").style.display = "none";
             document.getElementById("msgidproveedor").innerHTML = ""
             ProveedorP.style.borderColor = "";
+            
+            
+        }
+        
+    })
+    IdProductoP.addEventListener('blur', () => {
+
+        if (IdProductoP.value == "") {
+            document.getElementById("msgidproducto").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidproducto").style.display = "block";
+            IdProductoP.style.borderColor = "red";
+            
+        }
+        else if(!valcodProducto.exec(IdProductoP.value)){
+            document.getElementById("msgidproducto").innerHTML = "El formato correcto es aaa111"
+            document.getElementById("msgidproducto").style.display = "block";
+            IdProductoP.style.borderColor = "red";
+        }
+        
+        else {
+            document.getElementById("msgidproducto").style.display = "none";
+            document.getElementById("msgidproducto").innerHTML = ""
+            IdProductoP.style.borderColor = "";
             
             
         }
