@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Registro de Productos')
+
 @section('alert')
 <div class="container">
       @if (session('datos'))
@@ -19,7 +21,6 @@
 				<title></title>
 			</head>
 			<body>
-				<center><h3>Registro de Productos</h3></center><br>
 				@if ($errors->any())
 					<div class="alert alert-danger">
 					<center><h5>Hay errores en en formulario, favor revisar</H2></center>

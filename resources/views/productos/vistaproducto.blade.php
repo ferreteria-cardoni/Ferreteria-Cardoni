@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
+@section('titulo','Vista Inventario')
+
 @section('alert')
+
+<form>
+  <div class="input-group-prepend">
+    <input class="form-control mr-sm-2" id="tableSearch" type="text" placeholder="Buscar Productos" aria-label="Search">
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+  </div>
+  </form><br>
+
 <div class="container">
       @if (session('datos'))
   <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
@@ -12,32 +22,24 @@
 @endif
 @endsection
 
-
-
-
 @section('content')
-
-	<center><h3>Vista de Inventario</h3></center><br>
-			
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Stock</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($productos as $ItemP)
-    <tr>
-      <th scope="row">{{$ItemP->cod_producto}}</th>
-      <td>{{$ItemP->nombre}}</td>
-      <td>{{$ItemP->cantidad}}</td>
-    </tr>
-     @endforeach
-  </tbody>
-  
-</table>
-<div class="row"><div class="mx-auto">{{$productos->links()}}</div></div>		
+    <table class="table table-hover" >
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Stock</th>  
+        </tr>
+      </thead>
+      <tbody id="myTable">
+        @foreach($productos as $ItemP)
+        <tr>
+          <th scope="row">{{$ItemP->cod_producto}}</th>
+          <td>{{$ItemP->nombre}}</td>
+          <td>{{$ItemP->cantidad}}</td>
+        </tr>
+         @endforeach
+      </tbody>
+    </table>
+    <div class="row"><div class="mx-auto">{{$productos->links()}}</div></div>		
 @endsection

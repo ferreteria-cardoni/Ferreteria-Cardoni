@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('titulo','Login')
 @section('alert')
 <div class="container">
       @if (session('datos'))

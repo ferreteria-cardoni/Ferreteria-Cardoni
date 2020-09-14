@@ -43,9 +43,9 @@ class ProductoController extends Controller
      */
     public function store(FormProductoIngresar $request)
     {
+        
+        $findProductos = producto::find($request->idproducto); 
 
-
-        $findProductos = producto::find($request->idproducto);        
         if ($findProductos) {
             return redirect()->route('Productos.create')->with('datos','El producto que ingreso ya esta registrado');
         }else{
