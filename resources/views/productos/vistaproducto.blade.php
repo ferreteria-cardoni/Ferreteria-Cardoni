@@ -6,7 +6,7 @@
 
 <form>
   <div class="input-group-prepend">
-    <input class="form-control mr-sm-2" id="tableSearch" type="text" placeholder="Buscar Productos" aria-label="Search">
+    <input class="form-control mr-sm-2" id="tableSearch" name="tableSearch" type="text" placeholder="Buscar Productos" aria-label="Search">
     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
   </div>
   </form><br>
