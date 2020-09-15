@@ -59,7 +59,7 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
             
         }
         
-    })
+    }) 
     DescripcionP.addEventListener('blur', () => {
     })
     PresentacionP.addEventListener('blur', () => {
