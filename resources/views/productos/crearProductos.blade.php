@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@section('titulo','Registro de Productos')
+
+@section('alert')
+<div class="container">
+      @if (session('datos'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" align="center">
+    {{session('datos')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+@endif
+@endsection
+
 @section('content')
 	<!DOCTYPE html>
 		<html>
@@ -7,7 +21,6 @@
 				<title></title>
 			</head>
 			<body>
-				<center><h3>Registro de Productos</h3></center><br>
 				@if ($errors->any())
 					<div class="alert alert-danger">
 					<center><h5>Hay errores en en formulario, favor revisar</H2></center>
@@ -24,7 +37,7 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-1">
 				      <label>ID</label>
-				      <input type="text" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ old('idnombre') }}">
+				      <input type="text" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ old('idproducto') }}">
               <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
 				    </div>
 				    
@@ -39,7 +52,7 @@
       						<select name="idmarca" id="idmarca" class="form-control">
 	        					<option selected>No seleccionado</option>
 	        					@foreach($marca as $marcaiten)
-	        					<option value="{{$marcaiten->nombre_marca}}">{{$marcaiten->nombre_marca}}</option>
+	        					<option value="{{$marcaiten->cod_marca}}">{{$marcaiten->nombre_marca}}</option>
 	        					@endforeach
      						</select>
                 <span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
@@ -80,7 +93,8 @@
 					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Martillo doble con mango de goma" value="{{ old('iddescripcion') }}"></textarea>
 					  <span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
 				  </div>
-				  <button type="submit" class="btn btn-primary">Registrar Producto</button>
+				  <button type="submit" class="btn btn-primary">Registrar Producto</button> 
+				  <button type="reset" class="btn btn-danger">Limpiar Campos</button>
 				</form>
 			</body>
 		</html>
