@@ -16,10 +16,17 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productos = producto::paginate(10);
-       return view('productos.vistaproducto', compact('productos'));
+        if($request){
+            $query = trim($request->get('tableSearch'));
+
+            $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+                            ->orWhere('nombre','LIKE','%'.$query.'%')
+                            ->paginate(10);
+            return view('productos.vistaproducto', compact('productos'));
+        }
+        
     
     }
     /**
