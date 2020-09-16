@@ -46,7 +46,6 @@ class FormProductoIngresar extends FormRequest
             'idproveedor.required' => 'Se debe seleccionar almenos una opcione del Campo Proveedor',
             'idproducto.required' => 'Consulte el catalogo por el codigo del producto',
             'idproducto.regex' => 'Consulte el catalogo, el formato del codigo es incorrecto (aaa111)',
-            
         ];
     }
 }
