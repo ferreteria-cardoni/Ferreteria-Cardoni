@@ -19,10 +19,16 @@ class ProductoController extends Controller
      */
     public function index(BuscadorProducto $request)
     {
-        $productos = producto::paginate(10);
-        return view('productos.vistaproducto', compact('productos'));
+        if($request){
+            $query = trim($request->get('buscador'));
+
+            $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+                            ->orWhere('nombre','LIKE','%'.$query.'%')
+                            ->paginate(10);
+            return view('productos.vistaproducto', compact('productos'));
+        }
+        
     
-    }
     /**
      * Show the form for creating a new resource.
      *

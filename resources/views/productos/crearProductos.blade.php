@@ -50,7 +50,7 @@
 				      <div class="form-group col-md-5">
       					<label>Marca</label>
       						<select name="idmarca" id="idmarca" class="form-control">
-	        					<option selected>No seleccionado</option>
+	        					<option value="" selected>No seleccionado</option>
 	        					@foreach($marca as $marcaiten)
 	        					<option value="{{$marcaiten->cod_marca}}">{{$marcaiten->nombre_marca}}</option>
 	        					@endforeach
@@ -80,7 +80,7 @@
 				     <div class="form-group col-md-2">
       					<label>Proveedor</label>
       						<select name="idproveedor" id="idproveedor" class="form-control">
-	        					<option selected>No seleccionado</option>
+	        					<option value="" selected>No seleccionado</option>
 	        					@foreach($proveedor as $pro)
 	        					<option value="{{$pro->cod_proveedor}}">{{$pro->nombre}}</option>
 	        					@endforeach

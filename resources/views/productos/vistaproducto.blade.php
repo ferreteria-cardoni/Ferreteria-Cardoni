@@ -3,6 +3,7 @@
 @section('titulo','Vista Inventario')
 
 @section('alert')
+
 <div class="container">
       @if (session('datos'))
   <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
@@ -10,11 +11,16 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
       <span aria-hidden="true">&times;</span>
     </button>
+
+
 </div>
+ </div>
+
 @endif
 @endsection
 
 @section('content')
+
 
 @if ($errors->any())
 <div class="alert alert-danger">

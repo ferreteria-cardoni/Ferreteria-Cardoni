@@ -24,7 +24,8 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
 //funciones
 
 // Eventos
-//formulario registro de pacientes  
+//formulario registro de pacientes 
+if(NombreP){
     NombreP.addEventListener('blur', () => {
 
         if (NombreP.value == "") {
@@ -42,6 +43,8 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
         }
         
     })
+} 
+if(MarcaP){
     MarcaP.addEventListener('blur', () => {
 
         if (MarcaP.value == "") {
@@ -60,8 +63,12 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
         }
         
     })
+}    
+if(DescripcionP){
     DescripcionP.addEventListener('blur', () => {
-    })
+    }) 
+}   
+if(PresentacionP){
     PresentacionP.addEventListener('blur', () => {
 
         if (PresentacionP.value == "") {
@@ -81,6 +88,8 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
         }
         
     })
+}
+if(CantidadP){
     CantidadP.addEventListener('blur', () => {
 
         if (CantidadP.value == "") {
@@ -104,6 +113,9 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
         }
         
     })
+}
+
+if(PrecioP){
     PrecioP.addEventListener('blur', () => {
 
         if (PrecioP.value == "") {
@@ -123,6 +135,9 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
         }
         
     })
+}
+
+if(ProveedorP){
     ProveedorP.addEventListener('blur', () => {
 
         if (ProveedorP.value == "") {
@@ -140,6 +155,9 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
         }
         
     })
+}
+
+if(IdProductoP){
     IdProductoP.addEventListener('blur', () => {
 
         if (IdProductoP.value == "") {
@@ -163,6 +181,13 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
         }
         
     })
+}
+
+
+
+
+
+  
 
 
 

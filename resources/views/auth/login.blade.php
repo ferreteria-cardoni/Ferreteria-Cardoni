@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@section('titulo','Login')
+@section('alert')
+<div class="container">
+      @if (session('datos'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+    {{session('datos')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+@endif
+@endsection
+
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
