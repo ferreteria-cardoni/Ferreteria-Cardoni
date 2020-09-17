@@ -27,8 +27,10 @@ class ProductoController extends Controller
                             ->paginate(10);
             return view('productos.vistaproducto', compact('productos'));
         }
+
     }
     
+
     /**
      * Show the form for creating a new resource.
      *

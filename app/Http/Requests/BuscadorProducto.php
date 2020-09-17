@@ -24,7 +24,7 @@ class BuscadorProducto extends FormRequest
     public function rules()
     {
         return [
-            'buscador' => ['max:100', 'regex:/[\(a-z, A-Z, 0-9)+\s\(a-z, A-Z, 0-9)+]$/']
+            'buscador' => ['max:100','nullable', 'regex:/[\(a-z, A-Z, 0-9)+\s]$/']
         ];
     }
 
