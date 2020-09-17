@@ -28,7 +28,7 @@ class ProductoController extends Controller
             return view('productos.vistaproducto', compact('productos'));
         }
         
-    
+    }
     /**
      * Show the form for creating a new resource.
      *
