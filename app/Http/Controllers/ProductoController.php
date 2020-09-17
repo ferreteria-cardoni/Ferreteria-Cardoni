@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BuscadorProducto;
 use App\Http\Requests\FormProductoIngresar;
 use Illuminate\Http\Request;
 use App\producto;
@@ -16,10 +17,10 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(BuscadorProducto $request)
     {
         if($request){
-            $query = trim($request->get('tableSearch'));
+            $query = trim($request->get('buscador'));
 
             $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
                             ->orWhere('nombre','LIKE','%'.$query.'%')
@@ -28,7 +29,6 @@ class ProductoController extends Controller
         }
         
     
-    }
     /**
      * Show the form for creating a new resource.
      *
