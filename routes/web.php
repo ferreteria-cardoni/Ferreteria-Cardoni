@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Requests\BuscadorProducto;
 use App\producto;
 use App\marca_producto;
 use App\marca;
