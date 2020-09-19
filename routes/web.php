@@ -22,6 +22,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('Productos','ProductoController');
 
 
+Route::get('nombres/buscador','ProductoController@buscador');
 
 
 

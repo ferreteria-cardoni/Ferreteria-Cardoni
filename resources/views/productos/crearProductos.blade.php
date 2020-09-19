@@ -68,17 +68,6 @@
 					  <span id="msgidpresentacion" name="msgidpresentacion" class="AlertaMsg"></span>
 					</div>
 
-				    <div class="form-group col-md-2">
-				      <label>Cantidad</label>
-					    <input type="number" min="0" class="form-control" id="idcantidad" name="idcantidad" placeholder="1,2,3..." value="{{ old('idcantidad') }}">
-					    <span id="msgidcantidad" name="msgidcantidad" class="AlertaMsg"></span>
-				    </div>
-
-				    <div class="form-group col-md-2">
-				      <label>Precio</label>
-					    <input type="number" step="0.01" min="0.01" class="form-control" id="idprecio" name="idprecio" placeholder="$" value="{{ old('idprecio') }}">
-					    <span id="msgidprecio" name="msgidprecio" class="AlertaMsg"></span>
-				    </div>
 
 				    <div class="form-group col-md-2">
     				<label class="mb-2">Marca</label>
@@ -91,7 +80,6 @@
 						<span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
     				</div>
 
-				   
 				 </div> <br>
 				  <div class="form-group">
 				    <label>Descripción</label>
