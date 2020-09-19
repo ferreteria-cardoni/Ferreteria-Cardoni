@@ -40,8 +40,7 @@
     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
   </div>
   </form><br>
-
-
+@if ($tabla=='true')
     <table class="table table-hover" >
       <thead>
         <tr>
@@ -60,5 +59,10 @@
          @endforeach
       </tbody>
     </table>
-    <div class="row"><div class="mx-auto">{{$productos->links()}}</div></div>		
+
+    <div class="row"><div class="mx-auto">{{$productos->links()}}</div></div>	
+@endif
+
+
+  
 @endsection

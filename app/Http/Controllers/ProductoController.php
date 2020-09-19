@@ -19,13 +19,16 @@ class ProductoController extends Controller
      */
     public function index(BuscadorProducto $request)
     {
-        if($request){
-            $query = trim($request->get('buscador'));
-
-            $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+        $query = trim($request->get('buscador'));
+        $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
                             ->orWhere('nombre','LIKE','%'.$query.'%')
                             ->paginate(10);
-            return view('productos.vistaproducto', compact('productos'));
+        if($query){
+             $tabla = 'true';
+            return view('productos.vistaproducto', compact('productos','tabla'));
+        }else{
+             $tabla = 'false';
+            return view('productos.vistaproducto', compact('productos','tabla'));
         }
 
     }
@@ -65,8 +68,7 @@ class ProductoController extends Controller
         $Productos->cod_producto = strtoupper($request->idproducto);
         $Productos->cod_proveedor_fk= $request->idproveedor;
         $Productos->nombre =  $request->idnombre;   
-        $Productos->cantidad = $request->idcantidad;
-        $Productos->precio = $request->idprecio;
+        $Productos->cantidad = 0;
         $Productos->descripcion = $request->iddescripcion;
         $Productos->presentacion = $request->idpresentacion;
         $Productos->save();
@@ -130,6 +132,18 @@ class ProductoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscador(Request $request){
+       // $nombres    =   Nombres::where("nombre",'like',$request->texto."%")->take(10)->get();
+        //return view("nombres.paginas",compact("nombres"));        
+
+        $query = trim($request->get('texto'));
+        $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+                            ->orWhere('nombre','LIKE','%'.$query.'%')
+                            ->paginate(10);
+                            $tabla = 'false';
+        return view('productos.buscador', compact('productos', 'tabla'));
     }
 
 }
