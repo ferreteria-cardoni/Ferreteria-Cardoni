@@ -72,14 +72,19 @@ class ProductoController extends Controller
         $Productos->save();
 
         //Registro en la tabla "marca_productos" de cod_marca_fk y cod_producto_fk.
-        $Marca = new marca_producto();
-        $Marca->cod_producto_fk = $request->idproducto;
-        $Marca->cod_marca_fk = $request->idmarca;
-        $Marca->save();
-      
+    
+               foreach ($request->idmarca as $key) {
+                      $Marca = new marca_producto(); 
+                      $Marca->cod_marca_fk = $key;
+                      $Marca->cod_producto_fk = $request->idproducto;
+                      $Marca->save();                 
+                    }
+        }
+       
+
         //Mostrar vista
         return redirect()->route('Productos.index')->with('datos','Registro Exitoso');
-        }
+        
     }
 
     /**
