@@ -62,9 +62,9 @@ class ProductoController extends Controller
 
         //Registro de la tabla de productos
         $Productos = new producto;
-        $Productos->cod_producto = $request->idproducto;
-        $Productos->cod_proveedor_fk=$request->idproveedor;
-        $Productos->nombre = $request->idnombre;
+        $Productos->cod_producto = strtoupper($request->idproducto);
+        $Productos->cod_proveedor_fk= $request->idproveedor;
+        $Productos->nombre =  $request->idnombre;   
         $Productos->cantidad = $request->idcantidad;
         $Productos->precio = $request->idprecio;
         $Productos->descripcion = $request->iddescripcion;
