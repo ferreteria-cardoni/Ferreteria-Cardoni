@@ -46,18 +46,21 @@
 					  <input type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Martillo" value="{{ old('idnombre') }}">
 					  <span id="msgidnombre" name="msgidnombre" class="AlertaMsg"></span>
 				    </div>
-            
-				      <div class="form-group col-md-5">
-      					<label>Marca</label>
-      						<select name="idmarca" id="idmarca" class="form-control">
+
+          		 <div class="form-group col-md-5">
+      					<label>Proveedor</label>
+      						<select name="idproveedor" id="idproveedor" class="custom-select">
 	        					<option value="" selected>No seleccionado</option>
-	        					@foreach($marca as $marcaiten)
-	        					<option value="{{$marcaiten->cod_marca}}">{{$marcaiten->nombre_marca}}</option>
+	        					@foreach($proveedor as $pro)
+	        					<option value="{{$pro->cod_proveedor}}">{{$pro->nombre}}</option>
 	        					@endforeach
      						</select>
-                <span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
-    				</div>
-				  </div>
+               				 <span id="msgidproveedor" name="msgidproveedor" class="AlertaMsg"></span>
+    			</div>
+
+    			
+				 </div>
+
 				  <div class="form-row">
 				  	<div class="form-group col-md-6">
 				      <label>Presentación</label>
@@ -77,17 +80,19 @@
 					    <span id="msgidprecio" name="msgidprecio" class="AlertaMsg"></span>
 				    </div>
 
-				     <div class="form-group col-md-2">
-      					<label>Proveedor</label>
-      						<select name="idproveedor" id="idproveedor" class="form-control">
-	        					<option value="" selected>No seleccionado</option>
-	        					@foreach($proveedor as $pro)
-	        					<option value="{{$pro->cod_proveedor}}">{{$pro->nombre}}</option>
-	        					@endforeach
-     						</select>
-                <span id="msgidproveedor" name="msgidproveedor" class="AlertaMsg"></span>
+				    <div class="form-group col-md-2">
+    				<label class="mb-2">Marca</label>
+    					<select class='mi-selector' name='idmarca[]' id="idmarca" multiple='multiple'>
+						    <option disabled="true">Seleccione la marca</option>
+						    @foreach($marca as $marcaiten)
+						    <option value='{{$marcaiten->cod_marca}}'>{{$marcaiten->nombre_marca}}</option>
+						    @endforeach
+						</select>
+						<span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
     				</div>
-				  </div><br>
+
+				   
+				 </div> <br>
 				  <div class="form-group">
 				    <label>Descripción</label>
 					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Martillo doble con mango de goma" value="{{ old('iddescripcion') }}"></textarea>
@@ -99,3 +104,6 @@
 			</body>
 		</html>
 @endsection
+
+
+

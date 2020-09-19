@@ -27,8 +27,10 @@ class ProductoController extends Controller
                             ->paginate(10);
             return view('productos.vistaproducto', compact('productos'));
         }
-        
+
     }
+    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -60,9 +62,9 @@ class ProductoController extends Controller
 
         //Registro de la tabla de productos
         $Productos = new producto;
-        $Productos->cod_producto = $request->idproducto;
-        $Productos->cod_proveedor_fk=$request->idproveedor;
-        $Productos->nombre = $request->idnombre;
+        $Productos->cod_producto = strtoupper($request->idproducto);
+        $Productos->cod_proveedor_fk= $request->idproveedor;
+        $Productos->nombre =  $request->idnombre;   
         $Productos->cantidad = $request->idcantidad;
         $Productos->precio = $request->idprecio;
         $Productos->descripcion = $request->iddescripcion;
@@ -70,14 +72,19 @@ class ProductoController extends Controller
         $Productos->save();
 
         //Registro en la tabla "marca_productos" de cod_marca_fk y cod_producto_fk.
-        $Marca = new marca_producto();
-        $Marca->cod_producto_fk = $request->idproducto;
-        $Marca->cod_marca_fk = $request->idmarca;
-        $Marca->save();
-      
+    
+               foreach ($request->idmarca as $key) {
+                      $Marca = new marca_producto(); 
+                      $Marca->cod_marca_fk = $key;
+                      $Marca->cod_producto_fk = $request->idproducto;
+                      $Marca->save();                 
+                    }
+        }
+       
+
         //Mostrar vista
         return redirect()->route('Productos.index')->with('datos','Registro Exitoso');
-        }
+        
     }
 
     /**
@@ -124,7 +131,5 @@ class ProductoController extends Controller
     {
         //
     }
-
-
 
 }

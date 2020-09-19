@@ -25,6 +25,12 @@
     <!-- Styles -->
     <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!--- Prueba -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+   
     <style> 
         .AlertaMsg{ 
             font-weight: bold; 
@@ -39,10 +45,12 @@
              position:relative;
              left: 35%;
             }
+        }
     </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+
     <div id="app">
         <div class="wrapper">
 
@@ -221,6 +229,15 @@
 </html>
 <script src="{{ asset('js/validaciones.js') }}" defer></script>
 
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+    $(document).ready(function() {
+        $('.mi-selector').select2();
+    });
+});
+</script>
 
 
 
