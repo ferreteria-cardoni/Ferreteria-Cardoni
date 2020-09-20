@@ -8,11 +8,6 @@ class empleado extends Model
 {
 
 	protected $primaryKey = 'cod_empleado';
-
-    public function rol()
-    {
-    	return $this->belongsTo(rol::class,'cod_rol_fk');
-    }
     
     public function user()
     {

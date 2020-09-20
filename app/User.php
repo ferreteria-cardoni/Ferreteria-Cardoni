@@ -44,5 +44,20 @@ class User extends Authenticatable
         return $this->belongsTo(empleado::class,'cod_empleado_fk');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(role::class)->withTimestamps();
+    }
+
+    public function asignarRol($role)
+    {
+        $this->roles()->sync($role, false); 
+    }
+
+    public function tieneRol()
+    {
+        return $this->roles->flatten()->pluck('nombre')->unique();
+    }
+
 
 }

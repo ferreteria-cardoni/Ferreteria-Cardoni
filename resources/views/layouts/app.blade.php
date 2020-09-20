@@ -49,8 +49,10 @@
     </style>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
 
+
+
+<body class="hold-transition sidebar-mini layout-fixed">
     <div id="app">
         <div class="wrapper">
 
@@ -94,6 +96,7 @@
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
+
                 <a href="{{ url('/') }}" class="brand-link">
                     <img src="{{asset('dist/img/logoFFF.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                         style="opacity: .8">
@@ -139,18 +142,19 @@
                                     <p>Inicio</p>
                                 </a>
                             </li>
-
+                            @canany(['administrador', 'ventas'])
                             <li class="nav-item">
                                 <a href="usuarios"
                                     class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Usuarios
-                                        <?php use App\User; $users_count = User::all()->count(); ?>
+                                        <?php $users_count = DB::table('users')->count(); ?>
                                         <span class="right badge badge-danger">{{ $users_count ?? '0' }}</span>
                                     </p>
                                 </a>
                             </li>
+                            @endcanany
 
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
@@ -158,6 +162,7 @@
                                     <p>Productos<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
+                                    @canany(['bodega'])
                                     <li class="nav-item">
                                         <a href="{{route('Productos.create')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
@@ -165,13 +170,18 @@
                                             <p>Crear</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    @endcanany
+
+                                    @canany(['gerente', 'ventas', 'bodega'])
+                                 <li class="nav-item">
                                         <a href="{{route('Productos.index')}}"
                                             class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ver</p>
                                         </a>
                                     </li>
+                                    @endcanany
+                                
                                     <li class="nav-item">
                                         <a href="notas/archivadas"
                                             class="{{ Request::path() === 'notas/archivadas' ? 'nav-link active' : 'nav-link' }}">
@@ -208,11 +218,12 @@
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
+           
             <footer class="main-footer">
                 <!-- NO QUITAR -->
                 <strong>Ferreteria Cardoni
                     <div class="float-right d-none d-sm-inline-block">
-                        <b>Version</b> 1.0
+                        <b></b> 1.0
                     </div>
 
             </footer>
