@@ -32,37 +32,28 @@
 </ul>
 </div>
 @endif
-
+<div class="container">
+<!-- html agregado-->
 <form>
-  @csrf
   <div class="input-group-prepend">
-    <input class="form-control mr-sm-2" name="buscador" id="buscador" type="text" placeholder="Buscar Productos" aria-label="Search">
-    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+    <input class="form-control mr-sm-2" name="texto" id="texto" type="text" placeholder="Buscar Productos" aria-label="Search">
+    <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button> -->
   </div>
   </form><br>
-@if ($tabla=='true')
-    <table class="table table-hover" >
-      <thead>
+<!-- fin del html agregado-->
+  <table class="table table-hover" >
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Stock</th>  
+          </tr>
+        </thead>
+        <tbody id="ok">
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Stock</th>  
+          <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
         </tr>
-      </thead>
-      <tbody id="myTable">
-        @foreach($productos as $ItemP)
-        <tr>
-          <th scope="row">{{$ItemP->cod_producto}}</th>
-          <td>{{$ItemP->nombre}}</td>
-          <td>{{$ItemP->cantidad}}</td>
-        </tr>
-         @endforeach
       </tbody>
-    </table>
-
-    <div class="row"><div class="mx-auto">{{$productos->links()}}</div></div>	
-@endif
-
-
-  
+  </table>            
+</div>  
 @endsection

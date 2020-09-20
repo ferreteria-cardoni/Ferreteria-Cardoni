@@ -45,7 +45,7 @@
              position:relative;
              left: 35%;
             }
-        }
+        
     </style>
 </head>
 
@@ -251,17 +251,30 @@
 </script>
 
 <script type="text/javascript">
-    
-window.addEventListener('load',function(){
-        document.getElementById("texto").addEventListener("keyup", () => {
-            if((document.getElementById("texto").value.length)>=1)
-                fetch(`/nombres/buscador?texto=${document.getElementById("texto").value}`,{ method:'get' })
-                .then(response  =>  response.text() )
-                .then(html      =>  {   document.getElementById("resultados").innerHTML = html  })
-            else
-                document.getElementById("resultados").innerHTML = ""
+    window.addEventListener("load",function(){
+        function busca(query='')
+        {
+            $.ajax({
+                url: "{{ route('buscador') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success: function(data){
+                    //console.log(data);
+                    $('#ok').html(data);
+                }
+            })
+        }
+
+        $(document).on('keyup','#texto',function(){
+            var query = $(this).val();
+            //console.log(query);
+            busca(query);
         })
-    }); 
+
+    })
+    
+
 </script>
 
 
