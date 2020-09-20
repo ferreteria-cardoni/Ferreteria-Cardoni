@@ -19,7 +19,7 @@ class ProductoController extends Controller
      */
     public function index(BuscadorProducto $request)
     {
-        $query = trim($request->get('buscador'));
+     /*    $query = trim($request->get('buscador'));
         $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
                             ->orWhere('nombre','LIKE','%'.$query.'%')
                             ->paginate(10);
@@ -29,8 +29,8 @@ class ProductoController extends Controller
         }else{
              $tabla = 'false';
             return view('productos.vistaproducto', compact('productos','tabla'));
-        }
-
+        } */
+        return view('productos.vistaproducto');
     }
     
 
@@ -135,15 +135,51 @@ class ProductoController extends Controller
     }
 
     public function buscador(Request $request){
-       // $nombres    =   Nombres::where("nombre",'like',$request->texto."%")->take(10)->get();
-        //return view("nombres.paginas",compact("nombres"));        
-
-        $query = trim($request->get('texto'));
-        $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+        if($request->ajax()){
+            $query = trim($request->get('query'));
+            if($query != ''){
+                $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
                             ->orWhere('nombre','LIKE','%'.$query.'%')
-                            ->paginate(10);
-                            $tabla = 'false';
-        return view('productos.buscador', compact('productos', 'tabla'));
+                            ->take(10)
+                            ->get();
+            }else{
+                $output='
+                <tr>
+                    <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+                </tr>
+                ';
+            }
+            if(isset($productos)){
+                $total=$productos->count();
+                $output='';
+                if($total>0)
+                {   
+                    foreach($productos as $ItemP){
+                    $output .='
+                    <tr>
+                        <th scope="row">'.$ItemP->cod_producto.'</th>
+                        <td>'.$ItemP->nombre.'</td>
+                        <td>'.$ItemP->cantidad.'</td>
+                    </tr>
+                    ';
+                    }
+    
+                }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                }
+
+            }
+  
+          /*   $productos= array(
+                'table_data'  => $output
+            ); */
+
+            echo json_encode($output);
+        }
     }
 
 }
