@@ -15,7 +15,6 @@ class CreateEmpleadosTable extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {
             $table->string('cod_empleado',2)->primary();
-            $table->unsignedbigInteger('cod_rol_fk');
             $table->string('nombre', 30);
             $table->string('apellido', 40);
             $table->string('dui', 9)->unique();
@@ -23,10 +22,6 @@ class CreateEmpleadosTable extends Migration
             $table->char('sexo');
             $table->timestamps();
 
-            $table->foreign('cod_rol_fk')
-                  ->references('cod_rol')
-                  ->on('rols')
-                  ->onDelete('cascade');
                   
         });
     }
