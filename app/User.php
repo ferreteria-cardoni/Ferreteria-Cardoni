@@ -59,5 +59,12 @@ class User extends Authenticatable
         return $this->roles->flatten()->pluck('nombre')->unique();
     }
 
+    public function obtenerRol($rol)
+    {
+        return $this->roles()->where('nombre',$rol)->first();
+    }
+
+
+
 
 }
