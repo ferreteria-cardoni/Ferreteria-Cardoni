@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BuscadorProducto;
 use App\Http\Requests\FormProductoIngresar;
 use Illuminate\Http\Request;
@@ -9,6 +9,7 @@ use App\producto;
 use App\proveedor;
 use App\marca_producto;
 use App\marca;
+use App\User;
 
 class ProductoController extends Controller
 {
@@ -18,15 +19,13 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+   
+
 
 
     public function index(BuscadorProducto $request)
     {
-     /*    $query = trim($request->get('buscador'));
+       /* $query = trim($request->get('buscador'));
         $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
                             ->orWhere('nombre','LIKE','%'.$query.'%')
                             ->paginate(10);
@@ -36,7 +35,7 @@ class ProductoController extends Controller
         }else{
              $tabla = 'false';
             return view('productos.vistaproducto', compact('productos','tabla'));
-        } */
+        }*/
         return view('productos.vistaproducto');
     }
     
@@ -48,10 +47,14 @@ class ProductoController extends Controller
      */
     public function create()
     {
+
+        
          $proveedor = proveedor::all();
          $marca = marca::all();
     
          return view('productos.crearProductos', compact('proveedor','marca'));
+        
+         
     }
 
     /**
@@ -66,7 +69,7 @@ class ProductoController extends Controller
         $findProductos = producto::find($request->idproducto); 
 
         if ($findProductos) {
-            return redirect()->route('Productos.create')->with('datos','El producto que ingreso ya esta registrado');
+            return redirect('Productos/create')->with('datos','El producto que ingreso ya esta registrado');
         }else{
 
 
@@ -92,7 +95,7 @@ class ProductoController extends Controller
        
 
         //Mostrar vista
-        return redirect()->route('Productos.index')->with('datos','Registro Exitoso');
+        return redirect('/Productos')->with('datos','Registro Exitoso');
         
     }
 
@@ -187,6 +190,10 @@ class ProductoController extends Controller
 
             echo json_encode($output);
         }
+
+
+
+
     }
 
 }

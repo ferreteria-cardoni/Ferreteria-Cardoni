@@ -24,6 +24,31 @@ Route::resource('Productos','ProductoController');
 Route::get('/buscador', 'ProductoController@buscador')->name('buscador');
 
 
+Route::get('/Productos/create', 'ProductoController@create')
+->middleware('role:bodega')->name('Productos.create');
+
+
+//Route::get('/Productos', 'ProductoController@index')->middleware('role:ventas' , 'role:gerente')->name('Productos.index');
+
+
+
+Route::group([
+	'middleware' => 'role',
+	'prefix' => 'role',
+    'namespace' => 'role'
+], function () {
+
+	Route::get('/Productos', 'ProductoController@index')->name('Productos.index');
+  
+});
+
+
+
+
+
+
+
+
 
 
 

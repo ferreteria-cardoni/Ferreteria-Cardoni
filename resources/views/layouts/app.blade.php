@@ -174,7 +174,7 @@
 
                                     @canany(['gerente', 'ventas', 'bodega'])
                                  <li class="nav-item">
-                                        <a href="{{route('Productos.index')}}"
+                                        <a href="/Productos"
                                             class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ver</p>
