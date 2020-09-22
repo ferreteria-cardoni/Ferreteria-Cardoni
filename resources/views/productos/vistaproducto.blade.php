@@ -34,12 +34,13 @@
 @endif
 <div class="container">
 <!-- html agregado-->
-<form>
+<!-- <form> -->
   <div class="input-group-prepend">
     <input class="form-control mr-sm-2" name="texto" id="texto" type="text" placeholder="Buscar Productos" aria-label="Search">
     <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button> -->
   </div>
-  </form><br>
+  <!-- </form> -->
+  <br>
 <!-- fin del html agregado-->
   <table class="table table-hover" >
         <thead>
