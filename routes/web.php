@@ -42,6 +42,8 @@ Route::group([
   
 });
 
+Route::resource('compras', 'ComprasController');
+
 
 
 

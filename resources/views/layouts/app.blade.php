@@ -138,6 +138,7 @@
                                     <p>Inicio</p>
                                 </a>
                             </li>
+                            {{-- Usuarios --}}
                             @canany(['administrador', 'ventas'])
                             <li class="nav-item">
                                 <a href="usuarios" class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
@@ -151,6 +152,7 @@
                             </li>
                             @endcanany
 
+                            {{-- Productos --}}
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -183,6 +185,34 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            {{-- Movimientos --}}
+                            @canany(['bodega'])
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon far fa-sticky-note"></i>
+                                    <p>Movimientos<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                   
+                                    <li class="nav-item">
+                                        <a href="{{route('compras.index')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Compras</p>
+                                        </a>
+                                    </li>
+
+                                 <li class="nav-item">
+                                        <a href="/Productos"
+                                            class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Ventas</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endcanany
 
                         </ul>
                     </nav>
