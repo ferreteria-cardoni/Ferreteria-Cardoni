@@ -13,7 +13,7 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        //
+        return view('compras.vistaCompras');
     }
 
     /**
