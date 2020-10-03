@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\pedidoventa;
 use Illuminate\Http\Request;
 
 class VentasController extends Controller
@@ -13,7 +14,9 @@ class VentasController extends Controller
      */
     public function index()
     {
-        return view('ventas.vistaVentas');
+        $pedidoVentas = pedidoventa::paginate(3);
+
+        return view('ventas.vistaVentas', compact('pedidoVentas'));
     }
 
     /**

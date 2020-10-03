@@ -13,24 +13,21 @@
             </tr>
         </thead>
         <tbody>
+            @foreach ($pedidoVentas as $pedido)
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>10</td>
-                <td>2/10/2020</td>
+            <th scope="row">{{$pedido->cod_producto_fk}}</th>
+                {{-- Recuperando el nombre del producto --}}
+                <td>{{App\producto::find($pedido->cod_producto_fk)->nombre}}</td>
+                <td>{{$pedido->cantidad}}</td>
+                {{-- Mostrando la fecha en el formato dia-mes-año --}}
+                <td>{{\Carbon\Carbon::parse($pedido->fecha_venta)->format('d/m/Y')}}</td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>5</td>
-                <td>2/10/2020</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>15</td>
-                <td>2/10/2020</td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
+    <div class="row">
+        <div class="mx-auto">
+            {{$pedidoVentas}}
+        </div>
+    </div>
 @endsection
