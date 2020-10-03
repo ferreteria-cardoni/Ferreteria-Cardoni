@@ -44,7 +44,7 @@ Route::group([
 
 Route::resource('compras', 'ComprasController');
 
-
+Route::resource('ventas', 'VentasController');
 
 
 

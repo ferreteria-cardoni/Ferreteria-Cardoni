@@ -202,10 +202,10 @@
                                             <p>Compras</p>
                                         </a>
                                     </li>
-
+                                    
                                  <li class="nav-item">
-                                        <a href="/Productos"
-                                            class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="{{route('ventas.index')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ventas</p>
                                         </a>
