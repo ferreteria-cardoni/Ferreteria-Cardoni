@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\pedidocompra;
 use Illuminate\Http\Request;
 
 class ComprasController extends Controller
@@ -13,7 +14,9 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        return view('compras.vistaCompras');
+        $pedidoCompra = pedidocompra::paginate(3);
+
+        return view('compras.vistaCompras', compact('pedidoCompra'));
     }
 
     /**

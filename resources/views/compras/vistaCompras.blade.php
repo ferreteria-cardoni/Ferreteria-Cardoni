@@ -8,29 +8,26 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Unidades compradas</th>
-                <th scope="col">Fecha de compra</th>
+                <th scope="col">Unidades Compradas</th>
+                <th scope="col">Fecha de Compra</th>
             </tr>
         </thead>
         <tbody>
+            @foreach ($pedidoCompra as $compra)
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>10</td>
-                <td>2/10/2020</td>
+            <th scope="row">{{$compra->cod_producto_fk}}</th>
+                {{-- Recuperando el nombre del producto --}}
+                <td>{{App\producto::find($compra->cod_producto_fk)->nombre}}</td>
+                <td>{{$compra->cantidad}}</td>
+                {{-- Mostrando la fecha en el formato dia-mes-año --}}
+                <td>{{\Carbon\Carbon::parse($compra->fecha_venta)->format('d/m/Y')}}</td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>5</td>
-                <td>2/10/2020</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>15</td>
-                <td>2/10/2020</td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
+    <div class="row">
+        <div class="mx-auto">
+            {{$pedidoCompra}}
+        </div>
+    </div>
 @endsection
