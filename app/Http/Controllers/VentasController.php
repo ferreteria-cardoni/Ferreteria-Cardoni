@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\pedidoventa;
 use Illuminate\Http\Request;
 
