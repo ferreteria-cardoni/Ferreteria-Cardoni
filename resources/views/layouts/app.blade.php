@@ -176,13 +176,14 @@
                                         </a>
                                     </li>
                                     @endcanany
-
+                                    @canany(['gerente'])
                                     <li class="nav-item">
-                                        <a href="notas/archivadas" class="{{ Request::path() === 'notas/archivadas' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="/modificar" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Modificar</p>
                                         </a>
                                     </li>
+                                    @endcanany
                                 </ul>
                             </li>
 

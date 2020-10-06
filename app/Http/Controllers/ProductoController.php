@@ -37,8 +37,13 @@ class ProductoController extends Controller
             return view('productos.vistaproducto', compact('productos','tabla'));
         }*/
         return view('productos.vistaproducto');
+       
     }
-    
+    public function modification(BuscadorProducto $request){
+        $proveedor = proveedor::all();
+         $marca = marca::all();
+         return view('productos.modiProductos', compact('proveedor','marca'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -107,7 +112,7 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
