@@ -22,6 +22,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('Productos','ProductoController');
 
 Route::get('/buscador', 'ProductoController@buscador')->name('buscador');
+//ruta para pagina de modificar producto prros
+Route::get('/modificar', 'ProductoController@modification');
 
 
 Route::get('/Productos/create', 'ProductoController@create')
