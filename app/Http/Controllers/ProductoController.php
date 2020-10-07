@@ -45,11 +45,11 @@ class ProductoController extends Controller
         return view('productos.vistaproducto');
        
     }
-    public function modification(BuscadorProducto $request){
-        $proveedor = proveedor::all();
-        $marca = marca::all();
-        return view('productos.modiProductos', compact('proveedor','marca'));
-    }
+    // public function modification(BuscadorProducto $request){
+    //     $proveedor = proveedor::all();
+    //     $marca = marca::all();
+    //     return view('productos.modiProductos', compact('proveedor','marca'));
+    // }
 
     /**
      * Show the form for creating a new resource.
