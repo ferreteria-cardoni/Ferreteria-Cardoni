@@ -9,7 +9,7 @@ class marca extends Model
 
 	protected $primaryKey = 'cod_marca';
 
-     public function producto()
+     public function productos()
     {
     	return $this->belongsToMany(producto::class,'marca_productos','cod_marca_fk','cod_producto_fk');
     }

@@ -10,7 +10,7 @@ class producto extends Model
 
     public $incrementing = false;
     
-    public function proveedor()
+    public function proveedores()
     {
     	return $this->belongsTo(proveedor::class,'cod_proveedor_fk');
     }
@@ -27,8 +27,8 @@ class producto extends Model
 
      
 
-      public function marca()
+      public function marcas()
     {
-    	return $this->belongsToMany(marca::class,'marca_productos','cod_marca_fk','cod_producto_fk');
+    	return $this->belongsToMany(marca::class,'marca_productos','cod_producto_fk','cod_marca_fk');
     }
 }
