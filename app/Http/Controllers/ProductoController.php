@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BuscadorProducto;
 use App\Http\Requests\FormProductoIngresar;
+use App\Http\Requests\FormProductoModificar;
 use Illuminate\Http\Request;
 use App\producto;
 use App\proveedor;
@@ -141,7 +142,7 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FormProductoModificar $request, $id)
     {
 
         $findProductos = producto::find($id);

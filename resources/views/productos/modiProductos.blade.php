@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo','Modificación de Productos')
+@section('titulo','Modificar Producto')
 
 @section('alert')
 <div class="container">
@@ -32,7 +32,7 @@
 					</div>
 				@endif
 				
-				<form method="POST" action="{{route('Productos.update', $producto->cod_producto)}}">
+		<form method="POST" action="{{route('Productos.update', $producto->cod_producto)}}">
 					@method('PUT')
 					@csrf
 				  <div class="form-row">
