@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\historialproducto;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BuscadorProducto;
 use App\Http\Requests\FormProductoIngresar;
@@ -10,6 +12,8 @@ use App\proveedor;
 use App\marca_producto;
 use App\marca;
 use App\User;
+use Exception;
+use SebastianBergmann\Environment\Console;
 
 class ProductoController extends Controller
 {
@@ -144,24 +148,33 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
 
-        $findProductos = producto::find($id);
+//producto
+            $findProductos = producto::find($id);
+            $findProductos->cod_proveedor_fk = $request->idproveedor;
+            $findProductos->nombre =  $request->idnombre;   
+            $findProductos->cantidad = $request->idcantidad;
+            $findProductos->precio = $request->idprecio;
+            $findProductos->descripcion = $request->iddescripcion;
+            $findProductos->presentacion = $request->idpresentacion;
+            $findProductos->save();
+//marcaproduto
+            foreach ($request->idmarca as $key) {
+                $Marca = new marca_producto(); 
+                $Marca->cod_marca_fk = $key;
+                $Marca->cod_producto_fk = $id;
+                $Marca->save();                 
+            }
+//bitacora           
+            $bitacora= new historialproducto();
+            $bitacora->operacion="Modifiacion";
+            $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+            $bitacora->cod_producto_fk=$id;
+            $bitacora->save();
 
-        $findProductos->cod_proveedor_fk = $request->idproveedor;
-        $findProductos->nombre =  $request->idnombre;   
-        $findProductos->cantidad = $request->idcantidad;
-        $findProductos->precio = $request->idprecio;
-        $findProductos->descripcion = $request->iddescripcion;
-        $findProductos->presentacion = $request->idpresentacion;
-        $findProductos->save();
+            return redirect('/Productos')->with('datos','Datos actualizados exitosamente');
 
-        foreach ($request->idmarca as $key) {
-            $Marca = new marca_producto(); 
-            $Marca->cod_marca_fk = $key;
-            $Marca->cod_producto_fk = $id;
-            $Marca->save();                 
-          }
 
-        return redirect('/Productos')->with('datos','Datos actualizados exitosamente');
+        
     }
 
     /**
@@ -176,7 +189,9 @@ class ProductoController extends Controller
     }
 
     public function buscador(Request $request){
+        
         if($request->ajax()){
+            
             $query = trim($request->get('query'));
             if($query != ''){
                 $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
@@ -193,6 +208,7 @@ class ProductoController extends Controller
             if(isset($productos)){
                 $total=$productos->count();
                 $output='';
+                
                 if($total>0)
                 {   
                     foreach($productos as $ItemP){
@@ -201,9 +217,11 @@ class ProductoController extends Controller
                     <tr>
                         <th scope="row">'.$ItemP->cod_producto.'</th>
                         <td>'.$ItemP->nombre.'</td>
-                        <td>'.$ItemP->cantidad.'</td>
-                        <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
-                    </tr>
+                        <td>'.$ItemP->cantidad.'</td>                       
+                        <td headers="bot">
+                        <a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a>          
+                        </td>                   
+                        </tr>
                     ';
                     }
     

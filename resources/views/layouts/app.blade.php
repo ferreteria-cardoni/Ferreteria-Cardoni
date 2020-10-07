@@ -176,14 +176,14 @@
                                         </a>
                                     </li>
                                     @endcanany
-                                    @canany(['bodega'])
+<!--                                     @canany(['bodega'])
                                     <li class="nav-item">
                                         <a href="/modificar" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Modificar</p>
                                         </a>
                                     </li>
-                                    @endcanany
+                                    @endcanany -->
                                 </ul>
                             </li>
 

@@ -96,7 +96,7 @@
 							<span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
 					</div>
 					
-					<div class="form-group col-md-2">
+<!-- 					<div class="form-group col-md-2">
 						<label>Stock</label>
 						<input type="number" min="0"  class="form-control" id="idcantidad" name="idcantidad" placeholder="0" value="{{$producto->cantidad}}">
 						<span id="msgidcantidad" name="msgidcantidad" class="AlertaMsg"></span>
@@ -106,7 +106,7 @@
 						<label>Precio</label>
 						<input type="number" step="any" class="form-control" id="idprecio" name="idprecio" placeholder="0.0" value="{{$producto->precio}}">
 						<span id="msgidprecio" name="msgidprecio" class="AlertaMsg"></span>
-					</div>
+					</div> -->
 
 				 </div> <br>
 				  <div class="form-group">
