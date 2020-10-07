@@ -36,13 +36,15 @@ class ProductoController extends Controller
              $tabla = 'false';
             return view('productos.vistaproducto', compact('productos','tabla'));
         }*/
+
+        
         return view('productos.vistaproducto');
        
     }
     public function modification(BuscadorProducto $request){
         $proveedor = proveedor::all();
-         $marca = marca::all();
-         return view('productos.modiProductos', compact('proveedor','marca'));
+        $marca = marca::all();
+        return view('productos.modiProductos', compact('proveedor','marca'));
     }
 
     /**
@@ -123,7 +125,13 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $proveedores = proveedor::all();
+        $marcas = marca::all();
+        $producto = producto::find($id);
+        
+        // dd($producto);
+
+        return view('productos.modiProductos', compact('proveedores','marcas','producto'));
     }
 
     /**
@@ -135,7 +143,25 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $findProductos = producto::find($id);
+
+        $findProductos->cod_proveedor_fk = $request->idproveedor;
+        $findProductos->nombre =  $request->idnombre;   
+        $findProductos->cantidad = $request->idcantidad;
+        $findProductos->precio = $request->idprecio;
+        $findProductos->descripcion = $request->iddescripcion;
+        $findProductos->presentacion = $request->idpresentacion;
+        $findProductos->save();
+
+        foreach ($request->idmarca as $key) {
+            $Marca = new marca_producto(); 
+            $Marca->cod_marca_fk = $key;
+            $Marca->cod_producto_fk = $id;
+            $Marca->save();                 
+          }
+
+        return redirect('/Productos')->with('datos','Datos actualizados exitosamente');
     }
 
     /**
@@ -170,11 +196,13 @@ class ProductoController extends Controller
                 if($total>0)
                 {   
                     foreach($productos as $ItemP){
+                    $redireccion = route('Productos.edit', $ItemP->cod_producto);
                     $output .='
                     <tr>
                         <th scope="row">'.$ItemP->cod_producto.'</th>
                         <td>'.$ItemP->nombre.'</td>
                         <td>'.$ItemP->cantidad.'</td>
+                        <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
                     </tr>
                     ';
                     }
