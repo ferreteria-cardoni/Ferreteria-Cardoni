@@ -10,7 +10,7 @@ class producto extends Model
 
     public $incrementing = false;
     
-    public function proveedor()
+    public function proveedores()
     {
     	return $this->belongsTo(proveedor::class,'cod_proveedor_fk');
     }

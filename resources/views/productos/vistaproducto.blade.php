@@ -47,7 +47,7 @@
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Stock</th>  
+            <th scope="col">Stock</th>
           </tr>
         </thead>
         <tbody id="ok">
