@@ -27,7 +27,7 @@ class VentasController extends Controller
      */
     public function create()
     {
-        //
+        return view('ventas.crearVentas');
     }
 
     /**

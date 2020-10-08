@@ -74,7 +74,7 @@
 					  <span id="msgidpresentacion" name="msgidpresentacion" class="AlertaMsg"></span>
 					</div>
 
-					<center>{{$productos->nombre_marca}}</center>
+					<center>{{$producto->nombre_marca}}</center>
 				    <div class="form-group col-md-2">
 						<label class="mb-2">Marca</label>
 							<select class='mi-selector' name='idmarca[]' id="idmarca" multiple='multiple'>
