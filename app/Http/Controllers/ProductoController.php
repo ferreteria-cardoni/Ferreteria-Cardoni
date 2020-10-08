@@ -123,7 +123,13 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        //
+         $proveedor = proveedor::all();
+         $marca = marca::all();
+          $productos = producto::find($id);
+         
+           // dd($producto);
+
+         return view('productos.modiProductos', compact('proveedor','marca','productos'));
     }
 
     /**
@@ -170,11 +176,13 @@ class ProductoController extends Controller
                 if($total>0)
                 {   
                     foreach($productos as $ItemP){
+                    $redireccion = route('Productos.edit', $ItemP->cod_producto);
                     $output .='
                     <tr>
                         <th scope="row">'.$ItemP->cod_producto.'</th>
                         <td>'.$ItemP->nombre.'</td>
                         <td>'.$ItemP->cantidad.'</td>
+                        <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
                     </tr>
                     ';
                     }

@@ -37,13 +37,13 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-1">
 				      <label>ID</label>
-				      <input type="text" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ old('idproducto') }}">
+				      <input type="text" disabled="true" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ $productos->cod_producto}}">
               <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
 				    </div>
 				    
 				    <div class="form-group col-md-6">
 				      <label>Nombre</label>
-					  <input type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Martillo" value="{{ old('idnombre') }}">
+					  <input type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Martillo" value="{{ $productos->nombre}}">
 					  <span id="msgidnombre" name="msgidnombre" class="AlertaMsg"></span>
 				    </div>
 
@@ -64,17 +64,22 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-6">
 				      <label>Presentación</label>
-				      <input type="textarea" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Martillo de Acero" value="{{ old('idpresentacion') }}">
+				      <input type="textarea" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Martillo de Acero" value="{{ $productos->presentacion}}">
 					  <span id="msgidpresentacion" name="msgidpresentacion" class="AlertaMsg"></span>
 					</div>
 
-
+					<center>{{$productos->nombre_marca}}</center>
 				    <div class="form-group col-md-2">
     				<label class="mb-2">Marca</label>
     					<select class='mi-selector' name='idmarca[]' id="idmarca" multiple='multiple'>
 						    <option disabled="true">Seleccione la marca</option>
 						    @foreach($marca as $marcaiten)
-						    <option value='{{$marcaiten->cod_marca}}'>{{$marcaiten->nombre_marca}}</option>
+						    <option value='{{$marcaiten->cod_marca}}'
+
+						    		@if($marcaiten->nombre_marca==$productos->marcas)
+                                               		 selected
+                                                @endif
+						    	>{{$marcaiten->nombre_marca}}</option>
 						    @endforeach
 						</select>
 						<span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
@@ -83,7 +88,7 @@
 				 </div> <br>
 				  <div class="form-group">
 				    <label>Descripción</label>
-					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Martillo doble con mango de goma" value="{{ old('iddescripcion') }}"></textarea>
+					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Martillo doble con mango de goma" value="{{ $productos->descripcion}}"></textarea>
 					  <span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
 				  </div>
 				  <button type="submit" class="btn btn-primary">Modificar Producto</button> 
