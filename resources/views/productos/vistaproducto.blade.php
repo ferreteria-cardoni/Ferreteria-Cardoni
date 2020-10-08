@@ -48,6 +48,9 @@
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
             <th scope="col">Stock</th>
+            @canany(['bodega'])
+            <th scope="col">Acciones</th>
+            @endcanany
           </tr>
         </thead>
         <tbody id="ok">

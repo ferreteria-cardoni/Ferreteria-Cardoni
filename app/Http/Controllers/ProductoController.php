@@ -42,6 +42,7 @@ class ProductoController extends Controller
             return view('productos.vistaproducto', compact('productos','tabla'));
         }*/
 
+        // dd(Auth::user()->tieneRol()->first());
         
         return view('productos.vistaproducto');
        
@@ -153,8 +154,6 @@ class ProductoController extends Controller
             $findProductos = producto::find($id);
             $findProductos->cod_proveedor_fk = $request->idproveedor;
             $findProductos->nombre =  $request->idnombre;   
-            $findProductos->cantidad = $request->idcantidad;
-            $findProductos->precio = $request->idprecio;
             $findProductos->descripcion = $request->iddescripcion;
             $findProductos->presentacion = $request->idpresentacion;
             $findProductos->save();
@@ -218,12 +217,19 @@ class ProductoController extends Controller
                     <tr>
                         <th scope="row">'.$ItemP->cod_producto.'</th>
                         <td>'.$ItemP->nombre.'</td>
-                        <td>'.$ItemP->cantidad.'</td>                       
-                        <td headers="bot">
-                        <a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a>          
-                        </td>                   
-                        </tr>
+                        <td>'.$ItemP->cantidad.'</td>                                 
+                        // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
                     ';
+                    
+                    // Comprobando el rol del usuario que esta usando el sistema
+                    if (Auth::user()->tieneRol()->first() == "bodega") {
+                        // Agregando el boton junto con el tr al final
+                        $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';      
+                    }else{
+                        // Agregando el tr sin el boton
+                        $output .= '<tr>';
+                    }
+
                     }
     
                 }else{
