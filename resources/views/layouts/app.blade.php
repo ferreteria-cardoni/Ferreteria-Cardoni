@@ -176,15 +176,12 @@
                                         </a>
                                     </li>
                                     @endcanany
-<<<<<<< HEAD
-                                    @canany(['bodega'])
-=======
+
 
 
 
                                     {{-- @canany(['bodega'])
 
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
                                     <li class="nav-item">
                                         <a href="/modificar" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>

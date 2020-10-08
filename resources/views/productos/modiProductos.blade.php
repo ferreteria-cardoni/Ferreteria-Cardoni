@@ -38,21 +38,13 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-1">
 				      <label>ID</label>
-<<<<<<< HEAD
-				      <input type="text" disabled="true" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ $productos->cod_producto}}">
-=======
 				      <input type="text" disabled="true" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{$producto->cod_producto}}">
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
               <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
 				    </div>
 				    
 				    <div class="form-group col-md-6">
 				      <label>Nombre</label>
-<<<<<<< HEAD
-					  <input type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Martillo" value="{{ $productos->nombre}}">
-=======
 					  <input type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Escribe algo..." value="{{$producto->nombre}}">
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
 					  <span id="msgidnombre" name="msgidnombre" class="AlertaMsg"></span>
 				    </div>
 
@@ -78,32 +70,12 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-6">
 				      <label>Presentación</label>
-<<<<<<< HEAD
-				      <input type="textarea" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Martillo de Acero" value="{{ $productos->presentacion}}">
-=======
 				      <input type="textarea" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Escribe algo..." value="{{$producto->presentacion}}">
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
 					  <span id="msgidpresentacion" name="msgidpresentacion" class="AlertaMsg"></span>
 					</div>
 
 					<center>{{$productos->nombre_marca}}</center>
 				    <div class="form-group col-md-2">
-<<<<<<< HEAD
-    				<label class="mb-2">Marca</label>
-    					<select class='mi-selector' name='idmarca[]' id="idmarca" multiple='multiple'>
-						    <option disabled="true">Seleccione la marca</option>
-						    @foreach($marca as $marcaiten)
-						    <option value='{{$marcaiten->cod_marca}}'
-
-						    		@if($marcaiten->nombre_marca==$productos->marcas)
-                                               		 selected
-                                                @endif
-						    	>{{$marcaiten->nombre_marca}}</option>
-						    @endforeach
-						</select>
-						<span id="msgidmarca" name="msgidmarca" class="AlertaMsg"></span>
-    				</div>
-=======
 						<label class="mb-2">Marca</label>
 							<select class='mi-selector' name='idmarca[]' id="idmarca" multiple='multiple'>
 								<option disabled="true">Seleccione la marca</option>
@@ -135,16 +107,11 @@
 						<input type="number" step="any" class="form-control" id="idprecio" name="idprecio" min="0" placeholder="0.0" value="{{$producto->precio}}">
 						<span id="msgidprecio" name="msgidprecio" class="AlertaMsg"></span>
 					</div> -->
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
 
 				 </div> <br>
 				  <div class="form-group">
 				    <label>Descripción</label>
-<<<<<<< HEAD
-					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Martillo doble con mango de goma" value="{{ $productos->descripcion}}"></textarea>
-=======
 					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Escribe algo..." value="{{$producto->descripcion}}">{{$producto->descripcion}}</textarea>
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
 					  <span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
 				  </div>
 				  <button type="submit" class="btn btn-primary">Modificar Producto</button> 

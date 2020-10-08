@@ -130,15 +130,7 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-<<<<<<< HEAD
-         $proveedor = proveedor::all();
-         $marca = marca::all();
-          $productos = producto::find($id);
-         
-           // dd($producto);
 
-         return view('productos.modiProductos', compact('proveedor','marca','productos'));
-=======
         $proveedores = proveedor::all();
         $marcas = marca::all();
         $producto = producto::find($id);
@@ -146,7 +138,7 @@ class ProductoController extends Controller
         // dd($producto);
 
         return view('productos.modiProductos', compact('proveedores','marcas','producto'));
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
+
     }
 
     /**
@@ -228,17 +220,12 @@ class ProductoController extends Controller
                     <tr>
                         <th scope="row">'.$ItemP->cod_producto.'</th>
                         <td>'.$ItemP->nombre.'</td>
-<<<<<<< HEAD
-                        <td>'.$ItemP->cantidad.'</td>
-                        <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
-                    </tr>
-=======
+
                         <td>'.$ItemP->cantidad.'</td>                       
                         <td headers="bot">
                         <a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a>          
                         </td>                   
                         </tr>
->>>>>>> 47e274e47f6c5a2780aec55ef01ef3d253e1e15e
                     ';
                     }
     
