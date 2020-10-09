@@ -17,6 +17,16 @@ use App\marca;
 
 Auth::routes();
 
+
+Route::get('prueba', function ()
+{
+	
+	$relacion = producto::findOrFail('poi123')->marcas;
+	dd($relacion);
+
+
+});
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('Productos','ProductoController');
@@ -46,7 +56,7 @@ Route::group([
 
 Route::resource('compras', 'ComprasController');
 
-Route::resource('ventas', 'VentasController');
+Route::resource('Ventas', 'VentasController');
 
 
 

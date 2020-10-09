@@ -131,6 +131,7 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
+
         $proveedores = proveedor::all();
         $marcas = marca::all();
         $producto = producto::find($id);
@@ -138,6 +139,7 @@ class ProductoController extends Controller
         // dd($producto);
 
         return view('productos.modiProductos', compact('proveedores','marcas','producto'));
+
     }
 
     /**
@@ -217,8 +219,10 @@ class ProductoController extends Controller
                     <tr>
                         <th scope="row">'.$ItemP->cod_producto.'</th>
                         <td>'.$ItemP->nombre.'</td>
+
                         <td>'.$ItemP->cantidad.'</td>                                 
                         // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
+
                     ';
                     
                     // Comprobando el rol del usuario que esta usando el sistema

@@ -31,4 +31,7 @@ class producto extends Model
     {
     	return $this->belongsToMany(marca::class,'marca_productos','cod_producto_fk','cod_marca_fk');
     }
+
+
+    
 }
