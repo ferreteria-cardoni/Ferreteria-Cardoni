@@ -16,7 +16,7 @@
                         </div>
                     @endif
                   
-                  {{ Auth::user()->name }} has iniciado sesion correctamente !
+                   {{ Auth::user()->name }} has iniciado sesion como: {{ Auth::user()->tieneRol()->first() }} correctamente !
                 </div>
             </div>
         </div>

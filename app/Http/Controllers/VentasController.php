@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 
 use App\pedidoventa;
 use Illuminate\Http\Request;
-
+use App\cliente;
+use App\producto;
+use Illuminate\Support\Facades\Auth;
+use App\venta;
+use App\role;
+use App\empleado;
 class VentasController extends Controller
 {
     /**
@@ -27,7 +32,14 @@ class VentasController extends Controller
      */
     public function create()
     {
-        return view('ventas.crearVentas');
+
+        $cliente = cliente::all();
+        //dd($cliente);
+        $producto = producto::all();
+
+      
+        
+        return view('ventas.crearVentas',compact('cliente','producto'));
     }
 
     /**
@@ -38,7 +50,44 @@ class VentasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $nombreEmpleado = Auth::user()->id; //jordan
+     
+            $ventas = new venta;
+            $ventas->cod_venta = $request->idcodventa;
+            $ventas->cod_empleado_fk = $nombreEmpleado; //Jordan Logueo
+            $ventas->cod_cliente_fk = $request->nombreventa;
+            $ventas->direccion = $request->iddireccion;
+            $ventas->save();
+
+
+            
+            //$pedidoventa->cod_producto_fk = $request->nombreproducto;
+              // $arrayProductos = $request->nombreproducto;
+
+             foreach ($request->nombreproducto as $key) {
+                $pedidoventa = new pedidoventa;
+                $pedidoventa->cod_venta_fk = $request->idcodventa;
+                $pedidoventa->cod_producto_fk = $key;
+                
+             $precioProducto = producto::find($key)->precio;
+
+            $pedidoventa->cantidad = $request->idcantidad;
+          
+            $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+            $pedidoventa->save();
+
+            }
+
+            
+         //   $id = $request->idcodventa;
+
+        $cliente = cliente::all();
+      
+        $producto = producto::all();
+           $mensaje = "Producto Agreado Correctamente";
+        return view('ventas.crearVentas',compact('cliente','producto','mensaje'))->with('mensaje','Registro Exitoso');;
+       // return view('home');
     }
 
     /**
@@ -72,7 +121,7 @@ class VentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -85,4 +134,10 @@ class VentasController extends Controller
     {
         //
     }
+
+
+
+
+
+   
 }
