@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\pedidocompra;
 use Illuminate\Http\Request;
-
+use App\compra;
 class ComprasController extends Controller
 {
     /**
@@ -27,6 +27,8 @@ class ComprasController extends Controller
     public function create()
     {
         //
+            
+        return view('compras.crearCompras');
     }
 
     /**

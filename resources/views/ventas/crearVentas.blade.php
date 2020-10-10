@@ -35,7 +35,7 @@
         <form method="POST" action="{{route('Ventas.store')}}">
 					@csrf
 				  <div class="form-row">
-				  	<div class="form-group col-md-1">
+				  	<div class="form-group col-md-2">
 				      <label>Cod Pedido</label>
 				      <input type="text" class="form-control"  name="idcodventa" id="idcodventa" placeholder="Nº" value="{{ old('idproducto') }}">
               <span id="" name="" class=""></span>
@@ -68,8 +68,9 @@
 				      <input type="text" class="form-control" id="idtelefono" name="idtelefono" placeholder="2222-0000" value="{{ old('idpresentacion') }}">
 					  <span id="" name="" class=""></span>
 					</div> -->
+					
                      <div class="form-row">
-					  <div class="form-group col-md-4">
+					  <div class="form-group col-md-2">
     				<label class="mb-2">Nombre Producto</label>
     					<select class='mi-selector' name='nombreproducto[]' id="nombreproducto" multiple='multiple'>
 						    <option disabled="true">Seleccione el producto</option>
@@ -82,15 +83,17 @@
 						</select>
 						<span id="" name="" class=""></span>
     				</div>
+					</div>
+
 
 				<!-- 	<div class="form-group col-md-3">
 				      <label>Precio Unitario</label>
 				      <input type="number" class="form-control" id="idpreciounitario" name="idpreciounitario" placeholder="0.00" value="{{ old('idpresentacion') }}">
 					  <span id="" name="" class=""></span>
 					</div> -->
-
+					<div class="form-row">
 					<div class="form-group col-md-3">
-				      <label>Cantidad</label>
+				      <label class="mb-2">Cantidad</label>
 				      <input type="number" class="form-control" id="idcantidad" name="idcantidad" placeholder="0" value="{{ old('idpresentacion') }}">
 					  <span id="" name="" class="AlertaMsg"></span>
 					</div>

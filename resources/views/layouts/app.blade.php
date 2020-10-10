@@ -239,6 +239,55 @@
                                 </ul>
                             </li>
 
+                            {{-- Compras --}}
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon far fa-sticky-note"></i>
+                                    <p>Compras<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    @canany(['bodega'])
+                                    <li class="nav-item">
+                                        <a href="{{route('compras.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>crear</p>
+                                        </a>
+                                    </li>
+                                    @endcanany
+
+                                    @canany(['gerente', 'ventas', 'bodega'])
+                                    <li class="nav-item">
+                                        <a href="/Productos" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Ver</p>
+                                        </a>
+                                    </li>
+                                    @endcanany
+
+
+
+
+                                    {{-- @canany(['bodega'])
+
+                                    <li class="nav-item">
+                                        <a href="/modificar" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Modificar</p>
+                                        </a>
+                                    </li>
+
+
+                                    @endcanany --}}
+
+                                </ul>
+                            </li>
+
+
+
+
+
+
+
                             {{-- Movimientos --}}
                             @canany(['bodega'])
                             <li class="nav-item has-treeview">
