@@ -10,6 +10,13 @@ const PrecioP = document.querySelector('#idprecio');
 const ProveedorP = document.querySelector('#idproveedor');
 const IdProductoP = document.querySelector('#idproducto');
 
+//Formulario de Ventas
+const IdVenta = document.querySelector('#idcodventa');
+const NombreV = document.querySelector('#nombreventa');
+const DireccionV = document.querySelector('#iddireccion');
+const NombrePV = document.querySelector('#nombreproducto');
+const CantidadV = document.querySelector('#idcantidad');
+const TotalV = document.querySelector('#idtotal');
 
 
 
@@ -137,26 +144,6 @@ if(PrecioP){
     })
 }
 
-if(ProveedorP){
-    ProveedorP.addEventListener('blur', () => {
-
-        if (ProveedorP.value == "") {
-            document.getElementById("msgidproveedor").innerHTML = "Seleccione uno o mas proveedores";
-            document.getElementById("msgidproveedor").style.display = "block";
-            ProveedorP.style.borderColor = "red";
-            
-        }
-        else {
-            document.getElementById("msgidproveedor").style.display = "none";
-            document.getElementById("msgidproveedor").innerHTML = ""
-            ProveedorP.style.borderColor = "";
-            
-            
-        }
-        
-    })
-}
-
 if(IdProductoP){
     IdProductoP.addEventListener('blur', () => {
 
@@ -182,7 +169,64 @@ if(IdProductoP){
         
     })
 }
+if(DireccionV){
+    DireccionV.addEventListener('blur', () => {
 
+        if (DireccionV.value == "") {
+            document.getElementById("msgiddireccion").innerHTML = "Este campo es obligatorio";
+            document.getElementById("msgiddireccion").style.display = "block";
+            DireccionV.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgiddireccion").style.display = "none";
+            document.getElementById("msgiddireccion").innerHTML = ""
+            DireccionV.style.borderColor = "";
+            
+            
+        }
+        
+    })
+}
+/* if(NombreV){
+    NombreV.addEventListener('blur', () => {
+
+        if (NombreV.value == 0) {
+            document.getElementById("msgnombreventa").innerHTML = "Este campo es obligatorio";
+            document.getElementById("msgnombreventa").style.display = "block";
+            NombreV.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgnombreventa").style.display = "none";
+            document.getElementById("msgnombreventa").innerHTML = ""
+            NombreV.style.borderColor = "";
+            
+            
+        }
+        
+    })
+} */
+
+if(NombrePV){
+    NombrePV.addEventListener('blur', () => {
+
+        if (NombrePV.value ==null) {
+            document.getElementById("msgnombreproducto").innerHTML = "Este campo es obligatorio";
+            document.getElementById("msgnombreproducto").style.display = "block";
+            NombrePV.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgnombreproducto").style.display = "none";
+            document.getElementById("msgnombreproducto").innerHTML = ""
+            NombrePV.style.borderColor = "";
+            
+            
+        }
+        
+    })
+}
 
 
 

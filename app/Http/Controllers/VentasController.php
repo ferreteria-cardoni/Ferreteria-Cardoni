@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\pedidoventa;
 use Illuminate\Http\Request;
+use App\Http\Requests\FormVentasIngresar;
 use App\cliente;
 use App\producto;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,7 @@ class VentasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormVentasIngresar $request)
     {
 
         $nombreEmpleado = Auth::user()->id; //jordan

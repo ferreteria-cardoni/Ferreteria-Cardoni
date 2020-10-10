@@ -32,6 +32,7 @@
 					</div>
 				@endif
 				
+				
         <form method="POST" action="{{route('Ventas.store')}}">
 					@csrf
 				  <div class="form-row">
@@ -44,18 +45,18 @@
 				    <div class="form-group col-md-4">
     				<label class="mb-2">Nombre Cliente</label>
     					<select class="custom-select" name='nombreventa' id="nombreventa" >
-						    <option disabled="true">Seleccione el cliente</option>
+						    <option value=0 disabled="true">Seleccione el cliente</option>
 						    @foreach($cliente as $clienteiten)
 						    <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
 						    @endforeach
 						</select>
-						<span id="" name="" class=""></span>
+						<span id="msgnombreventa" name="msgnombreventa" class="AlertaMsg"></span>
     				</div>
 
 				    <div class="form-group col-md-7">
 				      <label>Direccion</label>
 					  <input type="text" class="form-control" id="iddireccion" name="iddireccion" placeholder="La Campanera, Soyapango, San Salvador" value="{{ old('idnombre') }}">
-					  <span id="" name="" class=""></span>
+					  <span id="msgiddireccion" name="msgiddireccion" class="AlertaMsg"></span>
 				    </div>
           		
 
@@ -80,7 +81,7 @@
 						    </option>
 						    @endforeach
 						</select>
-						<span id="" name="" class=""></span>
+						<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
     				</div>
 
 				<!-- 	<div class="form-group col-md-3">
