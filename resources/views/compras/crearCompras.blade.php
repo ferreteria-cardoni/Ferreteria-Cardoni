@@ -58,13 +58,13 @@
 						<tbody id="tbody">
 							<tr>
 								<td>
-									<select class='form-control' required name='nombreproducto[]' id="nombreproducto">
+									<select class='form-control' name='nombreproducto[]' id="nombreproducto">
 										<option disabled selected>Seleccione el producto</option>
 									</select>
 									<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
 								</td>
 
-								<td><input type="number" min="0" required name="idcantidad[]" id="idcantidad" class="form-control"></td>
+								<td><input type="number" min="0" name="idcantidad[]" id="idcantidad" class="form-control"></td>
 								{{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}}
 								<td><button type="button" class="btn btn-danger remove">Eliminar</button></td>
 							</tr>
