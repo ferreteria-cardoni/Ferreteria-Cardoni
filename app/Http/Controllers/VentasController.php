@@ -21,7 +21,7 @@ class VentasController extends Controller
      */
     public function index()
     {
-        $pedidoVentas = pedidoventa::paginate(3);
+        $pedidoVentas = pedidoventa::paginate(10);
 
         return view('ventas.vistaVentas', compact('pedidoVentas'));
     }
@@ -52,11 +52,10 @@ class VentasController extends Controller
     public function store(FormVentasIngresar $request)
     {
 
-        $nombreEmpleado = Auth::user()->id; //jordan
+        $codEmpleado = Auth::user()->id; //jordan
      
             $ventas = new venta;
-            $ventas->cod_venta = $request->idcodventa;
-            $ventas->cod_empleado_fk = $nombreEmpleado; //Jordan Logueo
+            $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
             $ventas->direccion = $request->iddireccion;
             $ventas->save();
@@ -66,29 +65,45 @@ class VentasController extends Controller
             //$pedidoventa->cod_producto_fk = $request->nombreproducto;
               // $arrayProductos = $request->nombreproducto;
 
-             foreach ($request->nombreproducto as $key) {
+              
+              // dd($ultimaVenta->cod_venta);
+              
+              
+            //   Recuperando el codigo de la ultima venta
+              $codUltimaVenta = venta::orderBy('cod_venta', 'desc')->first()->cod_venta;
+              
+            //   Arreglo de codigos de productos
+              $codProductos = $request->nombreproducto;
+              
+            // Arreglo de cantidades de productos
+              $cantidades = $request->idcantidad;
+
+              
+              $i = 0;
+              
+              while ($i < sizeof($codProductos) ) {
+
                 $pedidoventa = new pedidoventa;
-                $pedidoventa->cod_venta_fk = $request->idcodventa;
-                $pedidoventa->cod_producto_fk = $key;
-                
-             $precioProducto = producto::find($key)->precio;
-
-            $pedidoventa->cantidad = $request->idcantidad;
-          
-            $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
-            $pedidoventa->save();
-
+                  
+                $pedidoventa->cod_venta_fk = $codUltimaVenta;
+                $pedidoventa->cod_producto_fk = $codProductos[$i];
+                $precioProducto = producto::find($codProductos[$i])->precio;
+                $pedidoventa->cantidad = $cantidades[$i];
+                $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+                $pedidoventa->save();
+                $i++;
             }
 
-            
          //   $id = $request->idcodventa;
 
-        $cliente = cliente::all();
+        // $cliente = cliente::all();
       
-        $producto = producto::all();
-           $mensaje = "Producto Agreado Correctamente";
-        return view('ventas.crearVentas',compact('cliente','producto','mensaje'))->with('mensaje','Registro Exitoso');;
+        // $producto = producto::all();
+        // $mensaje = "Producto Agreado Correctamente";
+        // return view('ventas.crearVentas',compact('cliente','producto','mensaje'))->with('mensaje','Registro Exitoso');
        // return view('home');
+
+       return redirect(route('Ventas.create'))->with('datos','Registro exitoso');
     }
 
     /**

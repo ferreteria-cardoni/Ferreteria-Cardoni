@@ -5,7 +5,7 @@
 @section('alert')
 <div class="container">
       @if (session('datos'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert" align="center">
+  <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
     {{session('datos')}}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
       <span aria-hidden="true">&times;</span>
@@ -15,116 +15,79 @@
 @endsection
 
 @section('content')
-	<!DOCTYPE html>
-		<html>
-			<head>
-				<title></title>
-			</head>
-			<body>
-				@if ($errors->any())
-					<div class="alert alert-danger">
-					<center><h5>Hay errores en en formulario, favor revisar</H2></center>
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-					</div>
-				@endif
-				
-				
-        <form method="POST" action="{{route('Ventas.store')}}">
-					@csrf
-				  <div class="form-row">
-				  	<div class="form-group col-md-2">
-				      <label>Cod Pedido</label>
-				      <input type="text" class="form-control"  name="idcodventa" id="idcodventa" placeholder="Nº" value="{{ old('idproducto') }}">
-              <span id="" name="" class=""></span>
-				    </div>
-				    
-				    <div class="form-group col-md-4">
-    				<label class="mb-2">Nombre Cliente</label>
-    					<select class="custom-select" name='nombreventa' id="nombreventa" >
-						    <option value=0 disabled="true">Seleccione el cliente</option>
-						    @foreach($cliente as $clienteiten)
-						    <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
-						    @endforeach
-						</select>
-						<span id="msgnombreventa" name="msgnombreventa" class="AlertaMsg"></span>
-    				</div>
-
-				    <div class="form-group col-md-7">
-				      <label>Direccion</label>
-					  <input type="text" class="form-control" id="iddireccion" name="iddireccion" placeholder="La Campanera, Soyapango, San Salvador" value="{{ old('idnombre') }}">
-					  <span id="msgiddireccion" name="msgiddireccion" class="AlertaMsg"></span>
-				    </div>
-          		
-
-    			
-				 </div>
-
-				
-				   <!-- 	<div class="form-group col-md-2">
-				      <label>Telefono</label>
-				      <input type="text" class="form-control" id="idtelefono" name="idtelefono" placeholder="2222-0000" value="{{ old('idpresentacion') }}">
-					  <span id="" name="" class=""></span>
-					</div> -->
-					
-                     <div class="form-row">
-					  <div class="form-group col-md-2">
-    				<label class="mb-2">Nombre Producto</label>
-    					<select class='mi-selector' name='nombreproducto[]' id="nombreproducto" multiple='multiple'>
-						    <option disabled="true">Seleccione el producto</option>
-						    @foreach($producto as $productoiten)
-						    
-						    <option value='{{$productoiten->cod_producto}}'>
-						    	{{$productoiten->nombre}} ${{$productoiten->precio}}
-						    </option>
-						    @endforeach
-						</select>
-						<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
-    				</div>
+@if ($errors->any())
+<div class="alert alert-danger">
+	<center>
+		<h5>Hay errores en en formulario, favor revisar</H2>
+	</center>
+	<ul>
+		@foreach ($errors->all() as $error)
+		<li>{{ $error }}</li>
+		@endforeach
+	</ul>
+</div>
+@endif
+<div class="container">
+	<form method="POST" action="{{ route('Ventas.store') }}">
+		@csrf
+		<section>
+			<div class="panel panel-header">
+				<div class="row">
+					<div class="col-md-6">
+                        <select class="custom-select" name='nombreventa' id="nombreventa" >
+                            <option disabled selected>Seleccione el cliente</option>
+                            @foreach($cliente as $clienteiten)
+                            <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
+                            @endforeach
+                        </select>
+                        <span id="msgnombreventa" name="msgnombreventa" class="AlertaMsg"></span>
 					</div>
 
-
-				<!-- 	<div class="form-group col-md-3">
-				      <label>Precio Unitario</label>
-				      <input type="number" class="form-control" id="idpreciounitario" name="idpreciounitario" placeholder="0.00" value="{{ old('idpresentacion') }}">
-					  <span id="" name="" class=""></span>
-					</div> -->
-					<div class="form-row">
-					<div class="form-group col-md-3">
-				      <label class="mb-2">Cantidad</label>
-				      <input type="number" class="form-control" id="idcantidad" name="idcantidad" placeholder="0" value="{{ old('idpresentacion') }}">
-					  <span id="" name="" class="AlertaMsg"></span>
+					<div class="col-md-6">
+						<div class="form-group">
+							<input type="text" class="form-control" id="iddireccion" name="iddireccion" placeholder="Dirección..." value="{{ old('idnombre') }}">
+                      		<span id="msgiddireccion" name="msgiddireccion" class="AlertaMsg"></span>
+						</div>
 					</div>
-
-					<div class="form-group col-md-3">
-				    <label>Total</label>
-					  <input type="number" class="form-control" id="idtotal" name="idtotal" placeholder="0.00" value="{{ old('iddescripcion') }}"></intput>
-					  <span id="" name="" class=""></span>
-				  </div>
-
-
-				 </div> 
-
-
-
-
-
-
-				 <div class="form-row">
-				  
-				 </div>
-				  <button type="submit" class="btn btn-primary">Registrar Venta</button> 
-				  <button type="reset" class="btn btn-danger">Limpiar Campos</button>
-				</form>
-				<br>
-
-
-
-
-			</body>
-		</html>
+				</div>
+			</div>
+			<div class="panel panel-footer">
+				<table class="table table-border">
+					<thead>
+						<tr>
+							<th>Nombre del producto</th>
+							<th>Cantidad</th>
+							<th><a href="#" class="addRow btn btn-success">Agregar</a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><select class='form-control' name='nombreproducto[]' id="nombreproducto" >
+								<option disabled selected>Seleccione el producto</option>
+								@foreach($producto as $productoiten)
+								<option value='{{$productoiten->cod_producto}}'>
+								{{$productoiten->nombre}} ${{$productoiten->precio}}
+								</option>
+								@endforeach
+								</select>
+								<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
+							</td>
+							
+							<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>
+							<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td><input readonly type="number" class="form-control" placeholder="Total"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</section>
+		<button type="submit" class="btn btn-primary">Registrar Venta</button> 
+		<button type="reset" class="btn btn-danger">Limpiar Campos</button>
+	</form>
+</div>
 @endsection
 

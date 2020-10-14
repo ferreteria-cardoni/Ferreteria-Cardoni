@@ -5,8 +5,21 @@ namespace App\Http\Controllers;
 use App\pedidocompra;
 use Illuminate\Http\Request;
 use App\compra;
+use App\producto;
+use App\proveedor;
+use Illuminate\Support\Facades\Auth;
+
 class ComprasController extends Controller
 {
+
+
+    public function productosProveedor($id)
+    {
+        return producto::where('cod_proveedor_fk', $id)->get();
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +31,7 @@ class ComprasController extends Controller
 
         return view('compras.vistaCompras', compact('pedidoCompra'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -26,9 +39,10 @@ class ComprasController extends Controller
      */
     public function create()
     {
-        //
+        $proveedor = proveedor::all();
+        // $producto = producto::all();
             
-        return view('compras.crearCompras');
+        return view('compras.crearCompras', compact('proveedor'));
     }
 
     /**
@@ -39,7 +53,43 @@ class ComprasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $codEmpleado = Auth::user()->id;
+        
+        $compras = new compra;
+
+        $compras->cod_empleado_fk = $codEmpleado;
+
+        // dd($request->idproveedor);
+
+        $compras->cod_proveedor_fk = $request->idproveedor;
+        $compras->descripcion = $request->iddescripcion;
+        $compras->save();
+
+        // Recuperando el codigo de la ultima compra
+        $codUltimaCompra = compra::orderBy('cod_compra', 'desc')->first()->cod_compra;
+
+        //   Arreglo de codigos de productos
+        $codProductos = $request->nombreproducto;
+
+        // Arreglo de cantidades de productos
+        $cantidades = $request->idcantidad;
+
+        $i = 0;
+
+        while ($i < sizeof($codProductos) ) {
+            
+            $pedidoCompra = new pedidocompra;
+
+            $pedidoCompra->cod_compra_fk = $codUltimaCompra;
+            $pedidoCompra->cod_producto_fk = $codProductos[$i];
+            $pedidoCompra->cantidad = $cantidades[$i];
+            $pedidoCompra->save();
+            $i++;
+        }
+
+
+        return redirect(route('compras.create'))->with('datos','Registro exitoso');
+        
     }
 
     /**
