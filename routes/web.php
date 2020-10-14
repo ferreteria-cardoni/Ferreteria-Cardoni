@@ -5,6 +5,7 @@ use App\producto;
 use App\marca_producto;
 use App\marca;
 use App\compra;
+// use Symfony\Component\Routing\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

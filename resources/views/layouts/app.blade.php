@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -14,6 +14,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js')}}"></script>
     <script src="{{asset('dist/js/adminlte.js')}}"></script>
+   
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
@@ -31,6 +32,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
+    
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> --}}
+
     <style>
         .AlertaMsg {
             font-weight: bold;
@@ -45,6 +51,7 @@
             position: relative;
             left: 35%;
         }
+        
     </style>
 </head>
 
@@ -361,7 +368,6 @@
 <script src="{{ asset('js/validaciones.js') }}" defer></script>
 
 
-
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         $(document).ready(function() {
@@ -369,6 +375,113 @@
         });
     });
 </script>
+
+{{-- Solo se cargara el script cuando se encuentre en la vista de crear ventas --}}
+@if (Request::is('Ventas/create'))
+    
+<script type="text/javascript">
+
+    $(document).on('click', '.addRow', function(){
+        addRow();
+    });
+
+    // Agregando filas de ventas
+    function addRow()
+    {
+        var tr = '<tr>'+
+        '<td><select class="mi-selector form-control" name="nombreproducto[]" id="nombreproducto" ><option disabled selected>Seleccione el producto</option>@foreach($producto as $productoiten)<option value="{{$productoiten->cod_producto}}">{{$productoiten->nombre}} ${{$productoiten->precio}}</option>@endforeach</select><span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>'+
+        '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
+        '<tr>';
+        $('tbody').append(tr);
+    };
+
+    // Eliminado filas de ventas
+    $(document).on('click', '.remove', function(){
+        var ultimaFila = $('tbody tr').length;
+        if (ultimaFila == 1) {
+            alert('Lo siento, no se puede eliminar la ultima fila');
+        }else{
+            $(this).parent().parent().remove();
+        }
+    });
+</script>
+@endif
+
+
+
+
+{{-- Solo se cargara para la vista de compras  --}}
+@if (Request::is('compras/create'))
+    
+<script type="text/javascript">
+
+    $(function(){
+            
+        $('#idproveedor').on('change', onSelectProveedor);
+    });
+
+    // Rellenenando el select de productos en la vista de compras 
+        function onSelectProveedor(){
+            var codProveedor = $(this).val();
+
+            // Deshabilitando el select de proveedores
+            $(this).prop('disabled',true);
+
+            // Habilitando el select despues de que se envian los datos del formulario
+            $('#formulario').submit(function(event){
+                $('#idproveedor').prop('disabled', false);
+            })
+
+            //Habilitando el boton de agregar 
+            $('.addRow').prop('disabled', false);
+
+            // Enviando los productos segun proveedor
+            $.get('/api/proveedor/'+codProveedor+'/productos', function(data){
+                var htmlSelectProducto = '<option disabled selected>Seleccione el producto</option>';
+                for (let i = 0; i < data.length; i++) {
+
+                    htmlSelectProducto += '<option value="'+data[i].cod_producto+'">'+data[i].nombre+' $'+data[i].precio+'</option>'
+
+                    $('#nombreproducto').html(htmlSelectProducto);
+                }
+            })
+        }
+
+    $(document).on('click', '.addRow', function(){
+        addRow();
+    });
+
+    // Agregando filas de compras
+    function addRow()
+    {
+        // Recuperando el select de productos
+        var selectProducto = document.querySelector('#nombreproducto');
+
+        // console.log(selectProducto);
+  
+        var tr = '<tr>';
+
+        tr += '<td>'+selectProducto.outerHTML+'</td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>'+
+		'<td><button type="button" class="btn btn-danger remove">Eliminar</button></td>'+
+        '</tr>';
+        $('tbody').append(tr);
+    };
+
+    // Eliminando filas de compras
+    $(document).on('click', '.remove', function(){
+        var ultimaFila = $('tbody tr').length;
+        if (ultimaFila == 1) {
+            alert('Lo siento, no se puede eliminar la ultima fila');
+        }else{
+            $(this).parent().parent().remove();
+        }
+    });
+</script>
+@endif
+
+
 
 <script type="text/javascript">
     window.addEventListener("load", function() {
