@@ -20,7 +20,7 @@
                 <td>{{App\producto::find($compra->cod_producto_fk)->nombre}}</td>
                 <td>{{$compra->cantidad}}</td>
                 {{-- Mostrando la fecha en el formato dia-mes-año --}}
-                <td>{{\Carbon\Carbon::parse($compra->fecha_venta)->format('d/m/Y')}}</td>
+                <td>{{\Carbon\Carbon::parse($compra->created_at)->format('d/m/Y')}}</td>
             </tr>
             @endforeach
         </tbody>

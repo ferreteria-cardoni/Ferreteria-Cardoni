@@ -58,21 +58,21 @@
 						<tbody id="tbody">
 							<tr>
 								<td>
-									<select class='form-control' name='nombreproducto[]' id="nombreproducto">
+									<select class='form-control' disabled name='nombreproducto[]' id="nombreproducto">
 										<option disabled selected>Seleccione el producto</option>
 									</select>
 									<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
 								</td>
 
-								<td><input type="number" min="0" name="idcantidad[]" id="idcantidad" class="form-control"></td>
+								<td><input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="form-control"></td>
 								{{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}}
-								<td><button type="button" class="btn btn-danger remove">Eliminar</button></td>
+								<td><button type="button" id="btnEliminar" disabled class="btn btn-danger remove">Eliminar</button></td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<td>
-									<textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion"
+									<textarea type="text" disabled class="form-control" id="iddescripcion" name="iddescripcion"
 										placeholder="Escribe algo..." value="{{ old('iddescripcion') }}"></textarea>
 									<span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
 								</td>
@@ -85,7 +85,7 @@
 				</div>
 			</section>
 			<button type="submit" class="btn btn-primary">Registrar Compra</button>
-			{{-- <button type="reset" id="btnLimpiar" class="btn btn-danger">Limpiar Campos</button> --}}
+			<a href="{{route('compras.create')}}"><button type="button" id="btnLimpiar" class="btn btn-danger">Limpiar Campos</button></a>
 		</form>
 	</div>
 
