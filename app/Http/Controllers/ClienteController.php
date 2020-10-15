@@ -54,6 +54,7 @@ class ClienteController extends Controller
         $cliente->apellido = $request->idapellidoC;
         $cliente->direccion = $request->DireccionC;
         $cliente->telefono = $request->idtelefonoC;
+        $cliente->rubro = $request->idrubro;
         $cliente->nit = $request->NIT;
         $cliente->num_consumidor = $request->NCF;
         $cliente->save();
