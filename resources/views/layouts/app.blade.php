@@ -323,6 +323,26 @@
                             </li>
                             @endcanany
 
+                            {{-- Clientes --}}
+                            @canany(['secretaria','bodega'])
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon far fa-sticky-note"></i>
+                                    <p>Clientes<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                   
+                                    <li class="nav-item">
+                                        <a href="{{route('Clientes.index')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Agregar</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endcanany
+
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->
