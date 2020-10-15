@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\cliente;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -13,8 +14,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return view('Clientes.crearClientes');
-        //
+        
+        
     }
 
     /**
@@ -24,7 +25,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('Clientes.crearClientes');
     }
 
     /**
@@ -35,7 +36,28 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cliente = new cliente;
+        $ultimoCliente = cliente::orderBy('cod_cliente', 'desc')->first();
+
+        if ($ultimoCliente) {
+            $contador = $ultimoCliente->cod_cliente + 1;
+        }else{
+            $contador = 1;
+        }
+
+        $codCliente = str_pad($contador, 4, '0', STR_PAD_LEFT);
+
+        // Registrando cliente
+        $cliente->cod_cliente = $codCliente;
+        $cliente->nombre = $request->idnombreC;
+        $cliente->apellido = $request->idapellidoC;
+        $cliente->direccion = $request->DireccionC;
+        $cliente->telefono = $request->idtelefonoC;
+        $cliente->nit = $request->NIT;
+        $cliente->num_consumidor = $request->NCF;
+        $cliente->save();
+
+        return redirect(route('Clientes.create'))->with('datos','Registro exitoso');
     }
 
     /**
