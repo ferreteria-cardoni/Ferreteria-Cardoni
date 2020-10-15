@@ -428,6 +428,12 @@
             // Deshabilitando el select de proveedores
             $(this).prop('disabled',true);
 
+            $('#nombreproducto').prop('disabled',false);
+            $('#idcantidad').prop('disabled',false);
+            $('#iddescripcion').prop('disabled',false);
+            $('#btnEliminar').prop('disabled',false);
+
+
             // Habilitando el select despues de que se envian los datos del formulario
             $('#formulario').submit(function(event){
                 $('#idproveedor').prop('disabled', false);
