@@ -60,6 +60,8 @@ Route::resource('compras', 'ComprasController');
 
 Route::resource('Ventas', 'VentasController');
 
+Route::resource('Clientes', 'ClienteController');
+
 
 
 
