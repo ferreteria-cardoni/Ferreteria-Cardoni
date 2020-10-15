@@ -45,6 +45,7 @@ class ClienteController extends Controller
             $contador = 1;
         }
 
+        // Generando codigo del cliente
         $codCliente = str_pad($contador, 4, '0', STR_PAD_LEFT);
 
         // Registrando cliente
