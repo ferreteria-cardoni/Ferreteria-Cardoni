@@ -41,7 +41,7 @@
 								<option value="{{$pro->cod_proveedor}}">{{$pro->nombre}}</option>
 								@endforeach
 							</select>
-							<span id="msgidproveedor" name="msgidproveedor" class="AlertaMsg"></span>
+							<span id="msgidproveedor" name="msgidproveedor" class="form-control"></span>
 						</div>
 					</div>
 				</div>

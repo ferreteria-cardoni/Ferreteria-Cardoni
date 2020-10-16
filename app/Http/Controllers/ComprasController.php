@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormCrearCompras;
 use App\pedidocompra;
 use Illuminate\Http\Request;
 use App\compra;
@@ -51,7 +52,7 @@ class ComprasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormCrearCompras $request)
     {
         $codEmpleado = Auth::user()->id;
         
