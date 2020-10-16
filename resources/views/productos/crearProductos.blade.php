@@ -32,13 +32,13 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-1">
 				      <label>ID</label>
-				      <input type="text" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ old('idproducto') }}">
+				      <input autocomplete="off" type="text" class="form-control" maxlength="6" minlength="6" name="idproducto" id="idproducto" placeholder="Nº" value="{{ old('idproducto') }}">
               <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
 				    </div>
 				    
 				    <div class="form-group col-md-6">
 				      <label>Nombre</label>
-					  <input autocomplete="off" type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Escribe algo..." value="{{ old('idnombre') }}">
+					  <input autocomplete="off" type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Escribe el nombre..." value="{{ old('idnombre') }}">
 					  <span id="msgidnombre" name="msgidnombre" class="AlertaMsg"></span>
 				    </div>
 
