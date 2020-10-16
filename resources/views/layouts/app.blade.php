@@ -414,8 +414,8 @@
     function addRow()
     {
         var tr = '<tr>'+
-        '<td><input id="nombreproducto" name="nombreproducto[]" list="productos" class="form-control"><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>'+
+        '<td><input id="nombreproductoV" name="nombreproductoV[]" list="productos" class="a form-control"><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control"></td>'+
         '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
         '<tr>';
         $('tbody').append(tr);
@@ -498,14 +498,16 @@
         console.log(selectProducto);
 
         // console.log(selectProducto);
+        
   
         var tr = '<tr>';
 
         tr += '<td>'+selectProducto.outerHTML+'</td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control"></td>'+
 		'<td><button type="button" class="btn btn-danger remove">Eliminar</button></td>'+
         '</tr>';
         $('tbody').append(tr);
+        $('#btmVentasTab').attr('disabled',true);
     };
 
     // Eliminando filas de compras

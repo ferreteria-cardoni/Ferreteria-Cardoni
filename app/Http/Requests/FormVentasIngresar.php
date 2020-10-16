@@ -27,8 +27,8 @@ class FormVentasIngresar extends FormRequest
             // 'idcodventa' => 'required',
             'nombreventa' => 'required',
             'iddireccion'=> 'required',
-            'nombreproducto'=> 'required',
-            'idcantidad'=> 'required',
+            'nombreproductoV'=> 'required',
+            'idcantidadV'=> 'required',
 
             
             
@@ -41,8 +41,8 @@ class FormVentasIngresar extends FormRequest
             // 'idcodventa.required' => 'El Codigo de pedido no puede estar vacio',
             'nombreventa.required' => 'Se debe seleccionar Un Cliente',
             'iddireccion.required' => 'El Campo Dirección es obligatorio',          
-            'nombreproducto.required' => 'Sleccione uno o varios Productos',
-            'idcantidad.required' => 'Defina una cantidad superior a 0',
+            'nombreproductoV.required' => 'Sleccione uno o varios Productos',
+            'idcantidadV.required' => 'Defina una cantidad superior a 0',
             
         ];
     }

@@ -35,7 +35,7 @@
 				<div class="row">
 					<div class="col-md-6">
                         <select class="custom-select" name='nombreventa' id="nombreventa" >
-                            <option disabled selected>Seleccione el cliente</option>
+                            <option value="0" disabled selected>Seleccione el cliente</option>
                             @foreach($cliente as $clienteiten)
                             <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
                             @endforeach
@@ -52,34 +52,44 @@
 				</div>
 			</div>
 			<div class="panel panel-footer">
-				<table class="table table-border">
+				<table id="Venta" class="table table-border">
 					<thead>
 						<tr>
-							<th>Nombre del producto</th>
-							<th>Cantidad</th>
-							<th><a href="#" class="addRow btn btn-success">Agregar</a></th>
+							<th>Nombre del producto
+							<span id="msgnombreproductoV" name="msgnombreproductoV" class="AlertaMsg"></span>
+							</th>
+							<th>Cantidad
+							<span id="msgidcantidadV" name="msgidcantidadV" class="AlertaMsg"></span>
+							</th>
+							<th><button type="button" id="btmVentasTab" class="addRow btn btn-success" disabled >Agregar</button></th>
+							
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>
-								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="form-control">
+								<input id="nombreproductoV" name="nombreproductoV[]" list="productos" class="a form-control" autocomplete="off">
 								<datalist id="productos">
 									@foreach ($producto as $productoiten)
-									<option value="{{$productoiten->nombre}}">${{$productoiten->precio}}</option>
+									<option value="{{$productoiten->nombre}}">${{$productoiten->precio}}</option>			
 									@endforeach
 								</datalist>  
 							</td>
-							
-							<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>
+							<!-- <td>
+							<input id="precio" disabled name="precio[]" value="" class="form-control">
+							</td> -->
+							<td>
+								<input type="number" min="0" id="idcantidadV" name="idcantidadV[]" class="b form-control">
+								
+							</td>
 							<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>
 						</tr>
 					</tbody>
-					<tfoot>
+					<!-- <tfoot>
 						<tr>
-							<td><input readonly type="number" class="form-control" placeholder="Total"></td>
+							<td><input readonly type="number" class="form-control" id="idtotal" name="idtotal" placeholder="Total"></td>
 						</tr>
-					</tfoot>
+					</tfoot> -->
 				</table>
 			</div>
 		</section>

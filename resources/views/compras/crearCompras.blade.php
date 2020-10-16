@@ -36,36 +36,43 @@
 					<div class="row">
 						<div class="col-md-6 mb-4">
 							<select name="idproveedor" id="idproveedor" class="custom-select selectproveedor">
-								<option selected disabled>Seleccione un proveedor</option>
+								<option value="0" selected disabled>Seleccione un proveedor</option>
 								@foreach($proveedor as $pro)
 								<option value="{{$pro->cod_proveedor}}">{{$pro->nombre}}</option>
 								@endforeach
 							</select>
-							<span id="msgidproveedor" name="msgidproveedor" class="form-control"></span>
+							<span id="msgidproveedor" name="msgidproveedor" class="AlertaMsg"></span>
 						</div>
 					</div>
 				</div>
 				<div class="panel panel-footer">
-					<table class="table table-border" id="tabla">
+					<table class="table table-border" id="Compra">
 						<thead>
 							<tr>
-								<th>Nombre del producto</th>
-								<th>Cantidad</th>
+								<th>Nombre del producto
+								<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
+								</th>
+								<th>Cantidad
+								<span id="msgidcantidad" name="msgidcantidad" class="AlertaMsg"></span>
+								</th>
 								{{-- <th><a href="#" class="addRow btn btn-success">Agregar</a></th> --}}
-								<td><button type="button" disabled class="addRow btn btn-success">Agregar</button></td>
+								<td><button type="button" id="btmComprasTab" disabled class="addRow btn btn-success">Agregar</button></td>
 							</tr>
 						</thead>
 						<tbody id="tbody">
 							<tr>
 
 								<td>
-									<input id="nombreproducto" disabled name="nombreproducto[]" list="productos" class="form-control">
+									<input id="nombreproducto" disabled name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off">
 									<datalist id="productos">
 									</datalist>  
 								</td>
 
-								<td><input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="form-control"></td>
-								{{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}}
+								<td>
+									<input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="b form-control">
+								</td>
+								
+								<!-- {{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}} -->
 								<td><button type="button" id="btnEliminar" disabled class="btn btn-danger remove">Eliminar</button></td>
 							</tr>
 						</tbody>
