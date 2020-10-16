@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use App\cliente;
 use Illuminate\Http\Request;
+use App\Http\Requests\FormClientes;
+
+
 
 class ClienteController extends Controller
 {
@@ -34,7 +38,7 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormClientes $request)
     {
         $cliente = new cliente;
         $ultimoCliente = cliente::orderBy('cod_cliente', 'desc')->first();
