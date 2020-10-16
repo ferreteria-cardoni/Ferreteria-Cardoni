@@ -41,7 +41,7 @@
 								<option value="{{$pro->cod_proveedor}}">{{$pro->nombre}}</option>
 								@endforeach
 							</select>
-							<span id="msgidproveedor" name="msgidproveedor" class="AlertaMsg"></span>
+							<span id="msgidproveedor" name="msgidproveedor" class="form-control"></span>
 						</div>
 					</div>
 				</div>
@@ -61,7 +61,7 @@
 									<select class='form-control' disabled name='nombreproducto[]' id="nombreproducto">
 										<option disabled selected>Seleccione el producto</option>
 									</select>
-									<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
+									<span id="msgnombreproducto" name="msgnombreproducto" class="form-control"></span>
 								</td>
 
 								<td><input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="form-control"></td>
