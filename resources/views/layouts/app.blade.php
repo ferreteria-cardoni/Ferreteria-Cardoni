@@ -14,6 +14,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js')}}"></script>
     <script src="{{asset('dist/js/adminlte.js')}}"></script>
+    
    
 
     <!-- Font Awesome Icons -->
@@ -26,6 +27,7 @@
     <!-- Styles -->
     <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 
     <!--- Prueba -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -51,6 +53,7 @@
             position: relative;
             left: 35%;
         }
+
         
     </style>
 </head>
@@ -388,6 +391,7 @@
 <script src="{{ asset('js/validaciones.js') }}" defer></script>
 
 
+
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         $(document).ready(function() {
@@ -395,6 +399,7 @@
         });
     });
 </script>
+
 
 {{-- Solo se cargara el script cuando se encuentre en la vista de crear ventas --}}
 @if (Request::is('Ventas/create'))
@@ -409,7 +414,7 @@
     function addRow()
     {
         var tr = '<tr>'+
-        '<td><select class="mi-selector form-control" name="nombreproducto[]" id="nombreproducto" ><option disabled selected>Seleccione el producto</option>@foreach($producto as $productoiten)<option value="{{$productoiten->cod_producto}}">{{$productoiten->nombre}} ${{$productoiten->precio}}</option>@endforeach</select><span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span></td>'+
+        '<td><input id="nombreproducto" name="nombreproducto[]" list="productos" class="form-control"><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
 		'<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>'+
         '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
         '<tr>';
@@ -467,9 +472,15 @@
                 var htmlSelectProducto = '<option disabled selected>Seleccione el producto</option>';
                 for (let i = 0; i < data.length; i++) {
 
-                    htmlSelectProducto += '<option value="'+data[i].cod_producto+'">'+data[i].nombre+' $'+data[i].precio+'</option>'
+                    // htmlSelectProducto += '<option value="'+data[i].cod_producto+'">'+data[i].nombre+' $'+data[i].precio+'</option>'
 
-                    $('#nombreproducto').html(htmlSelectProducto);
+                    htmlSelectProducto += '<option value="'+data[i].nombre+'">$'+data[i].precio+'</option>'
+
+
+                    // $('#productos').html(htmlSelectProducto);
+
+                    $('#productos').html(htmlSelectProducto);
+
                 }
             })
         }
@@ -483,6 +494,8 @@
     {
         // Recuperando el select de productos
         var selectProducto = document.querySelector('#nombreproducto');
+
+        console.log(selectProducto);
 
         // console.log(selectProducto);
   

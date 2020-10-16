@@ -15,12 +15,7 @@
 @endsection
 
 @section('content')
-	<!DOCTYPE html>
-		<html>
-			<head>
-				<title></title>
-			</head>
-			<body>
+
 				@if ($errors->any())
 					<div class="alert alert-danger">
 					<center><h5>Hay errores en en formulario, favor revisar</H2></center>
@@ -43,7 +38,7 @@
 				    
 				    <div class="form-group col-md-6">
 				      <label>Nombre</label>
-					  <input type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Escribe algo..." value="{{ old('idnombre') }}">
+					  <input autocomplete="off" type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Escribe algo..." value="{{ old('idnombre') }}">
 					  <span id="msgidnombre" name="msgidnombre" class="AlertaMsg"></span>
 				    </div>
 
@@ -64,7 +59,7 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-6">
 				      <label>Presentación</label>
-				      <input type="textarea" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Escribe algo..." value="{{ old('idpresentacion') }}">
+				      <input autocomplete="off" type="textarea" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Escribe algo..." value="{{ old('idpresentacion') }}">
 					  <span id="msgidpresentacion" name="msgidpresentacion" class="AlertaMsg"></span>
 					</div>
 
@@ -89,8 +84,6 @@
 				  <button type="submit" class="btn btn-primary">Registrar Producto</button> 
 				  <button type="reset" class="btn btn-danger">Limpiar Campos</button>
 				</form>
-			</body>
-		</html>
 @endsection
 
 

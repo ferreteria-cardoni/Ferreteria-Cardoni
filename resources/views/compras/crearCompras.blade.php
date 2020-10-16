@@ -57,12 +57,20 @@
 						</thead>
 						<tbody id="tbody">
 							<tr>
+
 								<td>
+									<input id="nombreproducto" disabled name="nombreproducto[]" list="productos" class="form-control">
+									<datalist id="productos">
+									</datalist>  
+								</td>
+
+
+								{{-- <td>
 									<select class='form-control' disabled name='nombreproducto[]' id="nombreproducto">
 										<option disabled selected>Seleccione el producto</option>
 									</select>
 									<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
-								</td>
+								</td> --}}
 
 								<td><input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="form-control"></td>
 								{{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}}
@@ -73,7 +81,7 @@
 							<tr>
 								<td>
 									<textarea type="text" disabled class="form-control" id="iddescripcion" name="iddescripcion"
-										placeholder="Escribe algo..." value="{{ old('iddescripcion') }}"></textarea>
+										placeholder="Descripción..." value="{{ old('iddescripcion') }}"></textarea>
 									<span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
 								</td>
 

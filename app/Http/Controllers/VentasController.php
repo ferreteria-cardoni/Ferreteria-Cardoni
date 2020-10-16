@@ -73,21 +73,30 @@ class VentasController extends Controller
               $codUltimaVenta = venta::orderBy('cod_venta', 'desc')->first()->cod_venta;
               
             //   Arreglo de codigos de productos
-              $codProductos = $request->nombreproducto;
               
+            
+              $productos = $request->nombreproducto;
+              // dd($codProductos);
+
+
             // Arreglo de cantidades de productos
               $cantidades = $request->idcantidad;
 
               
               $i = 0;
               
-              while ($i < sizeof($codProductos) ) {
+              while ($i < sizeof($productos) ) {
 
                 $pedidoventa = new pedidoventa;
-                  
+    
                 $pedidoventa->cod_venta_fk = $codUltimaVenta;
-                $pedidoventa->cod_producto_fk = $codProductos[$i];
-                $precioProducto = producto::find($codProductos[$i])->precio;
+
+                // Recuperando el codigo del producto
+                $pedidoventa->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
+
+                // Recuperando el precio del producto
+                $precioProducto = producto::where('nombre', $productos[$i])->first()->precio;
+                
                 $pedidoventa->cantidad = $cantidades[$i];
                 $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
                 $pedidoventa->save();
