@@ -18,6 +18,10 @@ const NombrePV = document.querySelector('#nombreproducto');
 const CantidadV = document.querySelector('#idcantidad');
 const TotalV = document.querySelector('#idtotal');
 
+//Formulario de compras
+const NombrePC = document.querySelector('#nombreproducto');
+const ProveedorC = document.querySelector('#idproveedor');
+const CantidadC = document.querySelector('#idcantidad');
 
 
 //expresiones regulares usadas en las validaciones
@@ -228,6 +232,73 @@ if(NombrePV){
     })
 }
 
+//Formulario de compras
+
+if(NombrePC){
+    NombreP.addEventListener('blur', () => {
+
+        if (NombreP.value == "") {
+            document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
+            document.getElementById("msgnombreproducto").style.display = "block";
+            NombreP.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgnombreproducto").style.display = "none";
+            document.getElementById("msgnombreproducto").innerHTML = ""
+            NombreP.style.borderColor = "";
+            
+            
+        }
+        
+    })
+} 
+
+if(ProveedorC){
+    NombreP.addEventListener('blur', () => {
+
+        if (NombreP.value == "") {
+            document.getElementById("msgidproveedor").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidproveedor").style.display = "block";
+            NombreP.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgidproveedor").style.display = "none";
+            document.getElementById("msgidproveedor").innerHTML = ""
+            NombreP.style.borderColor = "";
+            
+            
+        }
+        
+    })
+}
+
+if(CantidadC){
+    CantidadP.addEventListener('blur', () => {
+
+        if (CantidadP.value == "") {
+            document.getElementById("msgidcantidad").innerHTML = "Si solo se registra el producto sin stock agregue 0 como valor";
+            document.getElementById("msgidcantidad").style.display = "block";
+            CantidadP.style.borderColor = "red";
+            
+        }
+        else if(!(CantidadP.value - Math.floor(CantidadP.value)) == 0){
+            document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
+            document.getElementById("msgidcantidad").style.display = "block";
+            CantidadP.style.borderColor = "red";
+        }
+
+        else {
+            document.getElementById("msgidcantidad").style.display = "none";
+            document.getElementById("msgidcantidad").innerHTML = ""
+            CantidadP.style.borderColor = "";
+            
+            
+        }
+        
+    })
+}
 
 
 
