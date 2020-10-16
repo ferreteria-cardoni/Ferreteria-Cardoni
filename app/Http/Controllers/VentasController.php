@@ -74,13 +74,14 @@ class VentasController extends Controller
               
             //   Arreglo de codigos de productos
               
+
             
-              $productos = $request->nombreproducto;
+              $productos = $request->nombreproductoV;
               // dd($codProductos);
 
 
             // Arreglo de cantidades de productos
-              $cantidades = $request->idcantidad;
+              $cantidades = $request->idcantidadV;
 
               
               $i = 0;
