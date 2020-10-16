@@ -11,17 +11,16 @@ const ProveedorP = document.querySelector('#idproveedor');
 const IdProductoP = document.querySelector('#idproducto');
 
 //Formulario de Ventas
-const IdVenta = document.querySelector('#idcodventa');
 const NombreV = document.querySelector('#nombreventa');
 const DireccionV = document.querySelector('#iddireccion');
-const NombrePV = document.querySelector('#nombreproducto');
-const CantidadV = document.querySelector('#idcantidad');
-const TotalV = document.querySelector('#idtotal');
+const TabVenta=document.querySelector('#Venta');
+
 
 //Formulario de compras
 const NombrePC = document.querySelector('#nombreproducto');
 const ProveedorC = document.querySelector('#idproveedor');
 const CantidadC = document.querySelector('#idcantidad');
+const TabCompra=document.querySelector('#Compra');
 
 //Formulario de Cliente
 
@@ -185,6 +184,7 @@ if(IdProductoP){
         
     })
 }
+//fFormulario Ventas
 if(DireccionV){
     DireccionV.addEventListener('blur', () => {
 
@@ -204,11 +204,12 @@ if(DireccionV){
         
     })
 }
-/* if(NombreV){
+
+if(NombreV){
     NombreV.addEventListener('blur', () => {
 
         if (NombreV.value == 0) {
-            document.getElementById("msgnombreventa").innerHTML = "Este campo es obligatorio";
+            document.getElementById("msgnombreventa").innerHTML = "Este campo es requerido"
             document.getElementById("msgnombreventa").style.display = "block";
             NombreV.style.borderColor = "red";
             
@@ -222,63 +223,96 @@ if(DireccionV){
         }
         
     })
-} */
-
-if(NombrePV){
-    NombrePV.addEventListener('blur', () => {
-
-        if (NombrePV.value ==null) {
-            document.getElementById("msgnombreproducto").innerHTML = "Este campo es obligatorio";
-            document.getElementById("msgnombreproducto").style.display = "block";
-            NombrePV.style.borderColor = "red";
-            
+}
+function NombreProductoVenta(){
+    var NombrePV = document.querySelectorAll('input.a');
+    var cant = document.querySelectorAll('input.b');
+    for(var i=0;i<NombrePV.length;i++){
+        if (NombrePV[i].value == "") {
+            document.getElementById("msgnombreproductoV").innerHTML = "Debe seleccionar un producto en el campo indicado"
+            document.getElementById("msgnombreproductoV").style.display = "block";
+            NombrePV[i].style.borderColor = "red";
+            NombrePV[i].style.borderWidth = "3px";
+            $('#btmVentasTab').attr('disabled',true);
         }
         else {
-            document.getElementById("msgnombreproducto").style.display = "none";
-            document.getElementById("msgnombreproducto").innerHTML = ""
-            NombrePV.style.borderColor = "";
-            
+            document.getElementById("msgnombreproductoV").style.display = "none";
+            document.getElementById("msgnombreproductoV").innerHTML = ""
+            NombrePV[i].style.borderColor = "";
+            NombrePV[i].style.borderWidth = "2px";
+            $('#btmVentasTab').attr('disabled',false); 
+        }
+
+        if (cant[i].value == "") {
+            document.getElementById("msgidcantidadV").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
+            document.getElementById("msgidcantidadV").style.display = "block";
+            cant[i].style.borderColor = "red";
+            cant[i].style.borderWidth = "3px";
+            $('#btmVentasTab').attr('disabled',true); 
             
         }
-        
+        else if(!(cant[i].value - Math.floor(cant[i].value)) == 0){
+            document.getElementById("msgidcantidadV").innerHTML = "Utilize solo números enteros";
+            document.getElementById("msgidcantidadV").style.display = "block";
+            cant[i].style.borderColor = "red";
+            cant[i].style.borderWidth = "3px";
+            $('#btmVentasTab').attr('disabled',true); 
+        }
+        else {
+            document.getElementById("msgidcantidadV").style.display = "none";
+            document.getElementById("msgidcantidadV").innerHTML = ""
+            cant[i].style.borderColor = "";
+            cant[i].style.borderWidth = "2px";
+            $('#btmVentasTab').attr('disabled',false); 
+        }
+
+    }
+
+};
+
+if(TabVenta){
+    TabVenta.addEventListener('click', () => {
+        NombreProductoVenta();     
+    })
+    TabVenta.addEventListener('change', () => {
+        NombreProductoVenta();     
     })
 }
-
 //Formulario de compras
 
-if(NombrePC){
-    NombreP.addEventListener('blur', () => {
+/* if(NombrePC){
+    NombrePC.addEventListener('blur', () => {
 
-        if (NombreP.value == "") {
+        if (NombrePC.value == "") {
             document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
             document.getElementById("msgnombreproducto").style.display = "block";
-            NombreP.style.borderColor = "red";
+            NombrePC.style.borderColor = "red";
             
         }
         else {
             document.getElementById("msgnombreproducto").style.display = "none";
             document.getElementById("msgnombreproducto").innerHTML = ""
-            NombreP.style.borderColor = "";
+            NombrePC.style.borderColor = "";
             
             
         }
         
     })
-} 
+}  */
 
 if(ProveedorC){
-    NombreP.addEventListener('blur', () => {
+    ProveedorC.addEventListener('blur', () => {
 
-        if (NombreP.value == "") {
+        if (ProveedorC.value == 0) {
             document.getElementById("msgidproveedor").innerHTML = "Este campo es requerido"
             document.getElementById("msgidproveedor").style.display = "block";
-            NombreP.style.borderColor = "red";
+            ProveedorC.style.borderColor = "red";
             
         }
         else {
             document.getElementById("msgidproveedor").style.display = "none";
             document.getElementById("msgidproveedor").innerHTML = ""
-            NombreP.style.borderColor = "";
+            ProveedorC.style.borderColor = "";
             
             
         }
@@ -286,32 +320,90 @@ if(ProveedorC){
     })
 }
 
-if(CantidadC){
-    CantidadP.addEventListener('blur', () => {
+/* if(CantidadC){
+    CantidadC.addEventListener('blur', () => {
 
-        if (CantidadP.value == "") {
-            document.getElementById("msgidcantidad").innerHTML = "Si solo se registra el producto sin stock agregue 0 como valor";
+        if (CantidadC.value == "") {
+            document.getElementById("msgidcantidad").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
             document.getElementById("msgidcantidad").style.display = "block";
-            CantidadP.style.borderColor = "red";
+            CantidadC.style.borderColor = "red";
             
         }
-        else if(!(CantidadP.value - Math.floor(CantidadP.value)) == 0){
+        else if(!(CantidadC.value - Math.floor(CantidadC.value)) == 0){
             document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
             document.getElementById("msgidcantidad").style.display = "block";
-            CantidadP.style.borderColor = "red";
+            CantidadC.style.borderColor = "red";
         }
 
         else {
             document.getElementById("msgidcantidad").style.display = "none";
             document.getElementById("msgidcantidad").innerHTML = ""
-            CantidadP.style.borderColor = "";
+            CantidadC.style.borderColor = "";
             
             
         }
         
     })
-}
+} */
 
+function NombreProductoCompra(){
+    if(ProveedorC.value == 0){
+        
+    }else{
+        var NombrePC = document.querySelectorAll('input.a');
+        var cantC = document.querySelectorAll('input.b');
+        for(var i=0;i<NombrePC.length;i++){
+            if (NombrePC[i].value == "") {
+                document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
+                document.getElementById("msgnombreproducto").style.display = "block";
+                NombrePC[i].style.borderColor = "red";
+                NombrePC[i].style.borderWidth = "3px";
+                $('#btmComprasTab').attr('disabled',true);
+            }
+            else {
+                document.getElementById("msgnombreproducto").style.display = "none";
+                document.getElementById("msgnombreproducto").innerHTML = ""
+                NombrePC[i].style.borderColor = "";
+                NombrePC[i].style.borderWidth = "2px";
+                $('#btmComprasTab').attr('disabled',false);
+            }
+    
+            if (cantC[i].value == "") {
+                document.getElementById("msgidcantidad").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
+                document.getElementById("msgidcantidad").style.display = "block";
+                cantC[i].style.borderColor = "red";
+                cantC[i].style.borderWidth = "3px";
+                $('#btmComprasTab').attr('disabled',true);
+                
+            }
+            else if(!(cantC[i].value - Math.floor(cantC[i].value)) == 0){
+                document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
+                document.getElementById("msgidcantidad").style.display = "block";
+                cantC[i].style.borderColor = "red";
+                cantC[i].style.borderWidth = "3px";
+                $('#btmComprasTab').attr('disabled',true);
+            }
+            else {
+                document.getElementById("msgidcantidad").style.display = "none";
+                document.getElementById("msgidcantidad").innerHTML = ""
+                cantC[i].style.borderColor = "";
+                cantC[i].style.borderWidth = "2px";
+                $('#btmComprasTab').attr('disabled',false);
+            }
+    
+        }
+    }
+
+
+}
+if(TabCompra){
+    TabCompra.addEventListener('click', () => {
+        NombreProductoCompra();     
+    })
+    TabCompra.addEventListener('change', () => {
+        NombreProductoCompra();     
+    })
+}
 //Formulario Clientes
 if(idnombrec){
     idnombrec.addEventListener('blur', () => {
