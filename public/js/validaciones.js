@@ -23,9 +23,21 @@ const NombrePC = document.querySelector('#nombreproducto');
 const ProveedorC = document.querySelector('#idproveedor');
 const CantidadC = document.querySelector('#idcantidad');
 
+//Formulario de Cliente
+
+const idnombrec = document.querySelector('#idnombreC');
+const idapellidoC = document.querySelector('#idapellidoC');
+const idtelefonoC = document.querySelector('#idtelefonoC');
+const idrubro = document.querySelector('#idrubro');
+const NIT = document.querySelector('#NIT');
+const NCF = document.querySelector('#NCF');
+const DireccionC = document.querySelector('#DireccionC');
+
 
 //expresiones regulares usadas en las validaciones
 var solotexto = new RegExp('[a-zA-Z\s]+$');
+var NITval = new RegExp('[0-9]{14}');
+var NCfinal = new RegExp('[0-9]{11}');
 var valtel = new RegExp('[0-9]{8}');
 var valcorreos = new RegExp('[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.([a-zA-Z]{2,4})+');
 var valdui = new RegExp('[0-9]{8}-[0-9]{1}');
@@ -299,6 +311,158 @@ if(CantidadC){
         
     })
 }
+
+//Formulario Clientes
+if(idnombrec){
+    idnombrec.addEventListener('blur', () => {
+
+        if (idnombrec.value == "") {
+            document.getElementById("msgidnombreC").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidnombreC").style.display = "block";
+            idnombrec.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgidnombreC").style.display = "none";
+            document.getElementById("msgidnombreC").innerHTML = ""
+            idnombrec.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+} 
+if(idapellidoC){
+    idapellidoC.addEventListener('blur', () => {
+
+        if (idapellidoC.value == "") {
+            document.getElementById("msgidapellidoC").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidapellidoC").style.display = "block";
+            idapellidoC.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgidapellidoC").style.display = "none";
+            document.getElementById("msgidapellidoC").innerHTML = ""
+            idapellidoC.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+} 
+if(idtelefonoC){
+    idtelefonoC.addEventListener('blur', () => {
+
+        if (idtelefonoC.value == "") {
+            document.getElementById("msgidtelefonoC").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidtelefonoC").style.display = "block";
+            idtelefonoC.style.borderColor = "red";
+            
+        }
+        else if(!valtel.exec(idtelefonoC.value)){
+            document.getElementById("msgidtelefonoC").innerHTML = "El formato correcto es 9999-9999 (8 digitos)"
+            document.getElementById("msgidtelefonoC").style.display = "block";
+            idtelefonoC.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidtelefonoC").style.display = "none";
+            document.getElementById("msgidtelefonoC").innerHTML = ""
+            idtelefonoC.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+} 
+if(idrubro){
+    idrubro.addEventListener('blur', () => {
+
+        if (idrubro.value == "") {
+            document.getElementById("msgidrubro").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidrubro").style.display = "block";
+            idrubro.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgidrubro").style.display = "none";
+            document.getElementById("msgidrubro").innerHTML = ""
+            idrubro.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+} 
+if(NIT){
+    NIT.addEventListener('blur', () => {
+
+        if (NIT.value == "") {
+            document.getElementById("msgNIT").innerHTML = "Este campo es requerido"
+            document.getElementById("msgNIT").style.display = "block";
+            NIT.style.borderColor = "red";
+            
+        }
+        else if(!NITval.exec(NIT.value)){
+            document.getElementById("msgNIT").innerHTML = "El formato correcto es 9999-999999-999-9 (14 digitos)"
+            document.getElementById("msgNIT").style.display = "block";
+            NIT.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgNIT").style.display = "none";
+            document.getElementById("msgNIT").innerHTML = ""
+            NIT.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+} 
+if(NCF){
+    NCF.addEventListener('blur', () => {
+
+        if (NCF.value == "") {
+            document.getElementById("msgNCF").innerHTML = "Este campo es requerido"
+            document.getElementById("msgNCF").style.display = "block";
+            NCF.style.borderColor = "red";
+            
+        }
+        else if(!NCfinal.exec(NCF.value)){
+            document.getElementById("msgNCF").innerHTML = "El formato correcto es 99999999999 (11 digitos)"
+            document.getElementById("msgNCF").style.display = "block";
+            NCF.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgNCF").style.display = "none";
+            document.getElementById("msgNCF").innerHTML = ""
+            NCF.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+} 
+if(DireccionC){
+    DireccionC.addEventListener('blur', () => {
+
+        if (DireccionC.value == "") {
+            document.getElementById("msgDireccionC").innerHTML = "Este campo es requerido"
+            document.getElementById("msgDireccionC").style.display = "block";
+            DireccionC.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgDireccionC").style.display = "none";
+            document.getElementById("msgDireccionC").innerHTML = ""
+            DireccionC.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+} 
+  
+
 
 
 
