@@ -64,14 +64,6 @@
 									</datalist>  
 								</td>
 
-
-								{{-- <td>
-									<select class='form-control' disabled name='nombreproducto[]' id="nombreproducto">
-										<option disabled selected>Seleccione el producto</option>
-									</select>
-									<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
-								</td> --}}
-
 								<td><input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="form-control"></td>
 								{{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}}
 								<td><button type="button" id="btnEliminar" disabled class="btn btn-danger remove">Eliminar</button></td>
