@@ -207,29 +207,31 @@
 
 
                               {{-- Ventas --}}
+                            @canany(['bodega'])
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                                <a href="{{route('Ventas.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Ventas<i class="fas fa-angle-left right"></i></p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    @canany(['bodega'])
+                            </li>
+                            @endcanany
+
+                                {{-- <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('Ventas.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Crear</p>
                                         </a>
-                                    </li>
-                                    @endcanany
+                                    </li> --}}
 
-                                    @canany(['gerente', 'ventas', 'bodega'])
+                                    {{-- @canany(['gerente', 'ventas', 'bodega'])
                                     <li class="nav-item">
                                         <a href="/Productos" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ver</p>
                                         </a>
                                     </li>
-                                    @endcanany
+                                    @endcanany --}}
 
 
 
@@ -246,26 +248,27 @@
 
                                     @endcanany --}}
 
-                                </ul>
-                            </li>
+                                {{-- </ul> --}}
 
                             {{-- Compras --}}
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                            @canany(['bodega'])
+                            <li class="nav-item">
+                                <a href="{{route('compras.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Compras<i class="fas fa-angle-left right"></i></p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    @canany(['bodega'])
+                            </li>
+                            @endcanany
+                            
+                                {{-- <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('compras.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>crear</p>
                                         </a>
-                                    </li>
-                                    @endcanany
+                                    </li> --}}
 
-                                    @canany(['gerente', 'ventas', 'bodega'])
+                                    {{-- @canany(['gerente', 'ventas', 'bodega'])
                                     <li class="nav-item">
                                         <a href="/Productos" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
@@ -273,7 +276,7 @@
                                         </a>
                                     </li>
                                     @endcanany
-
+ --}}
 
 
 
@@ -289,8 +292,7 @@
 
                                     @endcanany --}}
 
-                                </ul>
-                            </li>
+                                {{-- </ul> --}}
 
 
 
