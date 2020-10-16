@@ -87,7 +87,4 @@
 <button type="submit" class="btn btn-primary">Registrar Cliente</button>
 <button type="reset" class="btn btn-danger">Limpiar Campos</button>
 </form>
-</body>
-
-</html>
 @endsection

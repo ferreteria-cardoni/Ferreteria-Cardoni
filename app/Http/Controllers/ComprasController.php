@@ -70,19 +70,21 @@ class ComprasController extends Controller
         $codUltimaCompra = compra::orderBy('cod_compra', 'desc')->first()->cod_compra;
 
         //   Arreglo de codigos de productos
-        $codProductos = $request->nombreproducto;
-
+        $productos = $request->nombreproducto;
         // Arreglo de cantidades de productos
         $cantidades = $request->idcantidad;
 
         $i = 0;
 
-        while ($i < sizeof($codProductos) ) {
+        while ($i < sizeof($productos) ) {
             
             $pedidoCompra = new pedidocompra;
 
+            
+
             $pedidoCompra->cod_compra_fk = $codUltimaCompra;
-            $pedidoCompra->cod_producto_fk = $codProductos[$i];
+            // dd(producto::where('nombre', $productos[$i])->first()->cod_producto);
+            $pedidoCompra->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
             $pedidoCompra->cantidad = $cantidades[$i];
             $pedidoCompra->save();
             $i++;

@@ -62,15 +62,13 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><select class='form-control' name='nombreproducto[]' id="nombreproducto" >
-								<option disabled selected>Seleccione el producto</option>
-								@foreach($producto as $productoiten)
-								<option value='{{$productoiten->cod_producto}}'>
-								{{$productoiten->nombre}} ${{$productoiten->precio}}
-								</option>
-								@endforeach
-								</select>
-								<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
+							<td>
+								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="form-control">
+								<datalist id="productos">
+									@foreach ($producto as $productoiten)
+									<option value="{{$productoiten->nombre}}">${{$productoiten->precio}}</option>
+									@endforeach
+								</datalist>  
 							</td>
 							
 							<td><input type="number" min="0" name="idcantidad[]" class="form-control"></td>
