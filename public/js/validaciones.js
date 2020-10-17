@@ -14,6 +14,9 @@ const IdProductoP = document.querySelector('#idproducto');
 const NombreV = document.querySelector('#nombreventa');
 const DireccionV = document.querySelector('#iddireccion');
 const TabVenta=document.querySelector('#Venta');
+const TotalV=document.querySelector('#idtotal');
+const AddTab=document.querySelector('#btmVentasTab');
+var DelTab=document.querySelectorAll('button.remove');
 
 
 //Formulario de compras
@@ -21,6 +24,8 @@ const NombrePC = document.querySelector('#nombreproducto');
 const ProveedorC = document.querySelector('#idproveedor');
 const CantidadC = document.querySelector('#idcantidad');
 const TabCompra=document.querySelector('#Compra');
+
+
 
 //Formulario de Cliente
 
@@ -227,7 +232,10 @@ if(NombreV){
 function NombreProductoVenta(){
     var NombrePV = document.querySelectorAll('input.a');
     var cant = document.querySelectorAll('input.b');
+    var total=0; 
     for(var i=0;i<NombrePV.length;i++){
+        var uno=NombrePV[i].value.split("$");
+        //console.log(uno[1]*1+3);
         if (NombrePV[i].value == "") {
             document.getElementById("msgnombreproductoV").innerHTML = "Debe seleccionar un producto en el campo indicado"
             document.getElementById("msgnombreproductoV").style.display = "block";
@@ -265,11 +273,18 @@ function NombreProductoVenta(){
             cant[i].style.borderWidth = "2px";
             $('#btmVentasTab').attr('disabled',false); 
         }
-
+        
+            total = total+ Total(uno[1]*1,(cant[i].value)*1);
+            TotalV.value= "$"+total;
     }
 
 };
-
+function Total( precio,cant ){
+    if(!isNaN(precio) && !isNaN(cant)){
+        return precio*cant;
+    }
+    return 0;
+}
 if(TabVenta){
     TabVenta.addEventListener('click', () => {
         NombreProductoVenta();     
@@ -277,6 +292,10 @@ if(TabVenta){
     TabVenta.addEventListener('change', () => {
         NombreProductoVenta();     
     })
+    TabVenta.addEventListener('mousemove', () => {
+        NombreProductoVenta();     
+    })
+    
 }
 //Formulario de compras
 

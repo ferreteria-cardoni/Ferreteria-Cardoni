@@ -77,6 +77,7 @@ class VentasController extends Controller
 
             
             $productos = $request->nombreproducto;
+            
                //dd($productos);
 
 
@@ -89,18 +90,26 @@ class VentasController extends Controller
               while ($i < sizeof($productos) ) {
                 if($productos[$i]!=null){
                   $pedidoventa = new pedidoventa;
+                  $productoArray=explode("$",$productos[$i]);
+                  $NombreProducto=$productoArray[0];
     
                   $pedidoventa->cod_venta_fk = $codUltimaVenta;
   
                   // Recuperando el codigo del producto
-                  $pedidoventa->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
+                  $pedidoventa->cod_producto_fk = producto::where('nombre', $NombreProducto)->first()->cod_producto;
   
                   // Recuperando el precio del producto
-                  $precioProducto = producto::where('nombre', $productos[$i])->first()->precio;
+                  $precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
                   
                   $pedidoventa->cantidad = $cantidades[$i];
                   $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
                   $pedidoventa->save();
+
+                  $cant=producto::where('nombre', $NombreProducto)->first()->cantidad;
+                  $cant=$cant-$cantidades[$i];
+                  $pro=producto::find(producto::where('nombre', $NombreProducto)->first()->cod_producto);
+                  $pro->cantidad=$cant;
+                  $pro->save();
                 }
 
                 $i++;
