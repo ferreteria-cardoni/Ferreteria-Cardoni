@@ -28,7 +28,7 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        $pedidoCompra = pedidocompra::paginate(3);
+        $pedidoCompra = pedidocompra::paginate(10);
 
         return view('compras.vistaCompras', compact('pedidoCompra'));
     }
