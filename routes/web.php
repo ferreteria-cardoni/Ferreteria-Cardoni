@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Requests\BuscadorProducto;
+use Illuminate\Http\Request;
 use App\producto;
 use App\marca_producto;
 use App\marca;
@@ -33,6 +34,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('Productos','ProductoController');
 
 Route::get('/buscador', 'ProductoController@buscador')->name('buscador');
+Route::get('/listado', 'VentasController@listado')->name('listado');
 //ruta para pagina de modificar producto prros
 // Route::get('/modificar', 'ProductoController@modification');
 
@@ -58,6 +60,12 @@ Route::group([
 Route::resource('compras', 'ComprasController');
 
 Route::resource('Ventas', 'VentasController');
+
+Route::post('/listado', function (Requests $requests)
+{
+	dd($requests);
+	//return redirect()->route('Ventas.create')->with('listado','Producto Agregado');
+})->name('listado');
 
 
 

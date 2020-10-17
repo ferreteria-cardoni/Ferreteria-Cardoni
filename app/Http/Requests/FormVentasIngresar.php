@@ -25,10 +25,10 @@ class FormVentasIngresar extends FormRequest
     {
         return [
             'idcodventa' => 'required',
-            'nombreventa' => 'different:0',
+            'nombreventa' => 'required',
             'iddireccion'=> 'required',
             'nombreproducto'=> 'required',
-            'idcantidad'=> 'required',
+           // 'idcantidad'=> 'required',
 
             
             

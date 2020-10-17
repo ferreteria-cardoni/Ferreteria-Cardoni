@@ -32,9 +32,15 @@
 					</div>
 				@endif
 				
-				
+				</form>
+
+
+			
+
+
         <form method="POST" action="{{route('Ventas.store')}}">
 					@csrf
+
 				  <div class="form-row">
 				  	<div class="form-group col-md-2">
 				      <label>Cod Pedido</label>
@@ -45,7 +51,7 @@
 				    <div class="form-group col-md-4">
     				<label class="mb-2">Nombre Cliente</label>
     					<select class="custom-select" name='nombreventa' id="nombreventa" >
-						    <option value=0 disabled="true">Seleccione el cliente</option>
+						    <option disabled="true">Seleccione el cliente</option>
 						    @foreach($cliente as $clienteiten)
 						    <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
 						    @endforeach
@@ -53,7 +59,7 @@
 						<span id="msgnombreventa" name="msgnombreventa" class="AlertaMsg"></span>
     				</div>
 
-				    <div class="form-group col-md-7">
+				    <div class="form-group col-md-6">
 				      <label>Direccion</label>
 					  <input type="text" class="form-control" id="iddireccion" name="iddireccion" placeholder="La Campanera, Soyapango, San Salvador" value="{{ old('idnombre') }}">
 					  <span id="msgiddireccion" name="msgiddireccion" class="AlertaMsg"></span>
@@ -71,9 +77,9 @@
 					</div> -->
 					
                      <div class="form-row">
-					  <div class="form-group col-md-2">
+					  <div class="form-group col-md-3">
     				<label class="mb-2">Nombre Producto</label>
-    					<select class='mi-selector' name='nombreproducto[]' id="nombreproducto" multiple='multiple'>
+    					<select class='mi-selector'  name='nombreproducto[]' id="nombreproducto" >
 						    <option disabled="true">Seleccione el producto</option>
 						    @foreach($producto as $productoiten)
 						    
@@ -84,26 +90,41 @@
 						</select>
 						<span id="msgnombreproducto" name="msgnombreproducto" class="AlertaMsg"></span>
     				</div>
-					</div>
 
 
-				<!-- 	<div class="form-group col-md-3">
-				      <label>Precio Unitario</label>
-				      <input type="number" class="form-control" id="idpreciounitario" name="idpreciounitario" placeholder="0.00" value="{{ old('idpresentacion') }}">
-					  <span id="" name="" class=""></span>
-					</div> -->
-					<div class="form-row">
-					<div class="form-group col-md-3">
-				      <label class="mb-2">Cantidad</label>
-				      <input type="number" class="form-control" id="idcantidad" name="idcantidad" placeholder="0" value="{{ old('idpresentacion') }}">
-					  <span id="" name="" class="AlertaMsg"></span>
-					</div>
+    					 <div class="form-group col-md-2">
+    				<label class="mb-2">Cantidad</label>
+    					<select class="mi-selector" name='idcantidad1[]' id="idcantidad1" multiple>
+						    <option disabled="true">Seleccione la cantidad</option>
+						    <option value='1'>1 Unidad</option>
+						   <option value='2'>2 Unidades</option>
+						   <option value='3'>3 Unidades</option>
+						   <option value='4'>4 Unidades</option>
+						   <option value='5'>5 Unidades</option>
+						</select>
+						<span id="" name="" class=""></span>
+    				</div>
 
-					<div class="form-group col-md-3">
+    				<div class="form-group col-md-3">
 				    <label>Total</label>
 					  <input type="number" class="form-control" id="idtotal" name="idtotal" placeholder="0.00" value="{{ old('iddescripcion') }}"></intput>
 					  <span id="" name="" class=""></span>
 				  </div>
+					</div>
+
+
+				
+
+					
+
+					 <div class="form-row">
+					<!--<div class="form-group col-md-3">
+				      <label class="mb-2">Cantidad</label>
+				      <input type="number" class="form-control" id="idcantidad" name="idcantidad" placeholder="0" value="{{ old('idpresentacion') }}">
+					  <span id="" name="" class="AlertaMsg"></span>
+					</div> -->
+
+					
 
 
 				 </div> 
@@ -118,13 +139,45 @@
 				 </div>
 				  <button type="submit" class="btn btn-primary">Registrar Venta</button> 
 				  <button type="reset" class="btn btn-danger">Limpiar Campos</button>
-				</form>
-				<br>
+				  
+				
+				
+				<br><br><br>
 
-
+	  <button href="{{route('Ventas.update', 'asd')}}" type="submit" class="btn btn-primary" >  
+  Agregar Productos
+</button>
 
 
 			</body>
 		</html>
+@endsection
+
+
+@section('listado')
+<div class="container">
+      @if (session('nombre'))
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  	@foreach(session('nombre') as $key)
+    <tr>
+      <th scope="row">1</th>
+      <td> {{$key}}</td>
+      <td>{{session('cantidad')}}</td>
+      <td>@mdo</td>
+    </tr>
+     @endforeach
+  </tbody>
+</table>
+@endif
 @endsection
 

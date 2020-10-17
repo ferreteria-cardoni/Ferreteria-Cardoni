@@ -31,6 +31,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
+   
+
     <style>
         .AlertaMsg {
             font-weight: bold;
@@ -45,6 +47,8 @@
             position: relative;
             left: 35%;
         }
+
+        
     </style>
 </head>
 
@@ -335,6 +339,7 @@
                 <section class="content">
                     @yield('alert')
                     @yield('content')
+                    @yield('listado')
                 </section>
                 <!-- /.content -->
             </div>
@@ -362,13 +367,16 @@
 
 
 
+
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
+   jQuery(document).ready(function($) {
         $(document).ready(function() {
             $('.mi-selector').select2();
         });
     });
 </script>
+
+
 
 <script type="text/javascript">
     window.addEventListener("load", function() {
@@ -395,3 +403,4 @@
 
     })
 </script>
+

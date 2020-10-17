@@ -21,7 +21,7 @@ class VentasController extends Controller
      */
     public function index()
     {
-        $pedidoVentas = pedidoventa::paginate(3);
+        $pedidoVentas = pedidoventa::paginate(10);
 
         return view('ventas.vistaVentas', compact('pedidoVentas'));
     }
@@ -35,9 +35,8 @@ class VentasController extends Controller
     {
 
         $cliente = cliente::all();
-        //dd($cliente);
         $producto = producto::all();
-
+   
       
         
         return view('ventas.crearVentas',compact('cliente','producto'));
@@ -62,23 +61,38 @@ class VentasController extends Controller
             $ventas->save();
 
 
-            
+           // dd($request->nombreproducto);
             //$pedidoventa->cod_producto_fk = $request->nombreproducto;
               // $arrayProductos = $request->nombreproducto;
-
-             foreach ($request->nombreproducto as $key) {
-                $pedidoventa = new pedidoventa;
-                $pedidoventa->cod_venta_fk = $request->idcodventa;
-                $pedidoventa->cod_producto_fk = $key;
-                
-             $precioProducto = producto::find($key)->precio;
-
-            $pedidoventa->cantidad = $request->idcantidad;
+  // $pedidoventa->cantidad = $request->idcantidad1;
           
-            $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
-            $pedidoventa->save();
-
+            $contProducto = 0;
+        foreach ($request->nombreproducto as $key) {
+            
+            $contCantidad = 0;
+             $pedidoventa = new pedidoventa;   
+              $pedidoventa->cod_venta_fk = $request->idcodventa;
+                $pedidoventa->cod_producto_fk = $key;
+                $precioProducto = producto::findOrFail($key)->precio;
+            foreach ($request->idcantidad1 as $key1) {
+                 
+                 if ($contProducto == $contCantidad) {
+                       $pedidoventa->cantidad = $key1;  
+                  $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+                $pedidoventa->save(); 
+                break;
+                     
+                 }
+                
+               $contCantidad = $contCantidad +1;
             }
+       
+                $contProducto = $contProducto + 1;
+
+
+        }
+
+
 
             
          //   $id = $request->idcodventa;
@@ -86,8 +100,8 @@ class VentasController extends Controller
         $cliente = cliente::all();
       
         $producto = producto::all();
-           $mensaje = "Producto Agreado Correctamente";
-        return view('ventas.crearVentas',compact('cliente','producto','mensaje'))->with('mensaje','Registro Exitoso');;
+        
+        return view('ventas.crearVentas',compact('cliente','producto'));
        // return view('home');
     }
 
@@ -97,9 +111,9 @@ class VentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cliente)
     {
-        //
+       return redirect()->route('Ventas.create')->with('listado','Producto Agregado');
     }
 
     /**
@@ -122,7 +136,23 @@ class VentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+    
+   $nombre = $request->nombreproducto1;
+   $cantidad = $request->idcantidad1;
+
+  
+    
+
+    // $listadoNEW[] = $listadoOLD; 
+     //array_merge($listadoOLD, $listadoNEW);
+
+
+    
+    return redirect()->route('Ventas.create')->with('nombre', $nombre)->with('cantidad',$cantidad);
+  
+      
+     
+        //return view('ventas.crearVentas')->with('listado', $listado); 
     }
 
     /**
@@ -135,6 +165,13 @@ class VentasController extends Controller
     {
         //
     }
+
+
+  
+
+
+
+    
 
 
 
