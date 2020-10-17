@@ -46,7 +46,7 @@ var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
 //funciones
 
 // Eventos
-//formulario registro de pacientes 
+//formulario registro de Productos 
 if(NombreP){
     NombreP.addEventListener('blur', () => {
 
@@ -184,7 +184,7 @@ if(IdProductoP){
         
     })
 }
-//fFormulario Ventas
+//Formulario Ventas
 if(DireccionV){
     DireccionV.addEventListener('blur', () => {
 
@@ -280,26 +280,6 @@ if(TabVenta){
 }
 //Formulario de compras
 
-/* if(NombrePC){
-    NombrePC.addEventListener('blur', () => {
-
-        if (NombrePC.value == "") {
-            document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
-            document.getElementById("msgnombreproducto").style.display = "block";
-            NombrePC.style.borderColor = "red";
-            
-        }
-        else {
-            document.getElementById("msgnombreproducto").style.display = "none";
-            document.getElementById("msgnombreproducto").innerHTML = ""
-            NombrePC.style.borderColor = "";
-            
-            
-        }
-        
-    })
-}  */
-
 if(ProveedorC){
     ProveedorC.addEventListener('blur', () => {
 
@@ -319,32 +299,6 @@ if(ProveedorC){
         
     })
 }
-
-/* if(CantidadC){
-    CantidadC.addEventListener('blur', () => {
-
-        if (CantidadC.value == "") {
-            document.getElementById("msgidcantidad").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
-            document.getElementById("msgidcantidad").style.display = "block";
-            CantidadC.style.borderColor = "red";
-            
-        }
-        else if(!(CantidadC.value - Math.floor(CantidadC.value)) == 0){
-            document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
-            document.getElementById("msgidcantidad").style.display = "block";
-            CantidadC.style.borderColor = "red";
-        }
-
-        else {
-            document.getElementById("msgidcantidad").style.display = "none";
-            document.getElementById("msgidcantidad").innerHTML = ""
-            CantidadC.style.borderColor = "";
-            
-            
-        }
-        
-    })
-} */
 
 function NombreProductoCompra(){
     if(ProveedorC.value == 0){

@@ -76,31 +76,33 @@ class VentasController extends Controller
               
 
             
-              $productos = $request->nombreproducto;
-              // dd($codProductos);
+            $productos = $request->nombreproducto;
+               //dd($productos);
 
 
             // Arreglo de cantidades de productos
-              $cantidades = $request->idcantidad;
+            $cantidades = $request->idcantidad;
 
               
               $i = 0;
               
               while ($i < sizeof($productos) ) {
-
-                $pedidoventa = new pedidoventa;
+                if($productos[$i]!=null){
+                  $pedidoventa = new pedidoventa;
     
-                $pedidoventa->cod_venta_fk = $codUltimaVenta;
+                  $pedidoventa->cod_venta_fk = $codUltimaVenta;
+  
+                  // Recuperando el codigo del producto
+                  $pedidoventa->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
+  
+                  // Recuperando el precio del producto
+                  $precioProducto = producto::where('nombre', $productos[$i])->first()->precio;
+                  
+                  $pedidoventa->cantidad = $cantidades[$i];
+                  $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+                  $pedidoventa->save();
+                }
 
-                // Recuperando el codigo del producto
-                $pedidoventa->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
-
-                // Recuperando el precio del producto
-                $precioProducto = producto::where('nombre', $productos[$i])->first()->precio;
-                
-                $pedidoventa->cantidad = $cantidades[$i];
-                $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
-                $pedidoventa->save();
                 $i++;
             }
 

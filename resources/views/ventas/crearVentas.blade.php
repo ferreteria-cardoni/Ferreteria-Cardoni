@@ -68,18 +68,15 @@
 					<tbody>
 						<tr>
 							<td>
-								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off">
+								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control" required>
 								<datalist id="productos">
 									@foreach ($producto as $productoiten)
-									<option value="{{$productoiten->nombre}}">${{$productoiten->precio}}</option>			
+									<option value="{{$productoiten->nombre}}">${{$productoiten->precio}}</option>
 									@endforeach
 								</datalist>  
 							</td>
-							<!-- <td>
-							<input id="precio" disabled name="precio[]" value="" class="form-control">
-							</td> -->
 							<td>
-								<input type="number" min="0" name="idcantidad[]" id="idcantidad" class="b form-control">
+								<input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required></td>
 							</td>
 							<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>
 						</tr>
@@ -92,7 +89,7 @@
 				</table>
 			</div>
 		</section>
-		<button type="submit" class="btn btn-primary">Registrar Venta</button> 
+		<button id="btmsubmitV" type="submit" class="btn btn-primary" >Registrar Venta</button> 
 		<button type="reset" class="btn btn-danger">Limpiar Campos</button>
 	</form>
 </div>
