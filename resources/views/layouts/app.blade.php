@@ -505,11 +505,11 @@
         var tr = '<tr>';
 
         tr += '<td>'+selectProducto.outerHTML+'</td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control"></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]"  class="b form-control"></td>'+
 		'<td><button type="button" class="btn btn-danger remove">Eliminar</button></td>'+
         '</tr>';
         $('tbody').append(tr);
-        $('#btmVentasTab').attr('disabled',true);
+        
     };
 
     // Eliminando filas de compras
