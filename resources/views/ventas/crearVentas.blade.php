@@ -68,7 +68,7 @@
 					<tbody>
 						<tr>
 							<td>
-								<input id="nombreproductoV" name="nombreproductoV[]" list="productos" class="a form-control" autocomplete="off">
+								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off">
 								<datalist id="productos">
 									@foreach ($producto as $productoiten)
 									<option value="{{$productoiten->nombre}}">${{$productoiten->precio}}</option>			
@@ -79,8 +79,7 @@
 							<input id="precio" disabled name="precio[]" value="" class="form-control">
 							</td> -->
 							<td>
-								<input type="number" min="0" id="idcantidadV" name="idcantidadV[]" class="b form-control">
-								
+								<input type="number" min="0" name="idcantidad[]" id="idcantidad" class="b form-control">
 							</td>
 							<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>
 						</tr>

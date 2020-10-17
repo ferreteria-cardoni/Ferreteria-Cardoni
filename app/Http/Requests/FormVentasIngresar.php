@@ -28,7 +28,7 @@ class FormVentasIngresar extends FormRequest
             'nombreventa' => 'required',
             'iddireccion'=> 'required',
             'nombreproductoV'=> 'required',
-            'idcantidadV'=> 'required',
+            //'idcantidadV'=> 'required',
 
             
             
