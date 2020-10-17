@@ -63,13 +63,13 @@
 							<tr>
 
 								<td>
-									<input id="nombreproducto" disabled name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off">
+									<input id="nombreproducto" disabled name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off" required>
 									<datalist id="productos">
 									</datalist>  
 								</td>
 
 								<td>
-									<input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="b form-control">
+									<input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="b form-control" required>
 								</td>
 								
 								<!-- {{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}} -->

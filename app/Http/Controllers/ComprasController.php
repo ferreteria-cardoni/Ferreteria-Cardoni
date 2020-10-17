@@ -78,19 +78,22 @@ class ComprasController extends Controller
 
         while ($i < sizeof($productos) ) {
             
-            $pedidoCompra = new pedidocompra;
-
-            
-
+            $pedidoCompra = new pedidocompra;           
             $pedidoCompra->cod_compra_fk = $codUltimaCompra;
+            
             // dd(producto::where('nombre', $productos[$i])->first()->cod_producto);
             $pedidoCompra->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
             $pedidoCompra->cantidad = $cantidades[$i];
             $pedidoCompra->save();
+
+            $cant=producto::where('nombre', $productos[$i])->first()->cantidad;
+            $cant=$cant+$cantidades[$i];
+            $pro=producto::find(producto::where('nombre', $productos[$i])->first()->cod_producto);
+            $pro->cantidad=$cant;
+            $pro->save();
+
             $i++;
         }
-
-
         return redirect(route('compras.create'))->with('datos','Registro exitoso');
         
     }

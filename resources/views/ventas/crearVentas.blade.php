@@ -34,7 +34,7 @@
 			<div class="panel panel-header">
 				<div class="row">
 					<div class="col-md-6">
-                        <select class="custom-select" name='nombreventa' id="nombreventa" >
+                        <select class="custom-select" name='nombreventa' id="nombreventa" autocomplete="off">
                             <option value="0" disabled selected>Seleccione el cliente</option>
                             @foreach($cliente as $clienteiten)
                             <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
@@ -68,31 +68,33 @@
 					<tbody>
 						<tr>
 							<td>
-								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off">
+								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off" required>
 								<datalist id="productos">
 									@foreach ($producto as $productoiten)
-									<option value="{{$productoiten->nombre}}">${{$productoiten->precio}}</option>			
+									<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>
 									@endforeach
 								</datalist>  
 							</td>
-							<!-- <td>
-							<input id="precio" disabled name="precio[]" value="" class="form-control">
-							</td> -->
 							<td>
-								<input type="number" min="0" name="idcantidad[]" id="idcantidad" class="b form-control">
+								<input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required></td>
 							</td>
-							<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>
+							<td>
+								<button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button>						
+							</td>
 						</tr>
 					</tbody>
-					<!-- <tfoot>
+					<tfoot>
 						<tr>
-							<td><input readonly type="number" class="form-control" id="idtotal" name="idtotal" placeholder="Total"></td>
+							<td>
+								Total
+								<input readonly type="text" class="form-control" id="idtotal" name="idtotal" placeholder="Total">
+							</td>
 						</tr>
-					</tfoot> -->
+					</tfoot> 
 				</table>
 			</div>
 		</section>
-		<button type="submit" class="btn btn-primary">Registrar Venta</button> 
+		<button id="btmsubmitV" type="submit" class="btn btn-primary" >Registrar Venta</button> 
 		<button type="reset" class="btn btn-danger">Limpiar Campos</button>
 	</form>
 </div>
