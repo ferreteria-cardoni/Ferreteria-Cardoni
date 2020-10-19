@@ -416,8 +416,8 @@
     function addRow()
     {
         var tr = '<tr>'+
-        '<td><input id="nombreproductoV" name="nombreproductoV[]" list="productos" class="a form-control"><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control"></td>'+
+        '<td><input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control"><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
+		'<td><input id="idcantidad" type="number" min="0" name="idcantidad[]" class="b form-control"></td>'+
         '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
         '<tr>';
         $('tbody').append(tr);
