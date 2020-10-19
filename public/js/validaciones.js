@@ -17,6 +17,7 @@ const TabVenta=document.querySelector('#Venta');
 const TotalV=document.querySelector('#idtotal');
 const AddTab=document.querySelector('#btmVentasTab');
 var DelTab=document.querySelectorAll('button.remove');
+var dispos=0;
 
 
 //Formulario de compras
@@ -235,7 +236,8 @@ function NombreProductoVenta(){
     var total=0; 
     for(var i=0;i<NombrePV.length;i++){
         var uno=NombrePV[i].value.split("$");
-        //console.log(uno[1]*1+3);
+        Disponibilidad(uno[0]);
+        //console.log(NombrePV[i].value);
         if (NombrePV[i].value == "") {
             document.getElementById("msgnombreproductoV").innerHTML = "Debe seleccionar un producto en el campo indicado"
             document.getElementById("msgnombreproductoV").style.display = "block";
@@ -266,11 +268,20 @@ function NombreProductoVenta(){
             cant[i].style.borderWidth = "3px";
             $('#btmVentasTab').attr('disabled',true); 
         }
+        else if(cant[i].value>dispos){
+            document.getElementById("msgidcantidadV").innerHTML = "No hay suficiente stock del "+[i+1]+"° producto";
+            document.getElementById("msgidcantidadV").style.display = "block";
+            cant[i].style.borderColor = "red";
+            cant[i].style.borderWidth = "3px";
+            $('#btmVentasTab').attr('disabled',true);
+            $('#btmsubmitV').attr('disabled',true);            
+        }
         else {
             document.getElementById("msgidcantidadV").style.display = "none";
             document.getElementById("msgidcantidadV").innerHTML = ""
             cant[i].style.borderColor = "";
             cant[i].style.borderWidth = "2px";
+            console.log();           
             $('#btmVentasTab').attr('disabled',false); 
         }
         
@@ -291,12 +302,16 @@ function Total(){
     
     TotalV.value= "$"+total;
 }
+function dispo(msg){
+ dispos=msg;
+} 
 if(TabVenta){
     TabVenta.addEventListener('click', () => {
         NombreProductoVenta();     
     })
     TabVenta.addEventListener('change', () => {
-        NombreProductoVenta();     
+        NombreProductoVenta();
+             
     })
     TabVenta.addEventListener('mousemove', () => {
         Total();     

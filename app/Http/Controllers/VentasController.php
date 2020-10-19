@@ -184,10 +184,13 @@ class VentasController extends Controller
     {
         //
     }
-
-
-
-
-
-   
+    public function cantidad (Request $request){
+      if($request->ajax()){
+        $query = trim($request->get('query'));
+        $cant = producto::where('nombre', $query)->value('cantidad');
+        $lel='ok';
+        echo json_encode($cant);
+      }
+    }
+  
 }

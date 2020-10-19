@@ -545,12 +545,44 @@
                 }
             })
         }
-
         $(document).on('keyup', '#texto', function() {
             var query = $(this).val();
             //console.log(query);
             busca(query);
         })
 
+       
+   /*      $(document).on('keyup', '#idcantidad', function() {
+            var query = $('#nombreproducto').val().split("$");
+            //var uno=NombrePV[i].value.split("$");
+            console.log(query[0]);
+            Disponibilidad(query[0]);
+        }) */
+
     })
+</script>
+<script type="text/javascript">
+    function Disponibilidad(query=''){
+                var resp;
+                $.ajax({
+                    url:"{{ route('cantidad') }}",
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    dataType: "json",
+                    error: function (jqXHR, exception){
+                        console.log('neles');
+                    },
+                    success: function(data) {
+                        //console.log(data);
+                        dispo(data);
+                        //$('#ok').html(data);
+                        //resp= data;
+                        //return 'pasa';
+                        
+                    }
+                })
+                
+            }
 </script>
