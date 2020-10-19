@@ -14,6 +14,19 @@ use App\role;
 use App\empleado;
 class VentasController extends Controller
 {
+
+
+
+  public function __construct()
+  {
+        $this->middleware('bodega')->only(['index']);
+        $this->middleware('ventas')->only(['create']);
+
+  }
+
+
+
+
     /**
      * Display a listing of the resource.
      *

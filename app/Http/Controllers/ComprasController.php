@@ -20,6 +20,13 @@ class ComprasController extends Controller
     }
 
 
+    public function __construct()
+    {
+        $this->middleware('bodega')->only(['index']);
+        $this->middleware('compras')->only(['create']);
+
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -28,7 +35,7 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        $pedidoCompra = pedidocompra::paginate(3);
+        $pedidoCompra = pedidocompra::paginate(10);
 
         return view('compras.vistaCompras', compact('pedidoCompra'));
     }

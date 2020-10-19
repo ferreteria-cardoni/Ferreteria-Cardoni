@@ -149,7 +149,7 @@
                                 </a>
                             </li>
                             {{-- Usuarios --}}
-                            @canany(['administrador', 'ventas'])
+                            @canany(['administrador'])
                             <li class="nav-item">
                                 <a href="usuarios" class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
@@ -163,11 +163,16 @@
                             @endcanany
 
                             {{-- Productos --}}
+                            
+                                
+                            
                             <li class="nav-item has-treeview">
+                                @canany(['gerente', 'ventas', 'bodega'])
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Productos<i class="fas fa-angle-left right"></i></p>
                                 </a>
+                                @endcanany
                                 <ul class="nav nav-treeview">
                                     @canany(['bodega'])
                                     <li class="nav-item">
@@ -207,7 +212,7 @@
 
 
                               {{-- Ventas --}}
-                            @canany(['bodega'])
+                            @canany(['ventas'])
                             <li class="nav-item has-treeview">
                                 <a href="{{route('Ventas.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -251,7 +256,7 @@
                                 {{-- </ul> --}}
 
                             {{-- Compras --}}
-                            @canany(['bodega'])
+                            @canany(['compras'])
                             <li class="nav-item">
                                 <a href="{{route('compras.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -329,7 +334,7 @@
                             @endcanany
 
                             {{-- Clientes --}}
-                            @canany(['secretaria','bodega'])
+                            @canany(['secretaria'])
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>

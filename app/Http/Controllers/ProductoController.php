@@ -24,6 +24,10 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function __construct()
+    {
+        $this->middleware('bodega')->only(['edit']);
+    }
    
 
 
