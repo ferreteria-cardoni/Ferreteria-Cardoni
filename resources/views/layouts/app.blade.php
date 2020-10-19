@@ -416,9 +416,15 @@
     function addRow()
     {
         var tr = '<tr>'+
+<<<<<<< HEAD
         '<td><input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control"><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
 		'<td><input id="idcantidad" type="number" min="0" name="idcantidad[]" class="b form-control"></td>'+
         '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
+=======
+        '<td><input name="nombreproducto[]" list="productos" class="a form-control" required><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button></td>'
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
         '<tr>';
         $('tbody').append(tr);
     };
@@ -500,14 +506,12 @@
         console.log(selectProducto);
 
         // console.log(selectProducto);
-        
-  
         var tr = '<tr>';
 
         tr += '<td>'+selectProducto.outerHTML+'</td>'+
-		'<td><input type="number" min="0" name="idcantidad[]"  class="b form-control"></td>'+
-		'<td><button type="button" class="btn btn-danger remove">Eliminar</button></td>'+
-        '</tr>';
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
+        '<tr>';;
         $('tbody').append(tr);
         
     };
