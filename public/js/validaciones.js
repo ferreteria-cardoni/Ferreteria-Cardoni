@@ -234,58 +234,73 @@ function NombreProductoVenta(){
     var NombrePV = document.querySelectorAll('input.a');
     var cant = document.querySelectorAll('input.b');
     var total=0; 
+    var msg="";
     for(var i=0;i<NombrePV.length;i++){
         var uno=NombrePV[i].value.split("$");
         Disponibilidad(uno[0]);
         //console.log(NombrePV[i].value);
         if (NombrePV[i].value == "") {
-            document.getElementById("msgnombreproductoV").innerHTML = "Debe seleccionar un producto en el campo indicado"
             document.getElementById("msgnombreproductoV").style.display = "block";
+            document.getElementById("msgnombreproductoV").innerHTML = "Seleccione un producto"
             NombrePV[i].style.borderColor = "red";
             NombrePV[i].style.borderWidth = "3px";
             $('#btmVentasTab').attr('disabled',true);
+            cant[i].disabled="true";
         }
         else {
             document.getElementById("msgnombreproductoV").style.display = "none";
             document.getElementById("msgnombreproductoV").innerHTML = ""
             NombrePV[i].style.borderColor = "";
             NombrePV[i].style.borderWidth = "2px";
-            $('#btmVentasTab').attr('disabled',false); 
-        }
+            cant[i].disabled="";
 
-        if (cant[i].value == "") {
-            document.getElementById("msgidcantidadV").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
+
+            if (cant[i].value == "") {
+                msg = "La cantidad ingresada debe ser superior a 0 ";
+                //document.getElementById("msgidcantidadV").style.display = "block";
+                cant[i].style.borderColor = "red";
+                cant[i].style.borderWidth = "3px";
+                
+                
+            }
+            else if(!(cant[i].value - Math.floor(cant[i].value)) == 0){
+                msg = "Utilize solo números enteros";
+                //document.getElementById("msgidcantidadV").style.display = "block";
+                cant[i].style.borderColor = "red";
+                cant[i].style.borderWidth = "3px";
+                
+            }
+            else if(dispos>0){
+                if(cant[i].value>dispos){
+                    msg = "No hay suficiente stock del "+[i+1]+"° producto";
+                    //document.getElementById("msgidcantidadV").style.display = "block";
+                    cant[i].style.borderColor = "red";
+                    cant[i].style.borderWidth = "3px"; 
+                } else {
+                    //document.getElementById("msgidcantidadV").style.display = "none";
+                    //document.getElementById("msgidcantidadV").innerHTML = ""
+                    cant[i].style.borderColor = "";
+                    cant[i].style.borderWidth = "2px";         
+                }                      
+            }
+            else {
+                //document.getElementById("msgidcantidadV").style.display = "none";
+                //document.getElementById("msgidcantidadV").innerHTML = ""
+                cant[i].style.borderColor = "";
+                cant[i].style.borderWidth = "2px";         
+            }
+        }       
+        if(msg!=""){
+            document.getElementById("msgidcantidadV").innerHTML = msg;
             document.getElementById("msgidcantidadV").style.display = "block";
-            cant[i].style.borderColor = "red";
-            cant[i].style.borderWidth = "3px";
-            $('#btmVentasTab').attr('disabled',true); 
-            
-        }
-        else if(!(cant[i].value - Math.floor(cant[i].value)) == 0){
-            document.getElementById("msgidcantidadV").innerHTML = "Utilize solo números enteros";
-            document.getElementById("msgidcantidadV").style.display = "block";
-            cant[i].style.borderColor = "red";
-            cant[i].style.borderWidth = "3px";
-            $('#btmVentasTab').attr('disabled',true); 
-        }
-        else if(cant[i].value>dispos){
-            document.getElementById("msgidcantidadV").innerHTML = "No hay suficiente stock del "+[i+1]+"° producto";
-            document.getElementById("msgidcantidadV").style.display = "block";
-            cant[i].style.borderColor = "red";
-            cant[i].style.borderWidth = "3px";
             $('#btmVentasTab').attr('disabled',true);
-            $('#btmsubmitV').attr('disabled',true);            
-        }
-        else {
+            $('#btmsubmitV').attr('disabled',true); 
+        }else{
             document.getElementById("msgidcantidadV").style.display = "none";
-            document.getElementById("msgidcantidadV").innerHTML = ""
-            cant[i].style.borderColor = "";
-            cant[i].style.borderWidth = "2px";
-            console.log();           
-            $('#btmVentasTab').attr('disabled',false); 
-        }
-        
-            
+            document.getElementById("msgidcantidadV").innerHTML = "";
+            $('#btmVentasTab').attr('disabled',false);
+            $('#btmsubmitV').attr('disabled',false); 
+        }           
     }
 
 };

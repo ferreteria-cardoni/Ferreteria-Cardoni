@@ -76,7 +76,7 @@
 								</datalist>  
 							</td>
 							<td>
-								<input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required>
+								<input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required disabled>
 							</td>
 							<td>
 								<button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button>						
