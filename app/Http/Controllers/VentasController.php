@@ -49,7 +49,7 @@ class VentasController extends Controller
 
         $cliente = cliente::all();
         //dd($cliente);
-        $producto = producto::all();
+        $producto = producto::where('cantidad', '>', 0)->get();
 
       
         

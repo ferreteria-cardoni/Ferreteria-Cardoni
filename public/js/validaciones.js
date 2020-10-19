@@ -274,16 +274,22 @@ function NombreProductoVenta(){
             $('#btmVentasTab').attr('disabled',false); 
         }
         
-            total = total+ Total(uno[1]*1,(cant[i].value)*1);
-            TotalV.value= "$"+total;
+            
     }
 
 };
-function Total( precio,cant ){
-    if(!isNaN(precio) && !isNaN(cant)){
-        return precio*cant;
+function Total(){
+    var NombrePV = document.querySelectorAll('input.a');
+    var cant = document.querySelectorAll('input.b');
+    var total=0; 
+    for(var i=0;i<NombrePV.length;i++){
+        var uno=NombrePV[i].value.split("$");
+        if(!isNaN(uno[1]*1) && !isNaN((cant[i].value)*1)){
+            total = total+((uno[1]*1)*(cant[i].value)*1);
+        }
     }
-    return 0;
+    
+    TotalV.value= "$"+total;
 }
 if(TabVenta){
     TabVenta.addEventListener('click', () => {
@@ -293,7 +299,7 @@ if(TabVenta){
         NombreProductoVenta();     
     })
     TabVenta.addEventListener('mousemove', () => {
-        NombreProductoVenta();     
+        Total();     
     })
     
 }
