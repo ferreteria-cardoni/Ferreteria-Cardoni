@@ -149,7 +149,7 @@
                                 </a>
                             </li>
                             {{-- Usuarios --}}
-                            @canany(['administrador', 'ventas'])
+                            @canany(['administrador'])
                             <li class="nav-item">
                                 <a href="usuarios" class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
@@ -163,11 +163,16 @@
                             @endcanany
 
                             {{-- Productos --}}
+                            
+                                
+                            
                             <li class="nav-item has-treeview">
+                                @canany(['gerente', 'ventas', 'bodega'])
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Productos<i class="fas fa-angle-left right"></i></p>
                                 </a>
+                                @endcanany
                                 <ul class="nav nav-treeview">
                                     @canany(['bodega'])
                                     <li class="nav-item">
@@ -207,7 +212,7 @@
 
 
                               {{-- Ventas --}}
-                            @canany(['bodega'])
+                            @canany(['ventas'])
                             <li class="nav-item has-treeview">
                                 <a href="{{route('Ventas.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -251,7 +256,7 @@
                                 {{-- </ul> --}}
 
                             {{-- Compras --}}
-                            @canany(['bodega'])
+                            @canany(['compras'])
                             <li class="nav-item">
                                 <a href="{{route('compras.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -329,7 +334,7 @@
                             @endcanany
 
                             {{-- Clientes --}}
-                            @canany(['secretaria','bodega'])
+                            @canany(['secretaria'])
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -416,15 +421,9 @@
     function addRow()
     {
         var tr = '<tr>'+
-<<<<<<< HEAD
-        '<td><input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control"><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
-		'<td><input id="idcantidad" type="number" min="0" name="idcantidad[]" class="b form-control"></td>'+
-        '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
-=======
         '<td><input name="nombreproducto[]" list="productos" class="a form-control" required><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
 		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
         '<td><button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button></td>'
->>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
         '<tr>';
         $('tbody').append(tr);
     };
