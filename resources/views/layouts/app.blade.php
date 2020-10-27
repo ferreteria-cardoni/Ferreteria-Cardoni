@@ -551,15 +551,50 @@
             //console.log(query);
             busca(query);
         })
+    })
+</script>
 
-       
-   /*      $(document).on('keyup', '#idcantidad', function() {
-            var query = $('#nombreproducto').val().split("$");
-            //var uno=NombrePV[i].value.split("$");
-            console.log(query[0]);
-            Disponibilidad(query[0]);
-        }) */
+<script type="text/javascript">
+    window.addEventListener("load", function() {
+        function buscaCompras(query = '') {
+            $.ajax({
+                url: "{{ route('buscadorCompra') }}",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                dataType: 'json',
+                success: function(data) {
+                    //console.log(data);
+                    $('#VistaCompra').html(data);
+                }
+            })
+        }
+        $(document).on('keyup', '#textoCompra', function() {
+            var query = $(this).val();
+            //console.log(query);
+            buscaCompras(query);
+        })
 
+        function buscaVentas(query = '') {
+            $.ajax({
+                url: "{{ route('buscadorVenta') }}",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                dataType: 'json',
+                success: function(data) {
+                    //console.log(data);
+                    $('#VistaVenta').html(data);
+                }
+            })
+        }
+        $(document).on('keyup', '#textoVenta', function() {
+            var query = $(this).val();
+            //console.log(query);
+            buscaVentas(query);
+        })
     })
 </script>
 

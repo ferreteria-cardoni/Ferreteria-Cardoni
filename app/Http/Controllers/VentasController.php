@@ -193,5 +193,72 @@ class VentasController extends Controller
         echo json_encode($cant);
       }
     }
+
+    public function buscador(Request $request){
+        
+      if($request->ajax()){
+          
+          $query = trim($request->get('query'));
+          if($query != ''){
+              $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+                          ->orWhere('nombre','LIKE','%'.$query.'%')
+                          ->take(10)
+                          ->get();
+          }else{
+              $output='
+              <tr>
+                  <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+              </tr>
+              ';
+          }
+          if(isset($productos)){
+              $total=$productos->count();
+              $output='';
+              
+              if($total>0)
+              { 
+                  foreach($productos as $ItemP){
+                      $pedidoVenta= pedidoventa::where('cod_producto_fk',$ItemP->cod_producto)
+                                                  ->get();
+/*                         $output .='
+                      <tr>
+                          <th scope="row">'.$ItemP->cod_producto.'</th>
+                          <td>'.$ItemP->nombre.'</td>
+                      '; */
+                      foreach($pedidoVenta as $hventa){
+                        $Venta= venta::where('cod_venta',$hventa->cod_venta_fk)->value('cod_empleado_fk');
+                        //echo($hventa->cantidad);
+                        $empleadoN= empleado::where('cod_empleado',$Venta)->value('nombre');
+                        $empleadoA= empleado::where('cod_empleado',$Venta)->value('apellido');
+                          $output .='
+                          <tr>
+                          <th scope="row">'.$ItemP->cod_producto.'</th>
+                          <td>'.$ItemP->nombre.'</td>
+                          <td>'.$hventa->cantidad.'</td>
+                          <td>'.\Carbon\Carbon::parse($hventa->created_at)->format('d/m/Y').'</td>
+                          <td>'.$empleadoN.' '.$empleadoA.'</td>
+                         
+                      ';
+                      }
+                      $output .= '<tr>';
+                  }
+  
+              }else{
+                  $output='
+                  <tr>
+                      <td align="center" colspan="5">Sin Registros</td>
+                  </tr>
+                  ';
+              }
+
+          }
+
+        /*   $productos= array(
+              'table_data'  => $output
+          ); */
+
+          echo json_encode($output);
+      }
+  }
   
 }
