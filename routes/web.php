@@ -64,6 +64,10 @@ Route::get('/cantidad', 'VentasController@cantidad')->name('cantidad');
 
 Route::resource('Clientes', 'ClienteController');
 
+Route::get('/buscadorCompra', 'ComprasController@buscador')->name('buscadorCompra');
+
+Route::get('/buscadorVenta', 'VentasController@buscador')->name('buscadorVenta');
+
 
 
 
