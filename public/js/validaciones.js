@@ -1,5 +1,8 @@
 
 // Obteniendo los elementos del HTML a través de su id
+
+//const { truncate } = require("lodash");
+
 //formulario Registro productos
 const NombreP = document.querySelector('#idnombre');
 const MarcaP = document.querySelector('#idmarca');
@@ -25,6 +28,7 @@ const NombrePC = document.querySelector('#nombreproducto');
 const ProveedorC = document.querySelector('#idproveedor');
 const CantidadC = document.querySelector('#idcantidad');
 const TabCompra=document.querySelector('#Compra');
+const TotalCompra=document.querySelector('#totalc');
 
 
 
@@ -361,12 +365,16 @@ function NombreProductoCompra(){
     }else{
         var NombrePC = document.querySelectorAll('input.a');
         var cantC = document.querySelectorAll('input.b');
+        var precioC = document.querySelectorAll('input.c');
+        var totalC=0;
         for(var i=0;i<NombrePC.length;i++){
             if (NombrePC[i].value == "") {
                 document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
                 document.getElementById("msgnombreproducto").style.display = "block";
                 NombrePC[i].style.borderColor = "red";
                 NombrePC[i].style.borderWidth = "3px";
+                cantC[i].disabled="true";
+                precioC[i].disabled="true";
                 $('#btmComprasTab').attr('disabled',true);
             }
             else {
@@ -375,32 +383,39 @@ function NombreProductoCompra(){
                 NombrePC[i].style.borderColor = "";
                 NombrePC[i].style.borderWidth = "2px";
                 $('#btmComprasTab').attr('disabled',false);
+                cantC[i].disabled="";
+                precioC[i].disabled="";
+
+                if (cantC[i].value == "") {
+                    document.getElementById("msgidcantidad").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
+                    document.getElementById("msgidcantidad").style.display = "block";
+                    cantC[i].style.borderColor = "red";
+                    cantC[i].style.borderWidth = "3px";
+                    $('#btmComprasTab').attr('disabled',true);
+                    
+                }
+                else if(!(cantC[i].value - Math.floor(cantC[i].value)) == 0){
+                    document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
+                    document.getElementById("msgidcantidad").style.display = "block";
+                    cantC[i].style.borderColor = "red";
+                    cantC[i].style.borderWidth = "3px";
+                    $('#btmComprasTab').attr('disabled',true);
+                }
+                else {
+                    document.getElementById("msgidcantidad").style.display = "none";
+                    document.getElementById("msgidcantidad").innerHTML = ""
+                    cantC[i].style.borderColor = "";
+                    cantC[i].style.borderWidth = "2px";
+                    $('#btmComprasTab').attr('disabled',false);
+                }
             }
     
-            if (cantC[i].value == "") {
-                document.getElementById("msgidcantidad").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
-                document.getElementById("msgidcantidad").style.display = "block";
-                cantC[i].style.borderColor = "red";
-                cantC[i].style.borderWidth = "3px";
-                $('#btmComprasTab').attr('disabled',true);
-                
-            }
-            else if(!(cantC[i].value - Math.floor(cantC[i].value)) == 0){
-                document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
-                document.getElementById("msgidcantidad").style.display = "block";
-                cantC[i].style.borderColor = "red";
-                cantC[i].style.borderWidth = "3px";
-                $('#btmComprasTab').attr('disabled',true);
-            }
-            else {
-                document.getElementById("msgidcantidad").style.display = "none";
-                document.getElementById("msgidcantidad").innerHTML = ""
-                cantC[i].style.borderColor = "";
-                cantC[i].style.borderWidth = "2px";
-                $('#btmComprasTab').attr('disabled',false);
-            }
-    
+           totalC=totalC+((cantC[i].value*1)*(precioC[i].value*1));     
         }
+        
+        TotalCompra.value='$'+totalC.toFixed(2);
+        
+         
     }
 
 

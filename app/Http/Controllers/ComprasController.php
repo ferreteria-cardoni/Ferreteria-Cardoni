@@ -66,20 +66,18 @@ class ComprasController extends Controller
         $compras = new compra;
 
         $compras->cod_empleado_fk = $codEmpleado;
-
-        // dd($request->idproveedor);
-
         $compras->cod_proveedor_fk = $request->idproveedor;
         $compras->descripcion = $request->iddescripcion;
+        $compras->total = substr($request->totalc,1);
         $compras->save();
-
         // Recuperando el codigo de la ultima compra
         $codUltimaCompra = compra::orderBy('cod_compra', 'desc')->first()->cod_compra;
-
-        //   Arreglo de codigos de productos
+        // Arreglo de codigos de productos
         $productos = $request->nombreproducto;
         // Arreglo de cantidades de productos
         $cantidades = $request->idcantidad;
+        //arreglo precio
+        $precio=$request->idprecioC;
 
         $i = 0;
 
@@ -96,6 +94,7 @@ class ComprasController extends Controller
             $cant=producto::where('nombre', $productos[$i])->first()->cantidad;
             $cant=$cant+$cantidades[$i];
             $pro=producto::find(producto::where('nombre', $productos[$i])->first()->cod_producto);
+            $pro->precioCompra=$precio[$i];
             $pro->cantidad=$cant;
             $pro->save();
 

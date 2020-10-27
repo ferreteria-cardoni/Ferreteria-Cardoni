@@ -71,7 +71,7 @@
 								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off" required>
 								<datalist id="productos">
 									@foreach ($producto as $productoiten)
-									<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>
+									<option value="{{$productoiten->nombre}} ${{$productoiten->precioVenta}}"></option>
 									@endforeach
 								</datalist>  
 							</td>
