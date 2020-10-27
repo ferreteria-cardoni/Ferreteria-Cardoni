@@ -71,6 +71,7 @@ class VentasController extends Controller
             $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
             $ventas->direccion = $request->iddireccion;
+            $ventas->total= substr($request->idtotal,1);
             $ventas->save();
 
 
@@ -112,10 +113,10 @@ class VentasController extends Controller
                   $pedidoventa->cod_producto_fk = producto::where('nombre', $NombreProducto)->first()->cod_producto;
   
                   // Recuperando el precio del producto
-                  $precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
+                  //$precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
                   
                   $pedidoventa->cantidad = $cantidades[$i];
-                  $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+                  //$pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
                   $pedidoventa->save();
 
                   $cant=producto::where('nombre', $NombreProducto)->first()->cantidad;

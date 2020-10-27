@@ -481,7 +481,7 @@
 
                     // htmlSelectProducto += '<option value="'+data[i].cod_producto+'">'+data[i].nombre+' $'+data[i].precio+'</option>'
 
-                    htmlSelectProducto += '<option value="'+data[i].nombre+'">$'+data[i].precio+'</option>'
+                    htmlSelectProducto += '<option value="'+data[i].nombre+'"></option>'
 
 
                     // $('#productos').html(htmlSelectProducto);
@@ -508,7 +508,8 @@
         var tr = '<tr>';
 
         tr += '<td>'+selectProducto.outerHTML+'</td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><input type="number" min="0" step="any" disabled name="idprecioC[]" class="c form-control" required></td>'+
         '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
         '<tr>';;
         $('tbody').append(tr);
