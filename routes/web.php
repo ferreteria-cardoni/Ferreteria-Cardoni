@@ -6,6 +6,7 @@ use App\producto;
 use App\marca_producto;
 use App\marca;
 use App\compra;
+// use Symfony\Component\Routing\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,11 +62,15 @@ Route::resource('compras', 'ComprasController');
 
 Route::resource('Ventas', 'VentasController');
 
+<<<<<<< HEAD
 Route::post('/listado', function (Requests $requests)
 {
 	dd($requests);
 	//return redirect()->route('Ventas.create')->with('listado','Producto Agregado');
 })->name('listado');
+=======
+Route::resource('Clientes', 'ClienteController');
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
 
 
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -14,6 +14,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js')}}"></script>
     <script src="{{asset('dist/js/adminlte.js')}}"></script>
+    
+   
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
@@ -25,13 +27,21 @@
     <!-- Styles -->
     <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 
     <!--- Prueba -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
+<<<<<<< HEAD
    
+=======
+    
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> --}}
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
 
     <style>
         .AlertaMsg {
@@ -201,29 +211,31 @@
 
 
                               {{-- Ventas --}}
+                            @canany(['bodega'])
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                                <a href="{{route('Ventas.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Ventas<i class="fas fa-angle-left right"></i></p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    @canany(['bodega'])
+                            </li>
+                            @endcanany
+
+                                {{-- <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('Ventas.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Crear</p>
                                         </a>
-                                    </li>
-                                    @endcanany
+                                    </li> --}}
 
-                                    @canany(['gerente', 'ventas', 'bodega'])
+                                    {{-- @canany(['gerente', 'ventas', 'bodega'])
                                     <li class="nav-item">
                                         <a href="/Productos" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ver</p>
                                         </a>
                                     </li>
-                                    @endcanany
+                                    @endcanany --}}
 
 
 
@@ -240,26 +252,27 @@
 
                                     @endcanany --}}
 
-                                </ul>
-                            </li>
+                                {{-- </ul> --}}
 
                             {{-- Compras --}}
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                            @canany(['bodega'])
+                            <li class="nav-item">
+                                <a href="{{route('compras.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Compras<i class="fas fa-angle-left right"></i></p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    @canany(['bodega'])
+                            </li>
+                            @endcanany
+                            
+                                {{-- <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('compras.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>crear</p>
                                         </a>
-                                    </li>
-                                    @endcanany
+                                    </li> --}}
 
-                                    @canany(['gerente', 'ventas', 'bodega'])
+                                    {{-- @canany(['gerente', 'ventas', 'bodega'])
                                     <li class="nav-item">
                                         <a href="/Productos" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
@@ -267,7 +280,7 @@
                                         </a>
                                     </li>
                                     @endcanany
-
+ --}}
 
 
 
@@ -283,8 +296,7 @@
 
                                     @endcanany --}}
 
-                                </ul>
-                            </li>
+                                {{-- </ul> --}}
 
 
 
@@ -314,6 +326,26 @@
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ventas</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endcanany
+
+                            {{-- Clientes --}}
+                            @canany(['secretaria','bodega'])
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon far fa-sticky-note"></i>
+                                    <p>Clientes<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                   
+                                    <li class="nav-item">
+                                        <a href="{{route('Clientes.create')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Agregar</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -377,6 +409,129 @@
 </script>
 
 
+<<<<<<< HEAD
+=======
+{{-- Solo se cargara el script cuando se encuentre en la vista de crear ventas --}}
+@if (Request::is('Ventas/create'))
+    
+<script type="text/javascript">
+
+    $(document).on('click', '.addRow', function(){
+        addRow();
+    });
+
+    // Agregando filas de ventas
+    function addRow()
+    {
+        var tr = '<tr>'+
+        '<td><input name="nombreproducto[]" list="productos" class="a form-control" required><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button></td>'
+        '<tr>';
+        $('tbody').append(tr);
+    };
+
+    // Eliminado filas de ventas
+    $(document).on('click', '.remove', function(){
+        var ultimaFila = $('tbody tr').length;
+        if (ultimaFila == 1) {
+            alert('Lo siento, no se puede eliminar la ultima fila');
+        }else{
+            $(this).parent().parent().remove();
+        }
+    });
+</script>
+@endif
+
+
+
+
+{{-- Solo se cargara para la vista de compras  --}}
+@if (Request::is('compras/create'))
+    
+<script type="text/javascript">
+
+    $(function(){
+            
+        $('#idproveedor').on('change', onSelectProveedor);
+    });
+
+    // Rellenenando el select de productos en la vista de compras 
+        function onSelectProveedor(){
+            var codProveedor = $(this).val();
+
+            // Deshabilitando el select de proveedores
+            $(this).prop('disabled',true);
+
+            $('#nombreproducto').prop('disabled',false);
+            $('#idcantidad').prop('disabled',false);
+            $('#iddescripcion').prop('disabled',false);
+            $('#btnEliminar').prop('disabled',false);
+
+
+            // Habilitando el select despues de que se envian los datos del formulario
+            $('#formulario').submit(function(event){
+                $('#idproveedor').prop('disabled', false);
+            })
+
+            //Habilitando el boton de agregar 
+            $('.addRow').prop('disabled', false);
+
+            // Enviando los productos segun proveedor
+            $.get('/api/proveedor/'+codProveedor+'/productos', function(data){
+                var htmlSelectProducto = '<option disabled selected>Seleccione el producto</option>';
+                for (let i = 0; i < data.length; i++) {
+
+                    // htmlSelectProducto += '<option value="'+data[i].cod_producto+'">'+data[i].nombre+' $'+data[i].precio+'</option>'
+
+                    htmlSelectProducto += '<option value="'+data[i].nombre+'">$'+data[i].precio+'</option>'
+
+
+                    // $('#productos').html(htmlSelectProducto);
+
+                    $('#productos').html(htmlSelectProducto);
+
+                }
+            })
+        }
+
+    $(document).on('click', '.addRow', function(){
+        addRow();
+    });
+
+    // Agregando filas de compras
+    function addRow()
+    {
+        // Recuperando el select de productos
+        var selectProducto = document.querySelector('#nombreproducto');
+
+        console.log(selectProducto);
+
+        // console.log(selectProducto);
+        var tr = '<tr>';
+
+        tr += '<td>'+selectProducto.outerHTML+'</td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
+        '<tr>';;
+        $('tbody').append(tr);
+        
+    };
+
+    // Eliminando filas de compras
+    $(document).on('click', '.remove', function(){
+        var ultimaFila = $('tbody tr').length;
+        if (ultimaFila == 1) {
+            alert('Lo siento, no se puede eliminar la ultima fila');
+        }else{
+            $(this).parent().parent().remove();
+        }
+    });
+</script>
+@endif
+
+
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
 
 <script type="text/javascript">
     window.addEventListener("load", function() {
@@ -403,4 +558,7 @@
 
     })
 </script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5

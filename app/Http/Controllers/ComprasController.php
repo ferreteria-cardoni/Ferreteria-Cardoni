@@ -2,11 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormCrearCompras;
 use App\pedidocompra;
 use Illuminate\Http\Request;
 use App\compra;
+use App\producto;
+use App\proveedor;
+use Illuminate\Support\Facades\Auth;
+
 class ComprasController extends Controller
 {
+
+
+    public function productosProveedor($id)
+    {
+        return producto::where('cod_proveedor_fk', $id)->get();
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +32,7 @@ class ComprasController extends Controller
 
         return view('compras.vistaCompras', compact('pedidoCompra'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -26,9 +40,10 @@ class ComprasController extends Controller
      */
     public function create()
     {
-        //
+        $proveedor = proveedor::all();
+        // $producto = producto::all();
             
-        return view('compras.crearCompras');
+        return view('compras.crearCompras', compact('proveedor'));
     }
 
     /**
@@ -37,9 +52,50 @@ class ComprasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormCrearCompras $request)
     {
-        //
+        $codEmpleado = Auth::user()->id;
+        
+        $compras = new compra;
+
+        $compras->cod_empleado_fk = $codEmpleado;
+
+        // dd($request->idproveedor);
+
+        $compras->cod_proveedor_fk = $request->idproveedor;
+        $compras->descripcion = $request->iddescripcion;
+        $compras->save();
+
+        // Recuperando el codigo de la ultima compra
+        $codUltimaCompra = compra::orderBy('cod_compra', 'desc')->first()->cod_compra;
+
+        //   Arreglo de codigos de productos
+        $productos = $request->nombreproducto;
+        // Arreglo de cantidades de productos
+        $cantidades = $request->idcantidad;
+
+        $i = 0;
+
+        while ($i < sizeof($productos) ) {
+            
+            $pedidoCompra = new pedidocompra;           
+            $pedidoCompra->cod_compra_fk = $codUltimaCompra;
+            
+            // dd(producto::where('nombre', $productos[$i])->first()->cod_producto);
+            $pedidoCompra->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
+            $pedidoCompra->cantidad = $cantidades[$i];
+            $pedidoCompra->save();
+
+            $cant=producto::where('nombre', $productos[$i])->first()->cantidad;
+            $cant=$cant+$cantidades[$i];
+            $pro=producto::find(producto::where('nombre', $productos[$i])->first()->cod_producto);
+            $pro->cantidad=$cant;
+            $pro->save();
+
+            $i++;
+        }
+        return redirect(route('compras.create'))->with('datos','Registro exitoso');
+        
     }
 
     /**

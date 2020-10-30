@@ -79,10 +79,22 @@ class ProductoController extends Controller
     public function store(FormProductoIngresar $request)
     {
         
-        $findProductos = producto::find($request->idproducto); 
+        $findProductos = producto::find($request->idproducto);
+        
+        // $nombreProducto = producto::where('nombre', 'LIKE', '%'.$request->idnombre.'%')->first();
 
-        if ($findProductos) {
-            return redirect('Productos/create')->with('datos','El producto que ingreso ya esta registrado');
+        $nombreProducto = producto::where('nombre', $request->idnombre)->first();
+
+        // dd($nombreProducto);
+
+        if ($findProductos && $nombreProducto) {
+            return redirect('Productos/create')->with('datos','El código y nombre del producto que ingresó ya existe');
+
+        }elseif ($findProductos){
+            return redirect('Productos/create')->with('datos','El código de producto que ingresó ya existe');
+        
+        }elseif ($nombreProducto) {
+            return redirect('Productos/create')->with('datos','El nombre del producto que ingresó ya existe');
         }else{
 
 

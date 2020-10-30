@@ -51,11 +51,10 @@ class VentasController extends Controller
     public function store(FormVentasIngresar $request)
     {
 
-        $nombreEmpleado = Auth::user()->id; //jordan
+        $codEmpleado = Auth::user()->id; //jordan
      
             $ventas = new venta;
-            $ventas->cod_venta = $request->idcodventa;
-            $ventas->cod_empleado_fk = $nombreEmpleado; //Jordan Logueo
+            $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
             $ventas->direccion = $request->iddireccion;
             $ventas->save();
@@ -64,6 +63,7 @@ class VentasController extends Controller
            // dd($request->nombreproducto);
             //$pedidoventa->cod_producto_fk = $request->nombreproducto;
               // $arrayProductos = $request->nombreproducto;
+<<<<<<< HEAD
   // $pedidoventa->cantidad = $request->idcantidad1;
           
             $contProducto = 0;
@@ -93,16 +93,75 @@ class VentasController extends Controller
         }
 
 
+=======
+
+              
+              // dd($ultimaVenta->cod_venta);
+              
+              
+            //   Recuperando el codigo de la ultima venta
+              $codUltimaVenta = venta::orderBy('cod_venta', 'desc')->first()->cod_venta;
+              
+            //   Arreglo de codigos de productos
+              
 
             
+            $productos = $request->nombreproducto;
+            
+               //dd($productos);
+
+
+            // Arreglo de cantidades de productos
+            $cantidades = $request->idcantidad;
+
+              
+              $i = 0;
+              
+              while ($i < sizeof($productos) ) {
+                if($productos[$i]!=null){
+                  $pedidoventa = new pedidoventa;
+                  $productoArray=explode("$",$productos[$i]);
+                  $NombreProducto=$productoArray[0];
+    
+                  $pedidoventa->cod_venta_fk = $codUltimaVenta;
+  
+                  // Recuperando el codigo del producto
+                  $pedidoventa->cod_producto_fk = producto::where('nombre', $NombreProducto)->first()->cod_producto;
+  
+                  // Recuperando el precio del producto
+                  $precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
+                  
+                  $pedidoventa->cantidad = $cantidades[$i];
+                  $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+                  $pedidoventa->save();
+
+                  $cant=producto::where('nombre', $NombreProducto)->first()->cantidad;
+                  $cant=$cant-$cantidades[$i];
+                  $pro=producto::find(producto::where('nombre', $NombreProducto)->first()->cod_producto);
+                  $pro->cantidad=$cant;
+                  $pro->save();
+                }
+
+                $i++;
+            }
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
+
          //   $id = $request->idcodventa;
 
-        $cliente = cliente::all();
+        // $cliente = cliente::all();
       
+<<<<<<< HEAD
         $producto = producto::all();
         
         return view('ventas.crearVentas',compact('cliente','producto'));
+=======
+        // $producto = producto::all();
+        // $mensaje = "Producto Agreado Correctamente";
+        // return view('ventas.crearVentas',compact('cliente','producto','mensaje'))->with('mensaje','Registro Exitoso');
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
        // return view('home');
+
+       return redirect(route('Ventas.create'))->with('datos','Registro exitoso');
     }
 
     /**

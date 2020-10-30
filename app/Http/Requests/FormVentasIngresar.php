@@ -24,6 +24,7 @@ class FormVentasIngresar extends FormRequest
     public function rules()
     {
         return [
+<<<<<<< HEAD
             'idcodventa' => 'required',
             'nombreventa' => 'required',
             'iddireccion'=> 'required',
@@ -32,14 +33,21 @@ class FormVentasIngresar extends FormRequest
 
             
             
+=======
+            // 'idcodventa' => 'required',
+            'nombreventa' => 'required',       
+            'nombreproducto'=> 'required',
+            'iddireccion'=> 'required',
+            'idcantidad'=> 'required',    
+>>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
         ];
     }
 
     public function messages()
     {
         return [
-            'idcodventa.required' => 'El Codigo de pedido no puede estar vacio',
-            'nombreventa.different' => 'Se debe seleccionar Un Cliente',
+            // 'idcodventa.required' => 'El Codigo de pedido no puede estar vacio',
+            'nombreventa.required' => 'Se debe seleccionar Un Cliente',
             'iddireccion.required' => 'El Campo Dirección es obligatorio',          
             'nombreproducto.required' => 'Sleccione uno o varios Productos',
             'idcantidad.required' => 'Defina una cantidad superior a 0',
