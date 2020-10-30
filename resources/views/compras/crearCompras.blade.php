@@ -55,6 +55,7 @@
 								<th>Cantidad
 								<span id="msgidcantidad" name="msgidcantidad" class="AlertaMsg"></span>
 								</th>
+								<th>Precio Compra</th>
 								{{-- <th><a href="#" class="addRow btn btn-success">Agregar</a></th> --}}
 								<td><button type="button" id="btmComprasTab" disabled class="addRow btn btn-success">Agregar</button></td>
 							</tr>
@@ -71,6 +72,9 @@
 								<td>
 									<input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="b form-control" required>
 								</td>
+								<td>
+									<input type="number" min="0" disabled step="any" name="idprecioC[]" class="c form-control" required>
+								</td>
 								
 								<!-- {{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}} -->
 								<td><button type="button" id="btnEliminar" disabled class="btn btn-danger remove">Eliminar</button></td>
@@ -84,8 +88,10 @@
 									<span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
 								</td>
 
-								{{-- <td><input readonly type="number" class="form-control" placeholder="Total"></td> --}}
-
+								
+							</tr>
+							<tr>
+								<td><input readonly id="totalc" name="totalc" type="text" class="form-control" placeholder="Total"></td>
 							</tr>
 						</tfoot>
 					</table>

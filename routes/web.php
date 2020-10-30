@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('prueba', function ()
 {
-	
+
 	$relacion = producto::findOrFail('poi123')->marcas;
 	dd($relacion);
 
@@ -55,30 +55,19 @@ Route::group([
 ], function () {
 
 	Route::get('/Productos', 'ProductoController@index')->name('Productos.index');
-  
+
 });
 
 Route::resource('compras', 'ComprasController');
 
 Route::resource('Ventas', 'VentasController');
 
-<<<<<<< HEAD
-Route::post('/listado', function (Requests $requests)
-{
-	dd($requests);
-	//return redirect()->route('Ventas.create')->with('listado','Producto Agregado');
-})->name('listado');
-=======
+
+Route::get('/cantidad', 'VentasController@cantidad')->name('cantidad');
+
 Route::resource('Clientes', 'ClienteController');
->>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
 
 
+Route::get('/buscadorCompra', 'ComprasController@buscador')->name('buscadorCompra');
 
-
-
-
-
-
-
-
-
+Route::get('/buscadorVenta', 'VentasController@buscador')->name('buscadorVenta');

@@ -14,6 +14,19 @@ use App\role;
 use App\empleado;
 class VentasController extends Controller
 {
+
+
+
+  public function __construct()
+  {
+        $this->middleware('bodega')->only(['index']);
+        $this->middleware('ventas')->only(['create']);
+
+  }
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -35,10 +48,11 @@ class VentasController extends Controller
     {
 
         $cliente = cliente::all();
-        $producto = producto::all();
-   
-      
-        
+        //dd($cliente);
+        $producto = producto::where('cantidad', '>', 0)->get();
+
+
+
         return view('ventas.crearVentas',compact('cliente','producto'));
     }
 
@@ -52,87 +66,57 @@ class VentasController extends Controller
     {
 
         $codEmpleado = Auth::user()->id; //jordan
-     
+
             $ventas = new venta;
             $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
             $ventas->direccion = $request->iddireccion;
+            $ventas->total= substr($request->idtotal,1);
             $ventas->save();
 
 
            // dd($request->nombreproducto);
             //$pedidoventa->cod_producto_fk = $request->nombreproducto;
               // $arrayProductos = $request->nombreproducto;
-<<<<<<< HEAD
-  // $pedidoventa->cantidad = $request->idcantidad1;
-          
-            $contProducto = 0;
-        foreach ($request->nombreproducto as $key) {
-            
-            $contCantidad = 0;
-             $pedidoventa = new pedidoventa;   
-              $pedidoventa->cod_venta_fk = $request->idcodventa;
-                $pedidoventa->cod_producto_fk = $key;
-                $precioProducto = producto::findOrFail($key)->precio;
-            foreach ($request->idcantidad1 as $key1) {
-                 
-                 if ($contProducto == $contCantidad) {
-                       $pedidoventa->cantidad = $key1;  
-                  $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
-                $pedidoventa->save(); 
-                break;
-                     
-                 }
-                
-               $contCantidad = $contCantidad +1;
-            }
-       
-                $contProducto = $contProducto + 1;
 
 
-        }
-
-
-=======
-
-              
               // dd($ultimaVenta->cod_venta);
-              
-              
+
+
             //   Recuperando el codigo de la ultima venta
               $codUltimaVenta = venta::orderBy('cod_venta', 'desc')->first()->cod_venta;
-              
-            //   Arreglo de codigos de productos
-              
 
-            
+            //   Arreglo de codigos de productos
+
+
+
             $productos = $request->nombreproducto;
-            
+
                //dd($productos);
 
 
             // Arreglo de cantidades de productos
             $cantidades = $request->idcantidad;
 
-              
+
               $i = 0;
-              
+
               while ($i < sizeof($productos) ) {
                 if($productos[$i]!=null){
                   $pedidoventa = new pedidoventa;
                   $productoArray=explode("$",$productos[$i]);
                   $NombreProducto=$productoArray[0];
-    
+
                   $pedidoventa->cod_venta_fk = $codUltimaVenta;
-  
+
                   // Recuperando el codigo del producto
                   $pedidoventa->cod_producto_fk = producto::where('nombre', $NombreProducto)->first()->cod_producto;
-  
+
                   // Recuperando el precio del producto
-                  $precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
-                  
+                  //$precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
+
                   $pedidoventa->cantidad = $cantidades[$i];
-                  $pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+                  //$pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
                   $pedidoventa->save();
 
                   $cant=producto::where('nombre', $NombreProducto)->first()->cantidad;
@@ -144,21 +128,14 @@ class VentasController extends Controller
 
                 $i++;
             }
->>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
 
          //   $id = $request->idcodventa;
 
         // $cliente = cliente::all();
-      
-<<<<<<< HEAD
-        $producto = producto::all();
-        
-        return view('ventas.crearVentas',compact('cliente','producto'));
-=======
+
         // $producto = producto::all();
         // $mensaje = "Producto Agreado Correctamente";
         // return view('ventas.crearVentas',compact('cliente','producto','mensaje'))->with('mensaje','Registro Exitoso');
->>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
        // return view('home');
 
        return redirect(route('Ventas.create'))->with('datos','Registro exitoso');
@@ -195,23 +172,23 @@ class VentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-    
+
    $nombre = $request->nombreproducto1;
    $cantidad = $request->idcantidad1;
 
-  
-    
 
-    // $listadoNEW[] = $listadoOLD; 
+
+
+    // $listadoNEW[] = $listadoOLD;
      //array_merge($listadoOLD, $listadoNEW);
 
 
-    
+
     return redirect()->route('Ventas.create')->with('nombre', $nombre)->with('cantidad',$cantidad);
-  
-      
-     
-        //return view('ventas.crearVentas')->with('listado', $listado); 
+
+
+
+        //return view('ventas.crearVentas')->with('listado', $listado);
     }
 
     /**
@@ -224,17 +201,80 @@ class VentasController extends Controller
     {
         //
     }
+    public function cantidad (Request $request){
+      if($request->ajax()){
+        $query = trim($request->get('query'));
+        $cant = producto::where('nombre', $query)->value('cantidad');
+        $lel='ok';
+        echo json_encode($cant);
+      }
+    }
 
+    public function buscador(Request $request){
 
-  
+      if($request->ajax()){
 
+          $query = trim($request->get('query'));
+          if($query != ''){
+              $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+                          ->orWhere('nombre','LIKE','%'.$query.'%')
+                          ->take(10)
+                          ->get();
+          }else{
+              $output='
+              <tr>
+                  <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+              </tr>
+              ';
+          }
+          if(isset($productos)){
+              $total=$productos->count();
+              $output='';
 
+              if($total>0)
+              {
+                  foreach($productos as $ItemP){
+                      $pedidoVenta= pedidoventa::where('cod_producto_fk',$ItemP->cod_producto)
+                                                  ->get();
+/*                         $output .='
+                      <tr>
+                          <th scope="row">'.$ItemP->cod_producto.'</th>
+                          <td>'.$ItemP->nombre.'</td>
+                      '; */
+                      foreach($pedidoVenta as $hventa){
+                        $Venta= venta::where('cod_venta',$hventa->cod_venta_fk)->value('cod_empleado_fk');
+                        //echo($hventa->cantidad);
+                        $empleadoN= empleado::where('cod_empleado',$Venta)->value('nombre');
+                        $empleadoA= empleado::where('cod_empleado',$Venta)->value('apellido');
+                          $output .='
+                          <tr>
+                          <th scope="row">'.$ItemP->cod_producto.'</th>
+                          <td>'.$ItemP->nombre.'</td>
+                          <td>'.$hventa->cantidad.'</td>
+                          <td>'.\Carbon\Carbon::parse($hventa->created_at)->format('d/m/Y').'</td>
+                          <td>'.$empleadoN.' '.$empleadoA.'</td>
 
-    
+                      ';
+                      }
+                      $output .= '<tr>';
+                  }
 
+              }else{
+                  $output='
+                  <tr>
+                      <td align="center" colspan="5">Sin Registros</td>
+                  </tr>
+                  ';
+              }
 
+          }
 
+        /*   $productos= array(
+              'table_data'  => $output
+          ); */
 
+          echo json_encode($output);
+      }
+  }
 
-   
 }

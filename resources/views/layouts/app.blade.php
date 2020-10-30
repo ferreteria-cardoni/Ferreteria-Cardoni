@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -14,8 +14,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js')}}"></script>
     <script src="{{asset('dist/js/adminlte.js')}}"></script>
-    
-   
+
+
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
@@ -27,21 +27,17 @@
     <!-- Styles -->
     <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
 
     <!--- Prueba -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
-<<<<<<< HEAD
-   
-=======
-    
+
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> --}}
->>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
 
     <style>
         .AlertaMsg {
@@ -58,7 +54,7 @@
             left: 35%;
         }
 
-        
+
     </style>
 </head>
 
@@ -153,7 +149,7 @@
                                 </a>
                             </li>
                             {{-- Usuarios --}}
-                            @canany(['administrador', 'ventas'])
+                            @canany(['administrador'])
                             <li class="nav-item">
                                 <a href="usuarios" class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
@@ -167,11 +163,16 @@
                             @endcanany
 
                             {{-- Productos --}}
+
+
+
                             <li class="nav-item has-treeview">
+                                @canany(['gerente', 'ventas', 'bodega'])
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Productos<i class="fas fa-angle-left right"></i></p>
                                 </a>
+                                @endcanany
                                 <ul class="nav nav-treeview">
                                     @canany(['bodega'])
                                     <li class="nav-item">
@@ -211,7 +212,7 @@
 
 
                               {{-- Ventas --}}
-                            @canany(['bodega'])
+                            @canany(['ventas'])
                             <li class="nav-item has-treeview">
                                 <a href="{{route('Ventas.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -255,7 +256,7 @@
                                 {{-- </ul> --}}
 
                             {{-- Compras --}}
-                            @canany(['bodega'])
+                            @canany(['compras'])
                             <li class="nav-item">
                                 <a href="{{route('compras.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -263,7 +264,7 @@
                                 </a>
                             </li>
                             @endcanany
-                            
+
                                 {{-- <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('compras.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
@@ -312,7 +313,7 @@
                                     <p>Movimientos<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                   
+
                                     <li class="nav-item">
                                         <a href="{{route('compras.index')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
@@ -320,7 +321,7 @@
                                             <p>Compras</p>
                                         </a>
                                     </li>
-                                    
+
                                  <li class="nav-item">
                                         <a href="{{route('Ventas.index')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
@@ -333,14 +334,14 @@
                             @endcanany
 
                             {{-- Clientes --}}
-                            @canany(['secretaria','bodega'])
+                            @canany(['secretaria'])
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Clientes<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                   
+
                                     <li class="nav-item">
                                         <a href="{{route('Clientes.create')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
@@ -413,7 +414,7 @@
 =======
 {{-- Solo se cargara el script cuando se encuentre en la vista de crear ventas --}}
 @if (Request::is('Ventas/create'))
-    
+
 <script type="text/javascript">
 
     $(document).on('click', '.addRow', function(){
@@ -425,7 +426,7 @@
     {
         var tr = '<tr>'+
         '<td><input name="nombreproducto[]" list="productos" class="a form-control" required><datalist id="productos">@foreach ($producto as $productoiten)<option value="{{$productoiten->nombre}} ${{$productoiten->precio}}"></option>@endforeach</datalist></td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required disabled></td>'+
         '<td><button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button></td>'
         '<tr>';
         $('tbody').append(tr);
@@ -448,15 +449,15 @@
 
 {{-- Solo se cargara para la vista de compras  --}}
 @if (Request::is('compras/create'))
-    
+
 <script type="text/javascript">
 
     $(function(){
-            
+
         $('#idproveedor').on('change', onSelectProveedor);
     });
 
-    // Rellenenando el select de productos en la vista de compras 
+    // Rellenenando el select de productos en la vista de compras
         function onSelectProveedor(){
             var codProveedor = $(this).val();
 
@@ -474,7 +475,7 @@
                 $('#idproveedor').prop('disabled', false);
             })
 
-            //Habilitando el boton de agregar 
+            //Habilitando el boton de agregar
             $('.addRow').prop('disabled', false);
 
             // Enviando los productos segun proveedor
@@ -484,7 +485,7 @@
 
                     // htmlSelectProducto += '<option value="'+data[i].cod_producto+'">'+data[i].nombre+' $'+data[i].precio+'</option>'
 
-                    htmlSelectProducto += '<option value="'+data[i].nombre+'">$'+data[i].precio+'</option>'
+                    htmlSelectProducto += '<option value="'+data[i].nombre+'"></option>'
 
 
                     // $('#productos').html(htmlSelectProducto);
@@ -511,11 +512,12 @@
         var tr = '<tr>';
 
         tr += '<td>'+selectProducto.outerHTML+'</td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><input type="number" min="0" step="any" disabled name="idprecioC[]" class="c form-control" required></td>'+
         '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
         '<tr>';;
         $('tbody').append(tr);
-        
+
     };
 
     // Eliminando filas de compras
@@ -549,16 +551,87 @@
                 }
             })
         }
-
         $(document).on('keyup', '#texto', function() {
             var query = $(this).val();
             //console.log(query);
             busca(query);
         })
-
     })
 </script>
+
+<script type="text/javascript">
+    window.addEventListener("load", function() {
+        function buscaCompras(query = '') {
+            $.ajax({
+                url: "{{ route('buscadorCompra') }}",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                dataType: 'json',
+                success: function(data) {
+                    //console.log(data);
+                    $('#VistaCompra').html(data);
+                }
+            })
+        }
+        $(document).on('keyup', '#textoCompra', function() {
+            var query = $(this).val();
+            //console.log(query);
+            buscaCompras(query);
+        })
+
+        function buscaVentas(query = '') {
+            $.ajax({
+                url: "{{ route('buscadorVenta') }}",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                dataType: 'json',
+                success: function(data) {
+                    //console.log(data);
+                    $('#VistaVenta').html(data);
+                }
+            })
+        }
+        $(document).on('keyup', '#textoVenta', function() {
+            var query = $(this).val();
+            //console.log(query);
+            buscaVentas(query);
+        })
+    })
+</script>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
 >>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
+=======
+
+<script type="text/javascript">
+    function Disponibilidad(query=''){
+                var resp;
+                $.ajax({
+                    url:"{{ route('cantidad') }}",
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    dataType: "json",
+                    error: function (jqXHR, exception){
+                        console.log('neles');
+                    },
+                    success: function(data) {
+                        //console.log(data);
+                        dispo(data);
+                        //$('#ok').html(data);
+                        //resp= data;
+                        //return 'pasa';
+
+                    }
+                })
+
+            }
+</script>
+>>>>>>> 3fd36bed838aba82af08fe92b8560a3a42f1664a

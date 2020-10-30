@@ -20,6 +20,13 @@ class ComprasController extends Controller
     }
 
 
+    public function __construct()
+    {
+        $this->middleware('bodega')->only(['index']);
+        $this->middleware('compras')->only(['create']);
+
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -28,7 +35,7 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        $pedidoCompra = pedidocompra::paginate(3);
+        $pedidoCompra = pedidocompra::paginate(10);
 
         return view('compras.vistaCompras', compact('pedidoCompra'));
     }
@@ -59,20 +66,18 @@ class ComprasController extends Controller
         $compras = new compra;
 
         $compras->cod_empleado_fk = $codEmpleado;
-
-        // dd($request->idproveedor);
-
         $compras->cod_proveedor_fk = $request->idproveedor;
         $compras->descripcion = $request->iddescripcion;
+        $compras->total = substr($request->totalc,1);
         $compras->save();
-
         // Recuperando el codigo de la ultima compra
         $codUltimaCompra = compra::orderBy('cod_compra', 'desc')->first()->cod_compra;
-
-        //   Arreglo de codigos de productos
+        // Arreglo de codigos de productos
         $productos = $request->nombreproducto;
         // Arreglo de cantidades de productos
         $cantidades = $request->idcantidad;
+        //arreglo precio
+        $precio=$request->idprecioC;
 
         $i = 0;
 
@@ -89,6 +94,7 @@ class ComprasController extends Controller
             $cant=producto::where('nombre', $productos[$i])->first()->cantidad;
             $cant=$cant+$cantidades[$i];
             $pro=producto::find(producto::where('nombre', $productos[$i])->first()->cod_producto);
+            $pro->precioCompra=$precio[$i];
             $pro->cantidad=$cant;
             $pro->save();
 
@@ -141,5 +147,70 @@ class ComprasController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscador(Request $request){
+        
+        if($request->ajax()){
+            
+            $query = trim($request->get('query'));
+            if($query != ''){
+                $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+                            ->orWhere('nombre','LIKE','%'.$query.'%')
+                            ->take(10)
+                            ->get();
+            }else{
+                $output='
+                <tr>
+                    <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+                </tr>
+                ';
+            }
+            if(isset($productos)){
+                $total=$productos->count();
+                $output='';
+                
+                if($total>0)
+                { 
+                    foreach($productos as $ItemP){
+                        $pedidoCompra= pedidocompra::where('cod_producto_fk',$ItemP->cod_producto)
+                                                    ->get();
+/*                         $output .='
+                        <tr>
+                            <th scope="row">'.$ItemP->cod_producto.'</th>
+                            <td>'.$ItemP->nombre.'</td>
+                        '; */
+                        foreach($pedidoCompra as $hcompra){
+                            $output .='
+                            <tr>
+                            <th scope="row">'.$ItemP->cod_producto.'</th>
+                            <td>'.$ItemP->nombre.'</td>
+                            <td>'.$hcompra->cantidad.'</td>
+                            <td>'.\Carbon\Carbon::parse($hcompra->created_at)->format('d/m/Y').'</td>
+                        ';
+                        }
+                        $output .= '<tr>';
+                    }
+    
+                }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                }
+
+            }
+  
+          /*   $productos= array(
+                'table_data'  => $output
+            ); */
+
+            echo json_encode($output);
+        }
+
+
+
+
     }
 }

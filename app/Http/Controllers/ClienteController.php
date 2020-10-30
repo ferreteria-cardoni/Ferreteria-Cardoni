@@ -11,6 +11,17 @@ use App\Http\Requests\FormClientes;
 
 class ClienteController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('secretaria')->only(['create']);
+    }
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *
