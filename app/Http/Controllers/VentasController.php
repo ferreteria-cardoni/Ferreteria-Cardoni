@@ -39,6 +39,13 @@ class VentasController extends Controller
         return view('ventas.vistaVentas', compact('pedidoVentas'));
     }
 
+    public function index2()
+    {
+        $pedidoVentas = venta::where('estado','pendiente')->get();
+
+        return view('ventas.VentasPendientes', compact('pedidoVentas'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -149,6 +156,7 @@ class VentasController extends Controller
      */
     public function show($id)
     {
+      
         //
     }
 

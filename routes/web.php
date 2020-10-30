@@ -68,6 +68,8 @@ Route::get('/buscadorCompra', 'ComprasController@buscador')->name('buscadorCompr
 
 Route::get('/buscadorVenta', 'VentasController@buscador')->name('buscadorVenta');
 
+Route::get('/PendienteVenta', 'VentasController@index2')->name('Pendiente');
+
 
 
 
