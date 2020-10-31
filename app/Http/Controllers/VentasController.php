@@ -39,6 +39,13 @@ class VentasController extends Controller
         return view('ventas.vistaVentas', compact('pedidoVentas'));
     }
 
+    public function index2()
+    {
+        $pedidoVentas = venta::where('estado','pendiente')->get();
+
+        return view('ventas.VentasPendientes', compact('pedidoVentas'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -276,5 +283,79 @@ class VentasController extends Controller
           echo json_encode($output);
       }
   }
+
+  public function buscadorPedidos(Request $request){
+
+      if($request->ajax()){
+
+          $query = trim($request->get('query'));
+          if($query != ''){
+              $pedidoventa = pedidoventa::where('cod_pedidoventa','LIKE','%'.$query.'%')
+                          ->orWhere('cod_producto_fk','LIKE','%'.$query.'%')
+                          ->take(10)
+                          ->get();
+          }else{
+              $output='
+              <tr>
+                  <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+              </tr>
+              ';
+          }
+          if(isset($pedidoventa)){
+              $total=$pedidoventa->count();
+              $output='';
+
+              if($total>0)
+              {
+                  foreach($pedidoventa as $ItemP){
+                  $redireccion = route('Productos.edit', $ItemP->cod_pedidoventa);
+                  $output .='
+                  <tr>
+                      <th scope="row">'.$ItemP->cod_pedidoventa.'</th>
+                      <td>'.$ItemP->cod_venta_fk.'</td>
+
+                      <td>'.$ItemP->cod_producto_fk.'</td>
+
+                      <td>'.$ItemP->cantidad.'</td>
+
+                      <td>'.$ItemP->created_at.'</td>
+                      // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
+
+                  ';
+
+                  // Comprobando el rol del usuario que esta usando el sistema
+                  if (Auth::user()->tieneRol()->first() == "bodega") {
+                      // Agregando el boton junto con el tr al final
+                      $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';
+                  }else{
+                      // Agregando el tr sin el boton
+                      $output .= '<tr>';
+                  }
+
+                  }
+
+              }else{
+                  $output='
+                  <tr>
+                      <td align="center" colspan="5">Sin Registros</td>
+                  </tr>
+                  ';
+              }
+
+          }
+
+        /*   $productos= array(
+              'table_data'  => $output
+          ); */
+
+          echo json_encode($output);
+      }
+
+
+
+
+  }
+
+
 
 }

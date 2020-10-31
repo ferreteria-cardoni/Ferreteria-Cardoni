@@ -63,6 +63,7 @@ Route::resource('compras', 'ComprasController');
 Route::resource('Ventas', 'VentasController');
 
 
+
 Route::get('/cantidad', 'VentasController@cantidad')->name('cantidad');
 
 Route::resource('Clientes', 'ClienteController');
@@ -71,3 +72,10 @@ Route::resource('Clientes', 'ClienteController');
 Route::get('/buscadorCompra', 'ComprasController@buscador')->name('buscadorCompra');
 
 Route::get('/buscadorVenta', 'VentasController@buscador')->name('buscadorVenta');
+
+
+
+
+Route::get('/PendienteVenta', 'VentasController@index2')->name('Pendiente');
+
+Route::get('/buscadorPedidos1', 'VentasController@buscadorPedidos')->name('buscadorPedidos');

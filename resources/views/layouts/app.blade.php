@@ -166,8 +166,6 @@
 
                             {{-- Productos --}}
 
-
-
                             <li class="nav-item has-treeview">
                                 @canany(['gerente', 'ventas', 'bodega'])
                                 <a href="#" class="nav-link">
@@ -212,6 +210,31 @@
                                 </ul>
                             </li>
 
+                            {{-- Productos --}}
+
+                            <li class="nav-item has-treeview">
+                                @canany(['ventas'])
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon far fa-sticky-note"></i>
+                                    <p>Ventas<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                @endcanany
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{route('Ventas.create')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Venta</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="/PendienteVenta" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Penientes</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
                               {{-- Ventas --}}
                             @canany(['ventas'])
@@ -558,6 +581,34 @@
             busca(query);
         })
     })
+
+
+
+
+        window.addEventListener("load", function() {
+            function busca(query = '') {
+                $.ajax({
+                    url: "{{ route('buscadorPedidos') }}",
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        //console.log(data);
+                        $('#ok1').html(data);
+                    }
+                })
+            }
+
+            $(document).on('keyup', '#textoVentaP', function() {
+                var query = $(this).val();
+                //console.log(query);
+                busca(query);
+            })
+
+        })
+
 </script>
 
 <script type="text/javascript">
@@ -603,12 +654,7 @@
         })
     })
 </script>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> b4cc3f7401cefc177d602c3d209bf36254f4b3e5
-=======
 
 <script type="text/javascript">
     function Disponibilidad(query=''){
@@ -635,4 +681,3 @@
 
             }
 </script>
->>>>>>> 3fd36bed838aba82af08fe92b8560a3a42f1664a
