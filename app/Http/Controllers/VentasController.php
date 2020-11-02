@@ -58,8 +58,8 @@ class VentasController extends Controller
         //dd($cliente);
         $producto = producto::where('cantidad', '>', 0)->get();
 
-      
-        
+
+
         return view('ventas.crearVentas',compact('cliente','producto'));
     }
 
@@ -73,7 +73,7 @@ class VentasController extends Controller
     {
 
         $codEmpleado = Auth::user()->id; //jordan
-     
+
             $ventas = new venta;
             $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
@@ -82,46 +82,46 @@ class VentasController extends Controller
             $ventas->save();
 
 
-            
+           // dd($request->nombreproducto);
             //$pedidoventa->cod_producto_fk = $request->nombreproducto;
               // $arrayProductos = $request->nombreproducto;
 
-              
+
               // dd($ultimaVenta->cod_venta);
-              
-              
+
+
             //   Recuperando el codigo de la ultima venta
               $codUltimaVenta = venta::orderBy('cod_venta', 'desc')->first()->cod_venta;
-              
-            //   Arreglo de codigos de productos
-              
 
-            
+            //   Arreglo de codigos de productos
+
+
+
             $productos = $request->nombreproducto;
-            
+
                //dd($productos);
 
 
             // Arreglo de cantidades de productos
             $cantidades = $request->idcantidad;
 
-              
+
               $i = 0;
-              
+
               while ($i < sizeof($productos) ) {
                 if($productos[$i]!=null){
                   $pedidoventa = new pedidoventa;
                   $productoArray=explode("$",$productos[$i]);
                   $NombreProducto=$productoArray[0];
-    
+
                   $pedidoventa->cod_venta_fk = $codUltimaVenta;
-  
+
                   // Recuperando el codigo del producto
                   $pedidoventa->cod_producto_fk = producto::where('nombre', $NombreProducto)->first()->cod_producto;
-  
+
                   // Recuperando el precio del producto
                   //$precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
-                  
+
                   $pedidoventa->cantidad = $cantidades[$i];
                   //$pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
                   $pedidoventa->save();
@@ -139,7 +139,7 @@ class VentasController extends Controller
          //   $id = $request->idcodventa;
 
         // $cliente = cliente::all();
-      
+
         // $producto = producto::all();
         // $mensaje = "Producto Agreado Correctamente";
         // return view('ventas.crearVentas',compact('cliente','producto','mensaje'))->with('mensaje','Registro Exitoso');
@@ -154,10 +154,9 @@ class VentasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cliente)
     {
-      
-        //
+       return redirect()->route('Ventas.create')->with('listado','Producto Agregado');
     }
 
     /**
@@ -207,7 +206,6 @@ class VentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-
       // Actualizando venta
 
         $venta = venta::findOrFail($id);
@@ -372,6 +370,7 @@ class VentasController extends Controller
 
 
         return redirect('/PendienteVenta')->with('datos','Los datos se actualizaron correctamente');
+
     }
 
     /**
@@ -394,9 +393,9 @@ class VentasController extends Controller
     }
 
     public function buscador(Request $request){
-        
+
       if($request->ajax()){
-          
+
           $query = trim($request->get('query'));
           if($query != ''){
               $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
@@ -413,9 +412,9 @@ class VentasController extends Controller
           if(isset($productos)){
               $total=$productos->count();
               $output='';
-              
+
               if($total>0)
-              { 
+              {
                   foreach($productos as $ItemP){
                       $pedidoVenta= pedidoventa::where('cod_producto_fk',$ItemP->cod_producto)
                                                   ->get();
@@ -436,12 +435,12 @@ class VentasController extends Controller
                           <td>'.$hventa->cantidad.'</td>
                           <td>'.\Carbon\Carbon::parse($hventa->created_at)->format('d/m/Y').'</td>
                           <td>'.$empleadoN.' '.$empleadoA.'</td>
-                         
+
                       ';
                       }
                       $output .= '<tr>';
                   }
-  
+
               }else{
                   $output='
                   <tr>
@@ -459,5 +458,79 @@ class VentasController extends Controller
           echo json_encode($output);
       }
   }
-  
+
+  public function buscadorPedidos(Request $request){
+
+      if($request->ajax()){
+
+          $query = trim($request->get('query'));
+          if($query != ''){
+              $pedidoventa = pedidoventa::where('cod_pedidoventa','LIKE','%'.$query.'%')
+                          ->orWhere('cod_producto_fk','LIKE','%'.$query.'%')
+                          ->take(10)
+                          ->get();
+          }else{
+              $output='
+              <tr>
+                  <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+              </tr>
+              ';
+          }
+          if(isset($pedidoventa)){
+              $total=$pedidoventa->count();
+              $output='';
+
+              if($total>0)
+              {
+                  foreach($pedidoventa as $ItemP){
+                  $redireccion = route('Productos.edit', $ItemP->cod_pedidoventa);
+                  $output .='
+                  <tr>
+                      <th scope="row">'.$ItemP->cod_pedidoventa.'</th>
+                      <td>'.$ItemP->cod_venta_fk.'</td>
+
+                      <td>'.$ItemP->cod_producto_fk.'</td>
+
+                      <td>'.$ItemP->cantidad.'</td>
+
+                      <td>'.$ItemP->created_at.'</td>
+                      // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
+
+                  ';
+
+                  // Comprobando el rol del usuario que esta usando el sistema
+                  if (Auth::user()->tieneRol()->first() == "bodega") {
+                      // Agregando el boton junto con el tr al final
+                      $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';
+                  }else{
+                      // Agregando el tr sin el boton
+                      $output .= '<tr>';
+                  }
+
+                  }
+
+              }else{
+                  $output='
+                  <tr>
+                      <td align="center" colspan="5">Sin Registros</td>
+                  </tr>
+                  ';
+              }
+
+          }
+
+        /*   $productos= array(
+              'table_data'  => $output
+          ); */
+
+          echo json_encode($output);
+      }
+
+
+
+
+  }
+
+
+
 }

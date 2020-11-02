@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Requests\BuscadorProducto;
+use Illuminate\Http\Request;
 use App\producto;
 use App\marca_producto;
 use App\marca;
@@ -22,7 +23,7 @@ Auth::routes();
 
 Route::get('prueba', function ()
 {
-	
+
 	$relacion = producto::findOrFail('poi123')->marcas;
 	dd($relacion);
 
@@ -34,6 +35,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('Productos','ProductoController');
 
 Route::get('/buscador', 'ProductoController@buscador')->name('buscador');
+Route::get('/listado', 'VentasController@listado')->name('listado');
 //ruta para pagina de modificar producto prros
 // Route::get('/modificar', 'ProductoController@modification');
 
@@ -53,30 +55,27 @@ Route::group([
 ], function () {
 
 	Route::get('/Productos', 'ProductoController@index')->name('Productos.index');
-  
+
 });
 
 Route::resource('compras', 'ComprasController');
 
 Route::resource('Ventas', 'VentasController');
 
+
+
 Route::get('/cantidad', 'VentasController@cantidad')->name('cantidad');
 
 Route::resource('Clientes', 'ClienteController');
+
 
 Route::get('/buscadorCompra', 'ComprasController@buscador')->name('buscadorCompra');
 
 Route::get('/buscadorVenta', 'VentasController@buscador')->name('buscadorVenta');
 
+
+
+
 Route::get('/PendienteVenta', 'VentasController@index2')->name('Pendiente');
 
-
-
-
-
-
-
-
-
-
-
+Route::get('/buscadorPedidos1', 'VentasController@buscadorPedidos')->name('buscadorPedidos');

@@ -6,12 +6,14 @@
 
 <div class="container">
       @if (session('datos'))
-  <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
-    {{session('datos')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">Felicidades</h4>
+  
+  <hr>
+  <p class="mb-0"><p>{{session('datos')}}</p></p>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
       <span aria-hidden="true">&times;</span>
     </button>
-
 
 </div>
  </div>

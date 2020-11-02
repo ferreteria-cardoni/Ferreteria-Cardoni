@@ -7,7 +7,7 @@
       @if (session('datos'))
   <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
     {{session('datos')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -15,6 +15,7 @@
 @endsection
 
 @section('content')
+
 @if ($errors->any())
 <div class="alert alert-danger">
 	<center>
@@ -62,7 +63,7 @@
 							<span id="msgidcantidadV" name="msgidcantidadV" class="AlertaMsg"></span>
 							</th>
 							<th><button type="button" id="btmVentasTab" class="addRow btn btn-success" disabled >Agregar</button></th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
@@ -73,13 +74,13 @@
 									@foreach ($producto as $productoiten)
 									<option value="{{$productoiten->nombre}} ${{$productoiten->precioVenta}}"></option>
 									@endforeach
-								</datalist>  
+								</datalist>
 							</td>
 							<td>
 								<input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required disabled>
 							</td>
 							<td>
-								<button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button>						
+								<button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button>
 							</td>
 						</tr>
 					</tbody>
@@ -90,13 +91,41 @@
 								<input readonly type="text" class="form-control" id="idtotal" name="idtotal" placeholder="Total">
 							</td>
 						</tr>
-					</tfoot> 
+					</tfoot>
 				</table>
 			</div>
 		</section>
-		<button id="btmsubmitV" type="submit" class="btn btn-primary" >Registrar Venta</button> 
+		<button id="btmsubmitV" type="submit" class="btn btn-primary" >Registrar Venta</button>
 		<button type="reset" class="btn btn-danger">Limpiar Campos</button>
 	</form>
 </div>
+
 @endsection
 
+
+@section('listado')
+<div class="container">
+      @if (session('nombre'))
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  	@foreach(session('nombre') as $key)
+    <tr>
+      <th scope="row">1</th>
+      <td> {{$key}}</td>
+      <td>{{session('cantidad')}}</td>
+      <td>@mdo</td>
+    </tr>
+     @endforeach
+  </tbody>
+</table>
+@endif
+@endsection

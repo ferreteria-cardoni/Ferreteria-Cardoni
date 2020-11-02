@@ -36,7 +36,29 @@
             <a href="{{route('Ventas.edit', $pedido->cod_venta)}}" class="btn btn-primary">Editar</a>
         </div>
         </div>
-    </div>         
+    </div>
     @endforeach
   </div>
+
+
+  <table class="table table-hover" >
+        <thead>
+          <tr>
+            <th scope="col">ID Pedido Venta</th>
+            <th scope="col">Cod Venta</th>
+            <th scope="col">Cod Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Fecha Venta</th>
+            <!-- @canany(['bodega'])
+            <th scope="col">Acciones</th>
+            @endcanany -->
+          </tr>
+        </thead>
+        <tbody id="ok1">
+        <tr>
+          <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+        </tr>
+      </tbody>
+  </table>
+</div>
 @endsection

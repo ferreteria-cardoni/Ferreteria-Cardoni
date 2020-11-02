@@ -28,7 +28,7 @@ class ProductoController extends Controller
     {
         $this->middleware('bodega')->only(['edit']);
     }
-   
+
 
 
 
@@ -47,9 +47,9 @@ class ProductoController extends Controller
         }*/
 
         // dd(Auth::user()->tieneRol()->first());
-        
+
         return view('productos.vistaproducto');
-       
+
     }
     // public function modification(BuscadorProducto $request){
     //     $proveedor = proveedor::all();
@@ -65,13 +65,13 @@ class ProductoController extends Controller
     public function create()
     {
 
-        
+
          $proveedor = proveedor::all();
          $marca = marca::all();
-    
+
          return view('productos.crearProductos', compact('proveedor','marca'));
-        
-         
+
+
     }
 
     /**
@@ -82,9 +82,9 @@ class ProductoController extends Controller
      */
     public function store(FormProductoIngresar $request)
     {
-        
+
         $findProductos = producto::find($request->idproducto);
-        
+
         // $nombreProducto = producto::where('nombre', 'LIKE', '%'.$request->idnombre.'%')->first();
 
         $nombreProducto = producto::where('nombre', $request->idnombre)->first();
@@ -96,7 +96,7 @@ class ProductoController extends Controller
 
         }elseif ($findProductos){
             return redirect('Productos/create')->with('datos','El código de producto que ingresó ya existe');
-        
+
         }elseif ($nombreProducto) {
             return redirect('Productos/create')->with('datos','El nombre del producto que ingresó ya existe');
         }else{
@@ -106,26 +106,26 @@ class ProductoController extends Controller
         $Productos = new producto;
         $Productos->cod_producto = strtoupper($request->idproducto);
         $Productos->cod_proveedor_fk= $request->idproveedor;
-        $Productos->nombre =  $request->idnombre;   
+        $Productos->nombre =  $request->idnombre;
         $Productos->cantidad = 0;
         $Productos->descripcion = $request->iddescripcion;
         $Productos->presentacion = $request->idpresentacion;
         $Productos->save();
 
         //Registro en la tabla "marca_productos" de cod_marca_fk y cod_producto_fk.
-    
+
                foreach ($request->idmarca as $key) {
-                      $Marca = new marca_producto(); 
+                      $Marca = new marca_producto();
                       $Marca->cod_marca_fk = $key;
                       $Marca->cod_producto_fk = $request->idproducto;
-                      $Marca->save();                 
+                      $Marca->save();
                     }
         }
-       
+
 
         //Mostrar vista
         return redirect('/Productos')->with('datos','Registro Exitoso');
-        
+
     }
 
     /**
@@ -136,7 +136,7 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -151,7 +151,7 @@ class ProductoController extends Controller
         $proveedores = proveedor::all();
         $marcas = marca::all();
         $producto = producto::find($id);
-        
+
         // dd($producto);
 
         return view('productos.modiProductos', compact('proveedores','marcas','producto'));
@@ -171,18 +171,18 @@ class ProductoController extends Controller
 //producto
             $findProductos = producto::find($id);
             $findProductos->cod_proveedor_fk = $request->idproveedor;
-            $findProductos->nombre =  $request->idnombre;   
+            $findProductos->nombre =  $request->idnombre;
             $findProductos->descripcion = $request->iddescripcion;
             $findProductos->presentacion = $request->idpresentacion;
             $findProductos->save();
 //marcaproduto
             foreach ($request->idmarca as $key) {
-                $Marca = new marca_producto(); 
+                $Marca = new marca_producto();
                 $Marca->cod_marca_fk = $key;
                 $Marca->cod_producto_fk = $id;
-                $Marca->save();                 
+                $Marca->save();
             }
-//bitacora           
+//bitacora
             $bitacora= new historialproducto();
             $bitacora->operacion="Modifiacion";
             $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
@@ -192,7 +192,7 @@ class ProductoController extends Controller
             return redirect('/Productos')->with('datos','Datos actualizados exitosamente');
 
 
-        
+
     }
 
     /**
@@ -203,13 +203,13 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //  
     }
 
     public function buscador(Request $request){
-        
+
         if($request->ajax()){
-            
+
             $query = trim($request->get('query'));
             if($query != ''){
                 $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
@@ -226,9 +226,9 @@ class ProductoController extends Controller
             if(isset($productos)){
                 $total=$productos->count();
                 $output='';
-                
+
                 if($total>0)
-                {   
+                {
                     foreach($productos as $ItemP){
                     $redireccion = route('Productos.edit', $ItemP->cod_producto);
                     $output .='
@@ -236,22 +236,22 @@ class ProductoController extends Controller
                         <th scope="row">'.$ItemP->cod_producto.'</th>
                         <td>'.$ItemP->nombre.'</td>
 
-                        <td>'.$ItemP->cantidad.'</td>                                 
+                        <td>'.$ItemP->cantidad.'</td>
                         // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
 
                     ';
-                    
+
                     // Comprobando el rol del usuario que esta usando el sistema
                     if (Auth::user()->tieneRol()->first() == "bodega") {
                         // Agregando el boton junto con el tr al final
-                        $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';      
+                        $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';
                     }else{
                         // Agregando el tr sin el boton
                         $output .= '<tr>';
                     }
 
                     }
-    
+
                 }else{
                     $output='
                     <tr>
@@ -261,7 +261,7 @@ class ProductoController extends Controller
                 }
 
             }
-  
+
           /*   $productos= array(
                 'table_data'  => $output
             ); */
