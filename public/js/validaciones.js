@@ -236,8 +236,7 @@ if(NombreV){
 }
 function NombreProductoVenta(){
     var NombrePV = document.querySelectorAll('input.a');
-    var cant = document.querySelectorAll('input.b');
-    var total=0; 
+    var cant = document.querySelectorAll('input.b'); 
     var msg="";
     for(var i=0;i<NombrePV.length;i++){
         var uno=NombrePV[i].value.split("$");
