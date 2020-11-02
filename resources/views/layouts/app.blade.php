@@ -437,7 +437,7 @@
 
 
 
-// Se carga en la vista de modificar ventas
+{{-- Se carga en la vista de modificar ventas --}}
 @if (Request::is('Ventas/*/edit'))
     
 <script type="text/javascript">
