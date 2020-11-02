@@ -121,7 +121,7 @@ if(PresentacionP){
         
     })
 }
-if(CantidadP){
+if(CantidadP && PresentacionP){
     CantidadP.addEventListener('blur', () => {
 
         if (CantidadP.value == "") {
@@ -236,7 +236,8 @@ if(NombreV){
 }
 function NombreProductoVenta(){
     var NombrePV = document.querySelectorAll('input.a');
-    var cant = document.querySelectorAll('input.b'); 
+    var cant = document.querySelectorAll('input.b');
+    var cantMod = document.querySelectorAll('input.m');  
     var msg="";
     for(var i=0;i<NombrePV.length;i++){
         var uno=NombrePV[i].value.split("$");
@@ -273,17 +274,32 @@ function NombreProductoVenta(){
                 cant[i].style.borderWidth = "3px";
                 
             }
-            else if(dispos>0){
-                if(cant[i].value>dispos){
-                    msg = "No hay suficiente stock del "+[i+1]+"° producto";
-                    //document.getElementById("msgidcantidadV").style.display = "block";
-                    cant[i].style.borderColor = "red";
-                    cant[i].style.borderWidth = "3px"; 
-                } else {
-                    //document.getElementById("msgidcantidadV").style.display = "none";
-                    //document.getElementById("msgidcantidadV").innerHTML = ""
-                    cant[i].style.borderColor = "";
-                    cant[i].style.borderWidth = "2px";         
+            else if(dispos){
+                if(cantMod[i]){
+                    var totmod=dispos*1+cantMod[i].value*1;
+                    if(cant[i].value>totmod){
+                        msg = "No hay suficiente stock del "+[i+1]+"° producto";
+                        //document.getElementById("msgidcantidadV").style.display = "block";
+                        cant[i].style.borderColor = "red";
+                        cant[i].style.borderWidth = "3px"; 
+                    } else {
+                        //document.getElementById("msgidcantidadV").style.display = "none";
+                        //document.getElementById("msgidcantidadV").innerHTML = ""
+                        cant[i].style.borderColor = "";
+                        cant[i].style.borderWidth = "2px";         
+                    }
+                }else{
+                    if(cant[i].value>dispos){
+                        msg = "No hay suficiente stock del "+[i+1]+"° producto";
+                        //document.getElementById("msgidcantidadV").style.display = "block";
+                        cant[i].style.borderColor = "red";
+                        cant[i].style.borderWidth = "3px"; 
+                    } else {
+                        //document.getElementById("msgidcantidadV").style.display = "none";
+                        //document.getElementById("msgidcantidadV").innerHTML = ""
+                        cant[i].style.borderColor = "";
+                        cant[i].style.borderWidth = "2px";         
+                    }
                 }                      
             }
             else {
