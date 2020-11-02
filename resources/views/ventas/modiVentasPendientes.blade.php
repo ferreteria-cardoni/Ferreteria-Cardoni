@@ -82,7 +82,7 @@
 
                                 <td>
                                     <input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required value='{{$productoVenta->cantidad}}'>
-									<input type="number" min="0" class="m form-control" value='{{$productoVenta->cantidad}}'>
+									<input type="number" min="0" class="m form-control" value='{{$productoVenta->cantidad}}' hidden>
                                 </td>
                                 <td>
                                     <button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button>						
