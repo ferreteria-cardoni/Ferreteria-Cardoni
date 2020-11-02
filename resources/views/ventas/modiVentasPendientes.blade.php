@@ -29,6 +29,7 @@
 @endif
 <div class="container">
 	<form method="POST" action="{{ route('Ventas.update', $id) }}">
+		<div id="mod" hidden>{{$id}}</div>
 		@method('PATCH')
 		@csrf
 		<section>

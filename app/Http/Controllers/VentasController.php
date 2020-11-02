@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use App\venta;
 use App\role;
 use App\empleado;
+use App\Http\Middleware\Ventas;
+
 class VentasController extends Controller
 {
 
@@ -386,6 +388,7 @@ class VentasController extends Controller
     public function cantidad (Request $request){
       if($request->ajax()){
         $query = trim($request->get('query'));
+        //$venta = trim($request->get('ventas'));
         $cant = producto::where('nombre', $query)->value('cantidad');
         $lel='ok';
         echo json_encode($cant);
@@ -465,10 +468,9 @@ class VentasController extends Controller
 
           $query = trim($request->get('query'));
           if($query != ''){
-              $pedidoventa = pedidoventa::where('cod_pedidoventa','LIKE','%'.$query.'%')
-                          ->orWhere('cod_producto_fk','LIKE','%'.$query.'%')
-                          ->take(10)
+              $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
                           ->get();
+              
           }else{
               $output='
               <tr>
@@ -483,18 +485,28 @@ class VentasController extends Controller
               if($total>0)
               {
                   foreach($pedidoventa as $ItemP){
-                  $redireccion = route('Productos.edit', $ItemP->cod_pedidoventa);
+                  $redireccion = route('Ventas.edit', $ItemP->cod_venta);
+                  $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                  $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                  $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
+                  $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
                   $output .='
-                  <tr>
-                      <th scope="row">'.$ItemP->cod_pedidoventa.'</th>
-                      <td>'.$ItemP->cod_venta_fk.'</td>
-
-                      <td>'.$ItemP->cod_producto_fk.'</td>
-
-                      <td>'.$ItemP->cantidad.'</td>
-
-                      <td>'.$ItemP->created_at.'</td>
-                      // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
+                  <div class="col-sm-4">
+                  <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Special title treatment</h5>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                          <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
+                          <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
+                          <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                      </ul>
+                      <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                  </div>
+                  </div>
+                </div>
+                
 
                   ';
 

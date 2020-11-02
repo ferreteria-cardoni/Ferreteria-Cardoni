@@ -629,6 +629,7 @@
                     },
                     dataType: 'json',
                     success: function(data) {
+                        
                         //console.log(data);
                         $('#ok1').html(data);
                     }
@@ -691,8 +692,8 @@
 
 
 <script type="text/javascript">
-    function Disponibilidad(query=''){
-                var resp;
+    function Disponibilidad(query=''){    
+                let ventas= 'prueba';         
                 $.ajax({
                     url:"{{ route('cantidad') }}",
                     method: 'GET',
@@ -704,7 +705,7 @@
                         console.log('neles');
                     },
                     success: function(data) {
-                        //console.log(data);
+                        //console.log();
                         dispo(data);
                         //$('#ok').html(data);
                         //resp= data;
