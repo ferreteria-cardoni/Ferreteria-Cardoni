@@ -2,6 +2,19 @@
 
 @section('titulo','Ventas Pendientes')
 
+
+@section('alert')
+<div class="container">
+      @if (session('datos'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+    {{session('datos')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+@endif
+@endsection
+
 @section('content')
     <div class="input-group-prepend">
             <input class="form-control mr-sm-2" name="textoVentaP" id="textoVentaP" type="text" placeholder="Buscar Ventas" aria-label="Search">
@@ -20,7 +33,7 @@
                 <li class="list-group-item">Direccion: {{$pedido->direccion}}</li>
                 <li class="list-group-item">Total: ${{$pedido->total}}</li>
             </ul>
-            <a href="#" class="btn btn-primary">Ver</a>
+            <a href="{{route('Ventas.edit', $pedido->cod_venta)}}" class="btn btn-primary">Editar</a>
         </div>
         </div>
     </div>

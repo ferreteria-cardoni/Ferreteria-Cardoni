@@ -167,7 +167,34 @@ class VentasController extends Controller
      */
     public function edit($id)
     {
-        //
+
+      $codCliente = venta::find($id)->cod_cliente_fk;
+
+      $direccion = venta::find($id)->direccion;
+
+      $total = venta::find($id)->total;
+
+      // dd($total);
+
+      // dd($direccion);
+
+      $clientes = cliente::all();
+
+      $nombreCliente = cliente::find($codCliente)->nombre;
+
+      $apellidoCliente = cliente::find($codCliente)->apellido;
+
+      // dd($apellidoCliente);
+
+      $productosVenta = pedidoventa::where('cod_venta_fk', $id)->get();
+
+      $productosIventario = producto::all();
+
+      // dd($productos);
+      
+
+
+      return view('ventas.modiVentasPendientes', compact('id','codCliente', 'direccion', 'clientes', 'nombreCliente', 'apellidoCliente', 'productosVenta', 'total', 'productosIventario'));
     }
 
     /**
@@ -179,23 +206,171 @@ class VentasController extends Controller
      */
     public function update(Request $request, $id)
     {
+      // Actualizando venta
 
-   $nombre = $request->nombreproducto1;
-   $cantidad = $request->idcantidad1;
+        $venta = venta::findOrFail($id);
+
+        
+        $venta->direccion = $request->iddireccion;
+
+        $totalVenta = $request->idtotal;
+
+        $totalVenta = substr($request->idtotal, 1);
+
+        // dd($totalVenta);
+
+        $venta->total = $totalVenta;
+
+        // dd($request->nombreventa);
+
+        if ( $request->nombreventa) {
+          $venta->cod_cliente_fk = $request->nombreventa;
+        }
+
+        $venta->update();
+
+
+        
+
+        $productosPedidoVenta = pedidoventa::where('cod_venta_fk', $id)->get();
+        // dd($productosPedidoVenta);
+
+        $productosFormulario = $request->nombreproducto;
+        // dd($productosFormulario);
+
+        $cantidadesFormulario = $request->idcantidad;
+        // dd($cantidadesFormulario);
+
+        $i = 0;
+        $cantidadProductosVendidos = sizeof($productosPedidoVenta);
+        $cantidadProductosFormulario = sizeof($productosFormulario);
+        // dd($cantidadProductosFormulario);
+
+        //-------------------------- Eliminando Productos de pedidoventas ----------------------------
+        $j = 0;
+        if ($cantidadProductosVendidos > $cantidadProductosFormulario) {
+
+          $NombreProducto = array();
+
+          while ($j < $cantidadProductosVendidos) {
+
+            // $productoArray=explode("$",$productosFormulario[$j]);
+            foreach ($productosFormulario as $productoFormulario) {
+              $productoArray = explode("$", $productoFormulario);
+              // dd($productoArray);
+              $productoArray[0] = rtrim($productoArray[0]);
+              array_push($NombreProducto, $productoArray[0]);
+            }
+            
+            // dd($NombreProducto);
+
+            // dd($productosPedidoVenta);
+            
+
+            $producto =  producto::find($productosPedidoVenta[$j]->cod_producto_fk);
+
+            // dd($producto);
+
+            // dd(in_array($producto, $NombreProducto, false));
+
+            if (!in_array($producto->nombre, $NombreProducto, false)) {
+              $eliminarProducto = pedidoventa::findOrFail($productosPedidoVenta[$j]->cod_pedidoventa);
+
+              // dd($eliminarProducto);
+
+              // Actualizando el stock
+              $producto->cantidad += $productosPedidoVenta[$j]->cantidad;
+
+              $producto->update();
+
+              $eliminarProducto->delete();
+            }
+
+
+            $j++;
+
+          }
+        }
 
 
 
+        //------------------- Actualizando pedidoventa -------------------------------
 
-    // $listadoNEW[] = $listadoOLD;
-     //array_merge($listadoOLD, $listadoNEW);
+        while ($i < sizeof($productosFormulario)) {
+          
+          // Quitando el simbolo de $
+          $productoArray=explode("$",$productosFormulario[$i]);
+          $NombreProducto=$productoArray[0];
+          // dd(producto::where('nombre', $NombreProducto)->first()->cod_producto);
+
+          // Recuperando el codigo del producto
+          $codigoProducto = producto::where('nombre', $NombreProducto)->first()->cod_producto;
+
+          // dd($codigoProducto);
+          
+          if ($cantidadProductosVendidos > $i) {
+            
+  
+            $productosPedidoVenta[$i]->cod_producto_fk = $codigoProducto;
+            
+  
+            // Recuperando el producto desde inventario
+            $productoInventario = producto::where('nombre', $NombreProducto)->first();
+            // dd($productoInventario);
+  
+            // Comprobando que la cantidad de producto se cambio en el formulario
+            if ($productosPedidoVenta[$i]->cantidad != $cantidadesFormulario[$i]) {
+              
+  
+              // Actualizando el stock en el inventario
+              if ($productosPedidoVenta[$i]->cantidad > $cantidadesFormulario[$i]) {
+                
+                $diferencia = $productosPedidoVenta[$i]->cantidad - $cantidadesFormulario[$i];
+  
+                $productoInventario->cantidad += $diferencia;
+              }else{
+  
+                $diferencia = $cantidadesFormulario[$i] - $productosPedidoVenta[$i]->cantidad;
+                $productoInventario->cantidad -= $diferencia;
+              }
+  
+              // Actualizando la cantidad vendida del producto
+              $productosPedidoVenta[$i]->cantidad = $cantidadesFormulario[$i];
+    
+              $productoInventario->update();
+            }
+
+            $productosPedidoVenta[$i]->update();
+
+          }else{
+
+            $nuevoPedidoVenta = new pedidoventa();
+
+            $nuevoPedidoVenta->cod_venta_fk = $id;
+            
+            $nuevoPedidoVenta->cod_producto_fk = $codigoProducto;
+
+            $nuevoPedidoVenta->cantidad = $cantidadesFormulario[$i];
+
+            // Recuperando el producto desde inventario
+            $productoInventario = producto::where('nombre', $NombreProducto)->first();
+
+            
+            //Actualizando el stock
+            $productoInventario->cantidad -= $cantidadesFormulario[$i];
+
+            $productoInventario->update();
+
+            $nuevoPedidoVenta->save();
+          }
 
 
+          $i++;
+        }
 
-    return redirect()->route('Ventas.create')->with('nombre', $nombre)->with('cantidad',$cantidad);
 
+        return redirect('/PendienteVenta')->with('datos','Los datos se actualizaron correctamente');
 
-
-        //return view('ventas.crearVentas')->with('listado', $listado);
     }
 
     /**
