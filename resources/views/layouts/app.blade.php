@@ -379,6 +379,23 @@
                             </li>
                             @endcanany
 
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon far fa-sticky-note"></i>
+                                    <p>Proveedores<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                    <li class="nav-item">
+                                        <a href="{{route('Proveedores.create')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Agregar proveedor</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->
@@ -397,6 +414,7 @@
                 <!-- Main content -->
                 <section class="content">
                     @yield('alert')
+                    @yield('alert2')
                     @yield('content')
                     @yield('listado')
                 </section>
