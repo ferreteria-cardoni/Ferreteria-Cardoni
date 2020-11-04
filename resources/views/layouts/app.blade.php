@@ -645,12 +645,14 @@
 
 
         window.addEventListener("load", function() {
+            var opc= document.querySelector('#opcBuscador');
+            console.log(opc.value);
             function busca(query = '') {
                 $.ajax({
                     url: "{{ route('buscadorPedidos') }}",
                     method: 'GET',
                     data: {
-                        query: query
+                        query: query, opc: opc.value
                     },
                     dataType: 'json',
                     success: function(data) {
