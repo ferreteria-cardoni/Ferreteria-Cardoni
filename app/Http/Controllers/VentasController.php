@@ -468,73 +468,180 @@ class VentasController extends Controller
       if($request->ajax()){
 
           $query = trim($request->get('query'));
+          $opc= $request->get('opc');
           if($query != ''){
-              $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
-                          ->get();
+              switch($opc){
+                case 1:{  
+                  $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
+                            ->get();
+                    if(isset($pedidoventa)){
+                      $total=$pedidoventa->count();
+                      $output='';
+                      if($total>0)
+                      {
+                          foreach($pedidoventa as $ItemP){
+                          $redireccion = route('Ventas.edit', $ItemP->cod_venta);
+                          $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                          $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                          $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
+                          $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
+                          $output .='
+                          <div class="col-sm-4">
+                          <div class="card">
+                          <div class="card-body">
+                              <h5 class="card-title">Special title treatment</h5>
+                              <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                              <ul class="list-group list-group-flush">
+                                  <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                  <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
+                                  <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
+                                  <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                              </ul>
+                              <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                          </div>
+                          </div>
+                        </div>
+                        
+        
+                          ';       
+                          }
+        
+                      }else{
+                          $output='
+                          <tr>
+                              <td align="center" colspan="5">Sin Registros</td>
+                          </tr>
+                          ';
+                      }
+        
+                  }
+                }
+                break;
+                case 2:{
+                  $empleados= empleado::where('nombre','LIKE','%'.$query.'%') 
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')                                     
+                                    ->get();
+                  if($empleados->count()>0){
+                    foreach($empleados as $emp){
+                      $Ventaemp= venta::where('cod_empleado_fk',$emp->cod_empleado)->get();
+                      $output='';
+                      foreach($Ventaemp as $vemp){
+                        $pedidoventa = venta::where('cod_venta',$vemp->cod_venta)
+                      ->get();
+                      if(isset($pedidoventa)){
+                        $total=$empleados->count();
+                        if($total>0)
+                        {
+                            foreach($pedidoventa as $ItemP){
+                            $redireccion = route('Ventas.edit', $ItemP->cod_venta);
+                            $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                            $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                            $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
+                            $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
+                            $output .='
+                            <div class="col-sm-4">
+                            <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
+                                    <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
+                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                </ul>
+                                <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                            </div>
+                            </div>
+                          </div>
+                          
+          
+                            ';
+          
+                            }
+          
+                        }       
+                        }
+                      }                   
+                    } 
+                    
+                  }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                  }                     
+                }
+                break;
+                case 3:{
+                  $Clientes= cliente::where('nombre','LIKE','%'.$query.'%')
+                                      ->orWhere('apellido','LIKE','%'.$query.'%')                                      
+                                      ->get();
+                  if($Clientes->count()>0){
+                    foreach($Clientes as $emp){
+                      $Ventaemp= venta::where('cod_cliente_fk',$emp->cod_cliente)->get();
+                      $output='';
+                      foreach($Ventaemp as $vemp){
+                        $pedidoventa = venta::where('cod_venta',$vemp->cod_venta)
+                      ->get();
+                      if(isset($pedidoventa)){
+                        $total=$Clientes->count();
+                      
+          
+                        if($total>0)
+                        {
+                            foreach($pedidoventa as $ItemP){
+                            $redireccion = route('Ventas.edit', $ItemP->cod_venta);
+                            $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                            $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                            $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
+                            $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
+                            $output .='
+                            <div class="col-sm-4">
+                            <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
+                                    <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
+                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                </ul>
+                                <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                            </div>
+                            </div>
+                          </div>
+                          
+          
+                            ';
+          
+                            }
+          
+                        }        
+                        }
+                      }                    
+                    } 
+                  }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                  }                                   
+                }
+                break;
+              }
+              
               
           }else{
               $output='
               <tr>
-                  <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+                  <td align="center" colspan="5">Ingrese el valor correspondiente al filtro aplicado </td>
               </tr>
               ';
-          }
-          if(isset($pedidoventa)){
-              $total=$pedidoventa->count();
-              $output='';
-
-              if($total>0)
-              {
-                  foreach($pedidoventa as $ItemP){
-                  $redireccion = route('Ventas.edit', $ItemP->cod_venta);
-                  $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
-                  $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
-                  $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
-                  $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
-                  $output .='
-                  <div class="col-sm-4">
-                  <div class="card">
-                  <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
-                      <ul class="list-group list-group-flush">
-                          <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
-                          <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
-                          <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
-                          <li class="list-group-item">Total: $'.$ItemP->total.'</li>
-                      </ul>
-                      <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
-                  </div>
-                  </div>
-                </div>
-                
-
-                  ';
-
-                  // Comprobando el rol del usuario que esta usando el sistema
-                  if (Auth::user()->tieneRol()->first() == "bodega") {
-                      // Agregando el boton junto con el tr al final
-                      $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';
-                  }else{
-                      // Agregando el tr sin el boton
-                      $output .= '<tr>';
-                  }
-
-                  }
-
-              }else{
-                  $output='
-                  <tr>
-                      <td align="center" colspan="5">Sin Registros</td>
-                  </tr>
-                  ';
-              }
-
-          }
-
-        /*   $productos= array(
-              'table_data'  => $output
-          ); */
+          } 
 
           echo json_encode($output);
       }

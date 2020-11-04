@@ -17,8 +17,18 @@
 
 @section('content')
     <div class="input-group-prepend">
-            <input class="form-control mr-sm-2" name="textoVentaP" id="textoVentaP" type="text" placeholder="Buscar Ventas" aria-label="Search">
+      <div class="col-sm-8">
+        <input class="form-control mr-sm-2" name="textoVentaP" id="textoVentaP" type="text" placeholder="Buscar Ventas" aria-label="Search">
+      </div>
+      <div class="col-sm-4">
+        <select class="custom-select" name='opcBuscador' id="opcBuscador" autocomplete="off">
+          <option value="1"selected>Codigo Venta</option>
+          <option value="2">Empleado</option>
+          <option value="3">Cliente</option>
+        </select>
+      </div>
     </div>
+
     <br>
       <div class="row" id="ok1">
       @foreach ($pedidoVentas as $pedido)
