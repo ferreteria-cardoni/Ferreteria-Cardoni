@@ -1,6 +1,10 @@
 
 // Obteniendo los elementos del HTML a través de su id
 
+//const { forEach } = require("lodash");
+
+//const { delay } = require("lodash");
+
 //const { truncate } = require("lodash");
 
 //formulario Registro productos
@@ -242,89 +246,109 @@ if(NombreV){
 function NombreProductoVenta(){
     var NombrePV = document.querySelectorAll('input.a');
     var cant = document.querySelectorAll('input.b');
-    var cantMod = document.querySelectorAll('input.m');  
+    var cantMod = document.querySelectorAll('input.m');
+    var stock = document.querySelectorAll('span.s');   
     var msg="";
     for(var i=0;i<NombrePV.length;i++){
         var uno=NombrePV[i].value.split("$");
-        Disponibilidad(uno[0]);
-        //console.log(NombrePV[i].value);
-        if (NombrePV[i].value == "") {
-            document.getElementById("msgnombreproductoV").style.display = "block";
-            document.getElementById("msgnombreproductoV").innerHTML = "Seleccione un producto"
-            NombrePV[i].style.borderColor = "red";
-            NombrePV[i].style.borderWidth = "3px";
-            $('#btmVentasTab').attr('disabled',true);
-            cant[i].disabled="true";
+        var disponible=0;     
+        //console.log(stock[18].innerHTML);
+        for(var j=0;j<stock.length;j++){
+            var ver =stock[j].innerHTML.split("$");
+            //console.log(uno[0]);
+            //console.log(ver[0]);
+            if(uno[0] == ver[0]){
+                disponible=ver[1]; 
+                //console.log(disponible);
+                break;
+            }else{
+                console.log("nada");
+            }
+            //console.log(stock[j].innerHTML); 
         }
-        else {
-            document.getElementById("msgnombreproductoV").style.display = "none";
-            document.getElementById("msgnombreproductoV").innerHTML = ""
-            NombrePV[i].style.borderColor = "";
-            NombrePV[i].style.borderWidth = "2px";
-            cant[i].disabled="";
-
-
-            if (cant[i].value == "") {
-                msg = "La cantidad ingresada debe ser superior a 0 ";
-                //document.getElementById("msgidcantidadV").style.display = "block";
-                cant[i].style.borderColor = "red";
-                cant[i].style.borderWidth = "3px";
-                
-                
-            }
-            else if(!(cant[i].value - Math.floor(cant[i].value)) == 0){
-                msg = "Utilize solo números enteros";
-                //document.getElementById("msgidcantidadV").style.display = "block";
-                cant[i].style.borderColor = "red";
-                cant[i].style.borderWidth = "3px";
-                
-            }
-            else if(dispos){
-                if(cantMod[i]){
-                    var totmod=dispos*1+cantMod[i].value*1;
-                    if(cant[i].value>totmod){
-                        msg = "No hay suficiente stock del "+[i+1]+"° producto";
-                        //document.getElementById("msgidcantidadV").style.display = "block";
-                        cant[i].style.borderColor = "red";
-                        cant[i].style.borderWidth = "3px"; 
-                    } else {
-                        //document.getElementById("msgidcantidadV").style.display = "none";
-                        //document.getElementById("msgidcantidadV").innerHTML = ""
-                        cant[i].style.borderColor = "";
-                        cant[i].style.borderWidth = "2px";         
-                    }
-                }else{
-                    if(cant[i].value>dispos){
-                        msg = "No hay suficiente stock del "+[i+1]+"° producto";
-                        //document.getElementById("msgidcantidadV").style.display = "block";
-                        cant[i].style.borderColor = "red";
-                        cant[i].style.borderWidth = "3px"; 
-                    } else {
-                        //document.getElementById("msgidcantidadV").style.display = "none";
-                        //document.getElementById("msgidcantidadV").innerHTML = ""
-                        cant[i].style.borderColor = "";
-                        cant[i].style.borderWidth = "2px";         
-                    }
-                }                      
+        //Disponibilidad(uno[0]); 
+            if (NombrePV[i].value == "") {
+                document.getElementById("msgnombreproductoV").style.display = "block";
+                document.getElementById("msgnombreproductoV").innerHTML = "Seleccione un producto"
+                NombrePV[i].style.borderColor = "red";
+                NombrePV[i].style.borderWidth = "3px";
+                $('#btmVentasTab').attr('disabled',true);
+                cant[i].disabled="true";
+                var ctrl=1;
             }
             else {
-                //document.getElementById("msgidcantidadV").style.display = "none";
-                //document.getElementById("msgidcantidadV").innerHTML = ""
-                cant[i].style.borderColor = "";
-                cant[i].style.borderWidth = "2px";         
-            }
-        }       
-        if(msg!=""){
-            document.getElementById("msgidcantidadV").innerHTML = msg;
-            document.getElementById("msgidcantidadV").style.display = "block";
-            $('#btmVentasTab').attr('disabled',true);
-            $('#btmsubmitV').attr('disabled',true); 
-        }else{
-            document.getElementById("msgidcantidadV").style.display = "none";
-            document.getElementById("msgidcantidadV").innerHTML = "";
-            $('#btmVentasTab').attr('disabled',false);
-            $('#btmsubmitV').attr('disabled',false); 
-        }           
+                document.getElementById("msgnombreproductoV").style.display = "none";
+                document.getElementById("msgnombreproductoV").innerHTML = ""
+                NombrePV[i].style.borderColor = "";
+                NombrePV[i].style.borderWidth = "2px";
+                cant[i].disabled="";
+                var ctrl=0;
+    
+    
+                if (cant[i].value == "") {
+                    msg = "La cantidad ingresada debe ser superior a 0 ";
+                    //document.getElementById("msgidcantidadV").style.display = "block";
+                    cant[i].style.borderColor = "red";
+                    cant[i].style.borderWidth = "3px";
+                    $('#btmVentasTab').attr('disabled',true);
+                    
+                    
+                }
+                else if(!(cant[i].value - Math.floor(cant[i].value)) == 0){
+                    msg = "Utilize solo números enteros";
+                    //document.getElementById("msgidcantidadV").style.display = "block";
+                    cant[i].style.borderColor = "red";
+                    cant[i].style.borderWidth = "3px";
+                    
+                    
+                }
+                else if(disponible){
+                    if(cantMod[i]){                        
+                        var totmod=disponible*1+cantMod[i].value*1;
+                        if(cant[i].value>totmod){
+                            msg = "Insuficiente stock del "+[i+1]+"° producto, disponibles: "+totmod;
+                            //document.getElementById("msgidcantidadV").style.display = "block";
+                            cant[i].style.borderColor = "red";
+                            cant[i].style.borderWidth = "3px"; 
+                        } else {
+                            //document.getElementById("msgidcantidadV").style.display = "none";
+                            //document.getElementById("msgidcantidadV").innerHTML = ""
+                            cant[i].style.borderColor = "";
+                            cant[i].style.borderWidth = "2px";         
+                        }
+                    }else{
+                        
+                        if(cant[i].value>(disponible*1)){
+                            msg = "Insuficiente stock del "+[i+1]+"° producto, disponibles: "+disponible;
+                            //document.getElementById("msgidcantidadV").style.display = "block";
+                            cant[i].style.borderColor = "red";
+                            cant[i].style.borderWidth = "3px"; 
+                        } else {
+                            //document.getElementById("msgidcantidadV").style.display = "none";
+                            //document.getElementById("msgidcantidadV").innerHTML = ""
+                            cant[i].style.borderColor = "";
+                            cant[i].style.borderWidth = "2px";         
+                        }
+                        
+                    }                      
+                }
+                else {
+                    cant[i].style.borderColor = "";
+                    cant[i].style.borderWidth = "2px";         
+                }
+            }       
+            if(msg!=""){
+                document.getElementById("msgidcantidadV").innerHTML = msg;
+                document.getElementById("msgidcantidadV").style.display = "block";
+                $('#btmVentasTab').attr('disabled',true);
+                $('#btmsubmitV').attr('disabled',true); 
+            }else if(ctrl== 0){
+                document.getElementById("msgidcantidadV").style.display = "none";
+                document.getElementById("msgidcantidadV").innerHTML = "";
+                $('#btmVentasTab').attr('disabled',false);
+                $('#btmsubmitV').attr('disabled',false); 
+            }  
+                 
     }
 
 };
@@ -342,16 +366,18 @@ function Total(){
     TotalV.value= "$"+total;
 }
 function dispo(msg){
- dispos=msg;
-} 
+    dispos=msg;
+}
 if(TabVenta){
     TabVenta.addEventListener('click', () => {
+        //setTimeout(NombreProductoVenta,1000);
         NombreProductoVenta();     
-    })
-    TabVenta.addEventListener('change', () => {
+    }) 
+     TabVenta.addEventListener('change', () => {
         NombreProductoVenta();
+        Total(); 
              
-    })
+    }) 
     TabVenta.addEventListener('mousemove', () => {
         Total();     
     })
@@ -387,6 +413,7 @@ function NombreProductoCompra(){
         var cantC = document.querySelectorAll('input.b');
         var precioC = document.querySelectorAll('input.c');
         var totalC=0;
+        var msg="";
         for(var i=0;i<NombrePC.length;i++){
             if (NombrePC[i].value == "") {
                 document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
@@ -396,6 +423,8 @@ function NombreProductoCompra(){
                 cantC[i].disabled="true";
                 precioC[i].disabled="true";
                 $('#btmComprasTab').attr('disabled',true);
+                $('#btmsubmitC').attr('disabled',true);
+                var ctrl = 1;
             }
             else {
                 document.getElementById("msgnombreproducto").style.display = "none";
@@ -405,30 +434,34 @@ function NombreProductoCompra(){
                 $('#btmComprasTab').attr('disabled',false);
                 cantC[i].disabled="";
                 precioC[i].disabled="";
+                var ctrl = 0;
 
                 if (cantC[i].value == "") {
-                    document.getElementById("msgidcantidad").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
-                    document.getElementById("msgidcantidad").style.display = "block";
+                    msg = "La cantidad ingresada debe ser superior a 0 ";
                     cantC[i].style.borderColor = "red";
-                    cantC[i].style.borderWidth = "3px";
-                    $('#btmComprasTab').attr('disabled',true);
-                    
+                    cantC[i].style.borderWidth = "3px";                   
                 }
                 else if(!(cantC[i].value - Math.floor(cantC[i].value)) == 0){
-                    document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
-                    document.getElementById("msgidcantidad").style.display = "block";
+                    msg = "La cantidad ingresada debe ser entera ";
                     cantC[i].style.borderColor = "red";
-                    cantC[i].style.borderWidth = "3px";
-                    $('#btmComprasTab').attr('disabled',true);
+                    cantC[i].style.borderWidth = "3px";                   
                 }
                 else {
-                    document.getElementById("msgidcantidad").style.display = "none";
-                    document.getElementById("msgidcantidad").innerHTML = ""
                     cantC[i].style.borderColor = "";
                     cantC[i].style.borderWidth = "2px";
-                    $('#btmComprasTab').attr('disabled',false);
-                }
+                }               
             }
+            if(msg!="" ){
+                document.getElementById("msgidcantidad").innerHTML = msg;
+                document.getElementById("msgidcantidad").style.display = "block";               
+                $('#btmComprasTab').attr('disabled',true);
+                $('#btmsubmitC').attr('disabled',true);
+            }else if(ctrl== 0){
+                document.getElementById("msgidcantidad").style.display = "none";
+                document.getElementById("msgidcantidad").innerHTML = "";
+                $('#btmComprasTab').attr('disabled',false);
+                $('#btmsubmitC').attr('disabled',false);
+            }  
     
            totalC=totalC+((cantC[i].value*1)*(precioC[i].value*1));     
         }
