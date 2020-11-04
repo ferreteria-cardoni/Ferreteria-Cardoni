@@ -121,7 +121,11 @@
 		</section>
         <button id="btmsubmitV" type="submit" class="btn btn-primary">Modificar Venta</button>
         <a href="{{route('Pendiente')}}"><button type="button" class="btn btn-danger">Cancelar</button></a> 
-		
+		@foreach ($productosIventario as $producto)
+			<span class="s" hidden>{{$producto->nombre}} ${{$producto->cantidad}}</span>
+    	@endforeach
 	</form>
+	
 </div>
+
 @endsection

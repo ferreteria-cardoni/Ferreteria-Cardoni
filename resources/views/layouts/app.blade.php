@@ -720,7 +720,7 @@
 
 <script type="text/javascript">
     function Disponibilidad(query=''){    
-                let ventas= 'prueba';         
+                //let ventas= 'prueba';         
                 $.ajax({
                     url:"{{ route('cantidad') }}",
                     method: 'GET',

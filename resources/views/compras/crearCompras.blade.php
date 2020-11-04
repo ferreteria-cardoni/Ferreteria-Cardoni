@@ -55,7 +55,9 @@
 								<th>Cantidad
 								<span id="msgidcantidad" name="msgidcantidad" class="AlertaMsg"></span>
 								</th>
-								<th>Precio Compra</th>
+								<th>Precio Compra
+								<span id="msgidprecioC" name="msgidprecioC" class="AlertaMsg"></span>
+								</th>
 								{{-- <th><a href="#" class="addRow btn btn-success">Agregar</a></th> --}}
 								<td><button type="button" id="btmComprasTab" disabled class="addRow btn btn-success">Agregar</button></td>
 							</tr>
@@ -97,7 +99,7 @@
 					</table>
 				</div>
 			</section>
-			<button type="submit" class="btn btn-primary">Registrar Compra</button>
+			<button id="btmsubmitC" name="btmsubmitC" type="submit" class="btn btn-primary" disabled>Registrar Compra</button>
 			<a href="{{route('compras.create')}}"><button type="button" id="btnLimpiar" class="btn btn-danger">Limpiar Campos</button></a>
 		</form>
 	</div>
