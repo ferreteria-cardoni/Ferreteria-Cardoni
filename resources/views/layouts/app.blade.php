@@ -393,6 +393,13 @@
                                             <p>Agregar proveedor</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{route('Proveedores.create')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Modificar proveedor</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 

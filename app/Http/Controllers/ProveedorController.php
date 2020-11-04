@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\proveedor;
 use Illuminate\Http\Request;
+use App\Http\Requests\FormProveedores;
 
 class ProveedorController extends Controller
 {
@@ -33,7 +34,7 @@ class ProveedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormProveedores $request)
     {
         
 
