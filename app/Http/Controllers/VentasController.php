@@ -80,6 +80,7 @@ class VentasController extends Controller
             $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
             $ventas->direccion = $request->iddireccion;
+            $ventas->estado ="pendiente";
             $ventas->total= substr($request->idtotal,1);
             $ventas->save();
 

@@ -42,6 +42,11 @@ const NIT = document.querySelector('#NIT');
 const NCF = document.querySelector('#NCF');
 const DireccionC = document.querySelector('#DireccionC');
 
+//Formulario Proveedor
+const NombreProveedor = document.querySelector('#idnombreProve');
+const TelefonoProveedor = document.querySelector('#idtelefonoProve');
+const CorroProveedor = document.querySelector('#idcorreoProve');
+
 
 //expresiones regulares usadas en las validaciones
 var solotexto = new RegExp('[a-zA-Z\s]+$');
@@ -592,7 +597,75 @@ if(DireccionC){
         
     })
 } 
-  
+
+//Proveedores
+if(NombreProveedor){
+    NombreProveedor.addEventListener('blur', () => {
+
+        if (NombreProveedor.value == "" ) {
+            document.getElementById("msgidnombreProve").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidnombreProve").style.display = "block";
+            NombreProveedor.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgidnombreProve").style.display = "none";
+            document.getElementById("msgidnombreProve").innerHTML = ""
+            NombreProveedor.style.borderColor = "";
+            
+            
+        }
+        
+    })
+}
+if(TelefonoProveedor){
+    TelefonoProveedor.addEventListener('blur', () => {
+
+        if (TelefonoProveedor.value == "") {
+            document.getElementById("msgidtelefonoProve").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidtelefonoProve").style.display = "block";
+            TelefonoProveedor.style.borderColor = "red";
+            
+        }
+        else if(!valtel.exec(TelefonoProveedor.value)){
+            document.getElementById("msgidtelefonoProve").innerHTML = "El formato correcto es 9999-9999 (8 digitos)"
+            document.getElementById("msgidtelefonoProve").style.display = "block";
+            TelefonoProveedor.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidtelefonoProve").style.display = "none";
+            document.getElementById("msgidtelefonoProve").innerHTML = ""
+            TelefonoProveedor.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(CorroProveedor){
+    CorroProveedor.addEventListener('blur', () => {
+
+        if (CorroProveedor.value == "") {
+            document.getElementById("msgidcorreoProve").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidcorreoProve").style.display = "block";
+            CorroProveedor.style.borderColor = "red";
+            
+        }
+        else if(!valcorreos.exec(CorroProveedor.value)){
+            document.getElementById("msgidcorreoProve").innerHTML = "El formato correcto es ejemplo@gmail.com"
+            document.getElementById("msgidcorreoProve").style.display = "block";
+            CorroProveedor.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidcorreoProve").style.display = "none";
+            document.getElementById("msgidcorreoProve").innerHTML = ""
+            CorroProveedor.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
 
 
 
