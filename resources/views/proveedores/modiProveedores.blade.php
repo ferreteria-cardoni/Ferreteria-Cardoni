@@ -45,33 +45,33 @@
 @endif
 
 
-<form method="POST" action="{{route('Proveedores.store')}}">
+<form method="POST" action="{{route('Proveedores.update', $proveedor->cod_proveedor)}}">
     @csrf
-
+	@method('PATCH')
     <div class="form-row">
 		<div class="form-group col-md-5">
 			<label>Nombre del proveedor</label>
-			<input type="text" class="form-control" id="idnombreProve" name="idnombreProve" placeholder="Escriba el nombre..." value="{{ old('idnombreProve') }}">
+			<input type="text" class="form-control" id="idnombreProve" name="idnombreProve" placeholder="Escriba el nombre..." value="{{ $proveedor->nombre }}">
 			<span id="msgidnombreProve" name="msgidnombreProve" class="AlertaMsg"></span>
 		</div>
 
 		<div class="form-group col-md-5">
 			<label>Teléfono</label>
 			<input type="text" class="form-control" id="idtelefonoProve" name="idtelefonoProve"
-				placeholder="Escribe el teléfono..." maxlength="8" value="{{ old('idtelefonoProve') }}">
+				placeholder="Escribe el teléfono..." maxlength="8" value="{{ $proveedor->telefono }}">
 			<span id="msgidtelefonoProve" name="msgidtelefonoProve" class="AlertaMsg"></span>
 		</div>
 
 		<div class="form-group col-md-5">
 			<label>Correo electrónico</label>
 			<input type="text" class="form-control" id="idcorreoProve" name="idcorreoProve" placeholder="Email..."
-				value="{{ old('idcorreoProve') }}">
+				value="{{ $proveedor->correo }}">
 			<span id="msgidcorreoProve" name="msgidcorreoProve" class="AlertaMsg"></span>
 		</div>
 </div>
 
-<button type="submit" class="btn btn-primary">Registrar Proveedor</button>
-<button type="reset" class="btn btn-danger">Limpiar Campos</button>
+<button type="submit" class="btn btn-primary">Modificar Proveedor</button>
+<a href="{{route('Proveedores.index')}}"><button type="button" class="btn btn-danger">Cancelar</button></a>
 
 </form>
 

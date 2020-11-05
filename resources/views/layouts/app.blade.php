@@ -385,19 +385,19 @@
                                     <p>Proveedores<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{route('Proveedores.index')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Ver proveedores</p>
+                                        </a>
+                                    </li>
 
                                     <li class="nav-item">
                                         <a href="{{route('Proveedores.create')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Agregar proveedor</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('Proveedores.create')}}"
-                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Modificar proveedor</p>
                                         </a>
                                     </li>
                                 </ul>

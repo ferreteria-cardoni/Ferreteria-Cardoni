@@ -15,7 +15,9 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        $proveedores = proveedor::paginate(10);
+
+        return view('proveedores.vistaProveedores', compact('proveedores'));
     }
 
     /**
@@ -77,7 +79,9 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $proveedor = proveedor::findOrFail($id);
+
+        return view('proveedores.modiProveedores', compact('proveedor'));
     }
 
     /**
@@ -89,7 +93,15 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $proveedor = proveedor::findOrFail($id);
+
+        $proveedor->nombre = $request->idnombreProve;
+        $proveedor->telefono = $request->idtelefonoProve;
+        $proveedor->correo = $request->idcorreoProve;
+
+        $proveedor->update();
+
+        return redirect('Proveedores')->with('datos', 'Datos actualizados correctamente');
     }
 
     /**
