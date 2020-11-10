@@ -476,7 +476,7 @@
     {
         var tr = '<tr>'+
         '<td><input name="nombreproducto[]" list="productos" class="a form-control" required><datalist id="productos">@foreach ($productosIventario as $producto)<option value="{{$producto->nombre}} ${{$producto->precio}}"></option>@endforeach</datalist></td>'+
-		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required disabled></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required disabled  autocomplete="off"></td>'+
         '<td><button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button></td>'
         '<tr>';
         $('tbody').append(tr);
