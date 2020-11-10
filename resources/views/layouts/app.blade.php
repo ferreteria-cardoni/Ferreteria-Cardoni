@@ -210,7 +210,7 @@
                                 </ul>
                             </li>
 
-                            {{-- Productos --}}
+                            {{-- Ventas --}}
 
                             <li class="nav-item has-treeview">
                                 @canany(['ventas'])
@@ -237,100 +237,31 @@
                                 @endcanany
                             </li>
 
-                              {{-- Ventas --}}
-                            {{-- @canany(['ventas'])
-                            <li class="nav-item has-treeview">
-                                <a href="{{route('Ventas.create')}}" class="nav-link">
-                                    <i class="nav-icon far fa-sticky-note"></i>
-                                    <p>Ventas<i class="fas fa-angle-left right"></i></p>
-                                </a>
-                            </li>
-                            @endcanany --}}
-
-                                {{-- <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{route('Ventas.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Crear</p>
-                                        </a>
-                                    </li> --}}
-
-                                    {{-- @canany(['gerente', 'ventas', 'bodega'])
-                                    <li class="nav-item">
-                                        <a href="/Productos" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ver</p>
-                                        </a>
-                                    </li>
-                                    @endcanany --}}
-
-
-
-
-                                    {{-- @canany(['bodega'])
-
-                                    <li class="nav-item">
-                                        <a href="/modificar" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Modificar</p>
-                                        </a>
-                                    </li>
-
-
-                                    @endcanany --}}
-
-                                {{-- </ul> --}}
-
                             {{-- Compras --}}
-                            @canany(['compras'])
-                            <li class="nav-item">
-                                <a href="{{route('compras.create')}}" class="nav-link">
+                            <li class="nav-item has-treeview">
+                                @canany(['compras'])
+                                <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Compras<i class="fas fa-angle-left right"></i></p>
                                 </a>
+                                
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{route('compras.create')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Crear Compra</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="/PendienteCompra" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Compras Pendientes</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                @endcanany
                             </li>
-                            @endcanany
-
-                                {{-- <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{route('compras.create')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>crear</p>
-                                        </a>
-                                    </li> --}}
-
-                                    {{-- @canany(['gerente', 'ventas', 'bodega'])
-                                    <li class="nav-item">
-                                        <a href="/Productos" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ver</p>
-                                        </a>
-                                    </li>
-                                    @endcanany
- --}}
-
-
-
-                                    {{-- @canany(['bodega'])
-
-                                    <li class="nav-item">
-                                        <a href="/modificar" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Modificar</p>
-                                        </a>
-                                    </li>
-
-
-                                    @endcanany --}}
-
-                                {{-- </ul> --}}
-
-
-
-
-
-
-
                             {{-- Movimientos --}}
                             @canany(['bodega'])
                             <li class="nav-item has-treeview">
@@ -617,7 +548,7 @@
 
 
 
-
+<!-- buscadores -->
 <script type="text/javascript">
     window.addEventListener("load", function() {
         function busca(query = '') {
@@ -670,6 +601,34 @@
             })
 
         })
+        window.addEventListener("load", function() {
+            var opc= document.querySelector('#opcBuscadorC');
+            console.log(opc.value);
+            function buscaC(query = '') {
+                $.ajax({
+                    url: "{{ route('buscadorCompras') }}",
+                    method: 'GET',
+                    data: {
+                        query: query, opc: opc.value
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        
+                        //console.log(data);
+                        $('#ok2').html(data);
+                    }
+                })
+            }
+
+            $(document).on('keyup', '#textoCompraP', function() {
+                var query = $(this).val();
+                //console.log(query);
+                buscaC(query);
+            })
+
+        })
+
+
 
 </script>
 

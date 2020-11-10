@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\compra;
 use App\producto;
 use App\proveedor;
+use App\empleado;
 use Illuminate\Support\Facades\Auth;
 
 class ComprasController extends Controller
@@ -38,6 +39,12 @@ class ComprasController extends Controller
         $pedidoCompra = pedidocompra::paginate(10);
 
         return view('compras.vistaCompras', compact('pedidoCompra'));
+    }
+    public function index2()
+    {
+        $pedidoCompras = compra::where('estado','pendiente')->get();
+
+        return view('compras.ComprasPendientes', compact('pedidoCompras'));
     }
     
     /**
@@ -122,8 +129,20 @@ class ComprasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    { 
+    $codProveedor = compra::find($id)->cod_proveedor_fk;
+
+    $total = compra::find($id)->total;
+
+    $proveedores = proveedor::all();
+
+    $nombreproveedor = proveedor::find($codProveedor)->nombre;
+
+    $productoscompra = pedidocompra::where('cod_compra_fk', $id)->get();
+
+    $productosIventario = producto::all();
+
+    return view('compras.modiComprasPendientes', compact('id','codProveedor', 'proveedores', 'nombreproveedor', 'productoscompra', 'total', 'productosIventario'));
     }
 
     /**
@@ -175,11 +194,6 @@ class ComprasController extends Controller
                     foreach($productos as $ItemP){
                         $pedidoCompra= pedidocompra::where('cod_producto_fk',$ItemP->cod_producto)
                                                     ->get();
-/*                         $output .='
-                        <tr>
-                            <th scope="row">'.$ItemP->cod_producto.'</th>
-                            <td>'.$ItemP->nombre.'</td>
-                        '; */
                         foreach($pedidoCompra as $hcompra){
                             $output .='
                             <tr>
@@ -201,16 +215,183 @@ class ComprasController extends Controller
                 }
 
             }
-  
-          /*   $productos= array(
-                'table_data'  => $output
-            ); */
 
             echo json_encode($output);
         }
+    }
+    public function buscadorCompras(Request $request){
+        if($request->ajax()){
 
+            $query = trim($request->get('query'));
+            $opc= $request->get('opc');
+            if($query != ''){
+                switch($opc){
+                    case 1:{  
+                    $pedidocompra = compra::where('cod_compra','LIKE','%'.$query.'%')
+                                ->get();
+                        if(isset($pedidocompra)){
+                        $total=$pedidocompra->count();
+                        $output='';
+                        if($total>0)
+                        {
+                            foreach($pedidocompra as $ItemP){
+                            $redireccion = route('compras.edit', $ItemP->cod_compra);
+                            $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                            $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                            $proveedorN=proveedor::where('cod_proveedor',$ItemP->cod_proveedor_fk)->value('nombre');
+                            $output .='
+                            <div class="col-sm-4">
+                            <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                   
+                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                </ul>
+                                <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                            </div>
+                            </div>
+                            </div>
+                            
+            
+                            ';       
+                            }
+            
+                        }else{
+                            $output='
+                            <tr>
+                                <td align="center" colspan="5">Sin Registros</td>
+                            </tr>
+                            ';
+                        }
+            
+                    }
+                    }
+                    break;
+                    case 2:{
+                    $empleados= empleado::where('nombre','LIKE','%'.$query.'%') 
+                                        ->orWhere('apellido','LIKE','%'.$query.'%')                                     
+                                        ->get();
+                    if($empleados->count()>0){
+                        foreach($empleados as $emp){
+                        $Ventaemp= compra::where('cod_empleado_fk',$emp->cod_empleado)->get();
+                        $output='';
+                        foreach($Ventaemp as $vemp){
+                            $pedidocompra = compra::where('cod_compra',$vemp->cod_compra)
+                        ->get();
+                        if(isset($pedidocompra)){
+                            $total=$empleados->count();
+                            if($total>0)
+                            {
+                                foreach($pedidocompra as $ItemP){
+                                $redireccion = route('compras.edit', $ItemP->cod_compra);
+                                $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                                $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                                $proveedorN=proveedor::where('cod_proveedor',$ItemP->cod_proveedor_fk)->value('nombre');
+                                $output .='
+                                <div class="col-sm-4">
+                                <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Special title treatment</h5>
+                                    <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                        <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                     
+                                        <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                    </ul>
+                                    <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                                </div>
+                                </div>
+                            </div>
+                            
+            
+                                ';
+            
+                                }
+            
+                            }       
+                            }
+                        }                   
+                        } 
+                        
+                    }else{
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Sin Registros</td>
+                        </tr>
+                        ';
+                    }                     
+                    }
+                    break;
+                    case 3:{
+                    $Proveedors= proveedor::where('nombre','LIKE','%'.$query.'%')                                      
+                                        ->get();
+                    if($Proveedors->count()>0){
+                        foreach($Proveedors as $emp){
+                        $Ventaemp= compra::where('cod_proveedor_fk',$emp->cod_proveedor)->get();
+                        $output='';
+                        foreach($Ventaemp as $vemp){
+                            $pedidocompra = compra::where('cod_compra',$vemp->cod_compra)
+                        ->get();
+                        if(isset($pedidocompra)){
+                            $total=$Proveedors->count();
+                        
+            
+                            if($total>0)
+                            {
+                                foreach($pedidocompra as $ItemP){
+                                $redireccion = route('compras.edit', $ItemP->cod_compra);
+                                $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                                $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                                $proveedorN=proveedor::where('cod_proveedor',$ItemP->cod_proveedor_fk)->value('nombre');
+                                $output .='
+                                <div class="col-sm-4">
+                                <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Special title treatment</h5>
+                                    <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                        <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                       
+                                        <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                    </ul>
+                                    <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                                </div>
+                                </div>
+                            </div>
+                            
+            
+                                ';
+            
+                                }
+            
+                            }        
+                            }
+                        }                    
+                        } 
+                    }else{
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Sin Registros</td>
+                        </tr>
+                        ';
+                    }                                   
+                    }
+                    break;
+                }
+                
+                
+            }else{
+                $output='
+                <tr>
+                    <td align="center" colspan="5">Ingrese el valor correspondiente al filtro aplicado </td>
+                </tr>
+                ';
+            } 
 
-
-
+            echo json_encode($output);
+        }
     }
 }
