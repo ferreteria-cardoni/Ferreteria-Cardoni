@@ -363,6 +363,8 @@ function Total(){
         }
     }
     
+    total = total.toFixed(2);
+
     TotalV.value= "$"+total;
 }
 function dispo(msg){

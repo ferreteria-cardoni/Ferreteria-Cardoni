@@ -38,7 +38,7 @@
                         <select class="custom-select" name='nombreventa' id="nombreventa" autocomplete="off">
                             <option value="0" disabled selected>Seleccione el cliente</option>
                             @foreach($cliente as $clienteiten)
-                            <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
+							<option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}} {{$clienteiten->apellido}}</option>
                             @endforeach
                         </select>
                         <span id="msgnombreventa" name="msgnombreventa" class="AlertaMsg"></span>
