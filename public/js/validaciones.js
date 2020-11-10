@@ -261,8 +261,6 @@ function NombreProductoVenta(){
                 disponible=ver[1]; 
                 //console.log(disponible);
                 break;
-            }else{
-                console.log("nada");
             }
             //console.log(stock[j].innerHTML); 
         }

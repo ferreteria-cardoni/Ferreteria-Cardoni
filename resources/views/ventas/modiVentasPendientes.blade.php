@@ -54,6 +54,16 @@
 				</div>
 			</div>
 			<div class="panel panel-footer">
+
+				@foreach ($productosVenta as $productoVenta)
+					<datalist id="productos">
+						@foreach ($productosIventario as $producto)
+						<option value="{{$producto->nombre}} ${{$producto->precioVenta}}"></option>
+						@endforeach
+					</datalist>
+				@endforeach
+
+
 				<table id="Venta" class="table table-border">
 					<thead>
 						<tr>
@@ -73,15 +83,15 @@
                             <tr>
                                 <td>
                                     <input id="nombreproducto" name="nombreproducto[]" list="productos" value='{{App\producto::find($productoVenta->cod_producto_fk)->nombre}} ${{App\producto::find($productoVenta->cod_producto_fk)->precioVenta}}'  class="a form-control" autocomplete="off" required>
-                                    <datalist id="productos">
+                                    {{-- <datalist id="productos">
                                        @foreach ($productosIventario as $producto)
                                         <option value="{{$producto->nombre}} ${{$producto->precioVenta}}"></option>
                                        @endforeach
-                                    </datalist>
+                                    </datalist> --}}
                                 </td>
 
                                 <td>
-                                    <input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required value='{{$productoVenta->cantidad}}'>
+                                    <input type="number" min="0" id="idcantidad" name="idcantidad[]" class="b form-control" required value='{{$productoVenta->cantidad}}' autocomplete="off">
 									<input type="number" min="0" class="m form-control" value='{{$productoVenta->cantidad}}' hidden>
                                 </td>
                                 <td>
