@@ -259,10 +259,6 @@ class VentasController extends Controller
         array_push($productosNombre, $productoArray[0]);
       }
 
-      // dd($cantidadesDiccionario);
-
-      // dd($productosNombre);
-
       // Recuperando los nombres de los productos vendidos
       foreach ($pedidosVenta as $productoVenta) {
         $nombreP = producto::where('cod_producto', $productoVenta->cod_producto_fk)->value('nombre');
@@ -424,11 +420,7 @@ class VentasController extends Controller
                   foreach($productos as $ItemP){
                       $pedidoVenta= pedidoventa::where('cod_producto_fk',$ItemP->cod_producto)
                                                   ->get();
-/*                         $output .='
-                      <tr>
-                          <th scope="row">'.$ItemP->cod_producto.'</th>
-                          <td>'.$ItemP->nombre.'</td>
-                      '; */
+
                       foreach($pedidoVenta as $hventa){
                         $Venta= venta::where('cod_venta',$hventa->cod_venta_fk)->value('cod_empleado_fk');
                         //echo($hventa->cantidad);
