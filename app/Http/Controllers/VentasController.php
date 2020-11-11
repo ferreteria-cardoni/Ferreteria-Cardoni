@@ -213,12 +213,7 @@ class VentasController extends Controller
 
         // Actualizando la venta
         $venta = venta::findOrFail($id);
-<<<<<<< HEAD
 
-
-=======
-        
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
         $venta->direccion = $request->iddireccion;
 
         $totalVenta = $request->idtotal;
@@ -236,11 +231,7 @@ class VentasController extends Controller
         $venta->update();
 
 
-<<<<<<< HEAD
-
-=======
       $pedidosVenta = pedidoventa::where('cod_venta_fk', $id)->get();
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
       $productosNombre = array();
       $productosVendidosNombre = array();
@@ -268,24 +259,9 @@ class VentasController extends Controller
       foreach ($pedidosVenta as $productoVenta) {
         $nombreP = producto::where('cod_producto', $productoVenta->cod_producto_fk)->value('nombre');
 
-<<<<<<< HEAD
-            // $productoArray=explode("$",$productosFormulario[$j]);
-            foreach ($productosFormulario as $productoFormulario) {
-              $productoArray = explode("$", $productoFormulario);
-              // dd($productoArray);
-              $productoArray[0] = rtrim($productoArray[0]);
-              array_push($NombreProducto, $productoArray[0]);
-            }
-
-            // dd($NombreProducto);
-
-            // dd($productosPedidoVenta);
-
-=======
         $codigosPedidoDiccionario[$nombreP] = $productoVenta->cod_pedidoventa;
 
         $cantidadesPedidoDiccionario[$nombreP] = $productoVenta->cantidad;
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
         array_push($productosVendidosNombre, $nombreP);
       }
@@ -294,7 +270,7 @@ class VentasController extends Controller
       // Eliminar pedidosventas
 
       foreach ($productosVendidosNombre as $productoVendido) {
-        
+
 
         if (!in_array($productoVendido, $productosNombre, true)) {
 
@@ -316,70 +292,25 @@ class VentasController extends Controller
 
 
 
-<<<<<<< HEAD
-        while ($i < sizeof($productosFormulario)) {
-
-          // Quitando el simbolo de $
-          $productoArray=explode("$",$productosFormulario[$i]);
-          $NombreProducto=$productoArray[0];
-          // dd(producto::where('nombre', $NombreProducto)->first()->cod_producto);
-=======
       // Modificar o agregar pedidosventas
       foreach ($productosNombre as $producto) {
-        
+
         // Agregando productos a la venta
         if (!in_array($producto, $productosVendidosNombre, true)) {
-          
+
           $productoInventario = producto::where('nombre', $producto)->first();
 
           $nuevoPedidoVenta = new pedidoventa();
 
           $nuevoPedidoVenta->cod_venta_fk = $id;
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
           $nuevoPedidoVenta->cod_producto_fk = producto::where('nombre', $producto)->value('cod_producto');
 
-<<<<<<< HEAD
-          // dd($codigoProducto);
-
-          if ($cantidadProductosVendidos > $i) {
-
-
-            $productosPedidoVenta[$i]->cod_producto_fk = $codigoProducto;
-
-
-            // Recuperando el producto desde inventario
-            $productoInventario = producto::where('nombre', $NombreProducto)->first();
-            // dd($productoInventario);
-
-            // Comprobando que la cantidad de producto se cambio en el formulario
-            if ($productosPedidoVenta[$i]->cantidad != $cantidadesFormulario[$i]) {
-
-
-              // Actualizando el stock en el inventario
-              if ($productosPedidoVenta[$i]->cantidad > $cantidadesFormulario[$i]) {
-
-                $diferencia = $productosPedidoVenta[$i]->cantidad - $cantidadesFormulario[$i];
-
-                $productoInventario->cantidad += $diferencia;
-              }else{
-
-                $diferencia = $cantidadesFormulario[$i] - $productosPedidoVenta[$i]->cantidad;
-                $productoInventario->cantidad -= $diferencia;
-              }
-
-              // Actualizando la cantidad vendida del producto
-              $productosPedidoVenta[$i]->cantidad = $cantidadesFormulario[$i];
-
-              $productoInventario->update();
-            }
-=======
           $nuevoPedidoVenta->cantidad = $cantidadesDiccionario[$producto];
 
           $productoInventario->cantidad -= $cantidadesDiccionario[$producto];
-          
+
           $productoInventario->update();
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
           $nuevoPedidoVenta->save();
 
@@ -387,22 +318,11 @@ class VentasController extends Controller
 
           $productoInventario = producto::where('nombre', $producto)->first();
 
-<<<<<<< HEAD
-            $nuevoPedidoVenta->cod_venta_fk = $id;
-
-            $nuevoPedidoVenta->cod_producto_fk = $codigoProducto;
-=======
           $codigoVentaModificar = $codigosPedidoDiccionario[$producto];
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
           $pedidoVentaModificar = pedidoventa::find($codigoVentaModificar);
 
 
-<<<<<<< HEAD
-
-            //Actualizando el stock
-            $productoInventario->cantidad -= $cantidadesFormulario[$i];
-=======
           if ($cantidadesDiccionario[$producto] > $cantidadesPedidoDiccionario[$producto]) {
             $diferencia = $cantidadesDiccionario[$producto] - $cantidadesPedidoDiccionario[$producto];
 
@@ -414,7 +334,6 @@ class VentasController extends Controller
             $diferencia = $cantidadesPedidoDiccionario[$producto] - $cantidadesDiccionario[$producto];
 
             $productoInventario->cantidad += $diferencia;
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
             $productoInventario->update();
 
@@ -427,7 +346,7 @@ class VentasController extends Controller
         }
       }
 
-      // Registrando el codigo del empleado 
+      // Registrando el codigo del empleado
 
       $bitacora= new historialventa();
       $bitacora->operacion="Modificar";
@@ -498,7 +417,6 @@ class VentasController extends Controller
                           <td>'.$hventa->cantidad.'</td>
                           <td>'.\Carbon\Carbon::parse($hventa->created_at)->format('d/m/Y').'</td>
                           <td>'.$empleadoN.' '.$empleadoA.'</td>
-
                       ';
                       }
                       $output .= '<tr>';
@@ -529,14 +447,8 @@ class VentasController extends Controller
           $query = trim($request->get('query'));
           $opc= $request->get('opc');
           if($query != ''){
-<<<<<<< HEAD
-              $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
-                          ->orWhere('direccion','LIKE','%'.$query.'%')
-                          ->take(10)
-                          ->get();
-=======
               switch($opc){
-                case 1:{  
+                case 1:{
                   $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
                             ->get();
                     if(isset($pedidoventa)){
@@ -566,11 +478,11 @@ class VentasController extends Controller
                           </div>
                           </div>
                         </div>
-                        
-        
-                          ';       
+
+
+                          ';
                           }
-        
+
                       }else{
                           $output='
                           <tr>
@@ -578,13 +490,13 @@ class VentasController extends Controller
                           </tr>
                           ';
                       }
-        
+
                   }
                 }
                 break;
                 case 2:{
-                  $empleados= empleado::where('nombre','LIKE','%'.$query.'%') 
-                                    ->orWhere('apellido','LIKE','%'.$query.'%')                                     
+                  $empleados= empleado::where('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')
                                     ->get();
                   if($empleados->count()>0){
                     foreach($empleados as $emp){
@@ -619,29 +531,29 @@ class VentasController extends Controller
                             </div>
                             </div>
                           </div>
-                          
-          
+
+
                             ';
-          
+
                             }
-          
-                        }       
+
                         }
-                      }                   
-                    } 
-                    
+                        }
+                      }
+                    }
+
                   }else{
                     $output='
                     <tr>
                         <td align="center" colspan="5">Sin Registros</td>
                     </tr>
                     ';
-                  }                     
+                  }
                 }
                 break;
                 case 3:{
                   $Clientes= cliente::where('nombre','LIKE','%'.$query.'%')
-                                      ->orWhere('apellido','LIKE','%'.$query.'%')                                      
+                                      ->orWhere('apellido','LIKE','%'.$query.'%')
                                       ->get();
                   if($Clientes->count()>0){
                     foreach($Clientes as $emp){
@@ -652,8 +564,8 @@ class VentasController extends Controller
                       ->get();
                       if(isset($pedidoventa)){
                         $total=$Clientes->count();
-                      
-          
+
+
                         if($total>0)
                         {
                             foreach($pedidoventa as $ItemP){
@@ -678,90 +590,35 @@ class VentasController extends Controller
                             </div>
                             </div>
                           </div>
-                          
-          
+
+
                             ';
-          
+
                             }
-          
-                        }        
+
                         }
-                      }                    
-                    } 
+                        }
+                      }
+                    }
                   }else{
                     $output='
                     <tr>
                         <td align="center" colspan="5">Sin Registros</td>
                     </tr>
                     ';
-                  }                                   
+                  }
                 }
                 break;
               }
-              
-              
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
+
+
           }else{
               $output='
               <tr>
                   <td align="center" colspan="5">Ingrese el valor correspondiente al filtro aplicado </td>
               </tr>
               ';
-<<<<<<< HEAD
           }
-          if(isset($pedidoventa)){
-              $total=$pedidoventa->count();
-              $output='';
-
-              if($total>0)
-              {
-                  foreach($pedidoventa as $pedido){
-                  $redireccion = route('Ventas.edit', $pedido->cod_venta);
-                  $output .='
-
-                      <div class="card">
-                      <div class="card-body">
-                          <h5 class="card-title">Special title treatment</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
-                          <ul class="list-group list-group-flush">
-
-                              <li class="list-group-item">Direccion:'.$pedido->direccion.'</li>
-                              <li class="list-group-item">Total: '.$pedido->total.'</li>
-                          </ul>
-
-                          </div>
-                      </div>
-
-
-                  ';
-
-                  // // Comprobando el rol del usuario que esta usando el sistema
-                  // if (Auth::user()->tieneRol()->first() == "bodega") {
-                  //     // Agregando el boton junto con el tr al final
-                  //     $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';
-                  // }else{
-                  //     // Agregando el tr sin el boton
-                  //     $output .= '<tr>';
-                  // }
-
-                  }
-
-              }else{
-                  $output='
-                  <tr>
-                      <td align="center" colspan="5">Sin Registros</td>
-                  </tr>
-                  ';
-              }
-
-          }
-
-        /*   $productos= array(
-              'table_data'  => $output
-          ); */
-=======
-          } 
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
           echo json_encode($output);
       }
