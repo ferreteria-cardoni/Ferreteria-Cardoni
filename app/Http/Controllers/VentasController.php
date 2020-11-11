@@ -206,7 +206,6 @@ class VentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-
       // Actualizando venta
 
         $venta = venta::findOrFail($id);
@@ -371,6 +370,10 @@ class VentasController extends Controller
 
 
         return redirect('/PendienteVenta')->with('datos','Los datos se actualizaron correctamente');
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1bf022fb1183cc95c04591d472de16ca61f6a7df
     }
 
     /**
@@ -491,7 +494,7 @@ class VentasController extends Controller
                           <h5 class="card-title">Special title treatment</h5>
                           <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
                           <ul class="list-group list-group-flush">
-                        
+
                               <li class="list-group-item">Direccion:'.$pedido->direccion.'</li>
                               <li class="list-group-item">Total: '.$pedido->total.'</li>
                           </ul>

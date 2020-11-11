@@ -436,6 +436,7 @@
 </script>
 
 
+
 // Se carga en la vista de modificar ventas
 @if (Request::is('Ventas/*/edit'))
 
@@ -469,10 +470,13 @@
 @endif
 
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 1bf022fb1183cc95c04591d472de16ca61f6a7df
 {{-- Solo se cargara el script cuando se encuentre en la vista de crear ventas --}}
 @if (Request::is('Ventas/create'))
 
