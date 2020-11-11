@@ -29,7 +29,11 @@ class ClienteController extends Controller
      */
     public function index()
     {
+        $clientes = cliente::paginate(10);
 
+
+
+        return view('Clientes.vistaClientes', compact('clientes'));
 
     }
 
@@ -96,7 +100,10 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = cliente::findOrFail($id);
+
+
+        return view('Clientes.modiClientes', compact('cliente'));
     }
 
     /**

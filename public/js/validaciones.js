@@ -1,6 +1,10 @@
 
 // Obteniendo los elementos del HTML a través de su id
 
+//const { forEach } = require("lodash");
+
+//const { delay } = require("lodash");
+
 //const { truncate } = require("lodash");
 
 //formulario Registro productos
@@ -41,6 +45,11 @@ const idrubro = document.querySelector('#idrubro');
 const NIT = document.querySelector('#NIT');
 const NCF = document.querySelector('#NCF');
 const DireccionC = document.querySelector('#DireccionC');
+
+//Formulario Proveedor
+const NombreProveedor = document.querySelector('#idnombreProve');
+const TelefonoProveedor = document.querySelector('#idtelefonoProve');
+const CorroProveedor = document.querySelector('#idcorreoProve');
 
 
 //expresiones regulares usadas en las validaciones
@@ -121,7 +130,7 @@ if(PresentacionP){
         
     })
 }
-if(CantidadP){
+if(CantidadP && PresentacionP){
     CantidadP.addEventListener('blur', () => {
 
         if (CantidadP.value == "") {
@@ -237,74 +246,107 @@ if(NombreV){
 function NombreProductoVenta(){
     var NombrePV = document.querySelectorAll('input.a');
     var cant = document.querySelectorAll('input.b');
-    var total=0; 
+    var cantMod = document.querySelectorAll('input.m');
+    var stock = document.querySelectorAll('span.s');   
     var msg="";
     for(var i=0;i<NombrePV.length;i++){
         var uno=NombrePV[i].value.split("$");
-        Disponibilidad(uno[0]);
-        //console.log(NombrePV[i].value);
-        if (NombrePV[i].value == "") {
-            document.getElementById("msgnombreproductoV").style.display = "block";
-            document.getElementById("msgnombreproductoV").innerHTML = "Seleccione un producto"
-            NombrePV[i].style.borderColor = "red";
-            NombrePV[i].style.borderWidth = "3px";
-            $('#btmVentasTab').attr('disabled',true);
-            cant[i].disabled="true";
+        var disponible=0;     
+        //console.log(stock[18].innerHTML);
+        for(var j=0;j<stock.length;j++){
+            var ver =stock[j].innerHTML.split("$");
+            //console.log(uno[0]);
+            //console.log(ver[0]);
+            if(uno[0] == ver[0]){
+                disponible=ver[1]; 
+                //console.log(disponible);
+                break;
+            }
+            //console.log(stock[j].innerHTML); 
         }
-        else {
-            document.getElementById("msgnombreproductoV").style.display = "none";
-            document.getElementById("msgnombreproductoV").innerHTML = ""
-            NombrePV[i].style.borderColor = "";
-            NombrePV[i].style.borderWidth = "2px";
-            cant[i].disabled="";
-
-
-            if (cant[i].value == "") {
-                msg = "La cantidad ingresada debe ser superior a 0 ";
-                //document.getElementById("msgidcantidadV").style.display = "block";
-                cant[i].style.borderColor = "red";
-                cant[i].style.borderWidth = "3px";
-                
-                
-            }
-            else if(!(cant[i].value - Math.floor(cant[i].value)) == 0){
-                msg = "Utilize solo números enteros";
-                //document.getElementById("msgidcantidadV").style.display = "block";
-                cant[i].style.borderColor = "red";
-                cant[i].style.borderWidth = "3px";
-                
-            }
-            else if(dispos>0){
-                if(cant[i].value>dispos){
-                    msg = "No hay suficiente stock del "+[i+1]+"° producto";
-                    //document.getElementById("msgidcantidadV").style.display = "block";
-                    cant[i].style.borderColor = "red";
-                    cant[i].style.borderWidth = "3px"; 
-                } else {
-                    //document.getElementById("msgidcantidadV").style.display = "none";
-                    //document.getElementById("msgidcantidadV").innerHTML = ""
-                    cant[i].style.borderColor = "";
-                    cant[i].style.borderWidth = "2px";         
-                }                      
+        //Disponibilidad(uno[0]); 
+            if (NombrePV[i].value == "") {
+                document.getElementById("msgnombreproductoV").style.display = "block";
+                document.getElementById("msgnombreproductoV").innerHTML = "Seleccione un producto"
+                NombrePV[i].style.borderColor = "red";
+                NombrePV[i].style.borderWidth = "3px";
+                $('#btmVentasTab').attr('disabled',true);
+                cant[i].disabled="true";
+                var ctrl=1;
             }
             else {
-                //document.getElementById("msgidcantidadV").style.display = "none";
-                //document.getElementById("msgidcantidadV").innerHTML = ""
-                cant[i].style.borderColor = "";
-                cant[i].style.borderWidth = "2px";         
-            }
-        }       
-        if(msg!=""){
-            document.getElementById("msgidcantidadV").innerHTML = msg;
-            document.getElementById("msgidcantidadV").style.display = "block";
-            $('#btmVentasTab').attr('disabled',true);
-            $('#btmsubmitV').attr('disabled',true); 
-        }else{
-            document.getElementById("msgidcantidadV").style.display = "none";
-            document.getElementById("msgidcantidadV").innerHTML = "";
-            $('#btmVentasTab').attr('disabled',false);
-            $('#btmsubmitV').attr('disabled',false); 
-        }           
+                document.getElementById("msgnombreproductoV").style.display = "none";
+                document.getElementById("msgnombreproductoV").innerHTML = ""
+                NombrePV[i].style.borderColor = "";
+                NombrePV[i].style.borderWidth = "2px";
+                cant[i].disabled="";
+                var ctrl=0;
+    
+    
+                if (cant[i].value == "") {
+                    msg = "La cantidad ingresada debe ser superior a 0 ";
+                    //document.getElementById("msgidcantidadV").style.display = "block";
+                    cant[i].style.borderColor = "red";
+                    cant[i].style.borderWidth = "3px";
+                    $('#btmVentasTab').attr('disabled',true);
+                    
+                    
+                }
+                else if(!(cant[i].value - Math.floor(cant[i].value)) == 0){
+                    msg = "Utilize solo números enteros";
+                    //document.getElementById("msgidcantidadV").style.display = "block";
+                    cant[i].style.borderColor = "red";
+                    cant[i].style.borderWidth = "3px";
+                    
+                    
+                }
+                else if(disponible){
+                    if(cantMod[i]){                        
+                        var totmod=disponible*1+cantMod[i].value*1;
+                        if(cant[i].value>totmod){
+                            msg = "Insuficiente stock del "+[i+1]+"° producto, disponibles: "+totmod;
+                            //document.getElementById("msgidcantidadV").style.display = "block";
+                            cant[i].style.borderColor = "red";
+                            cant[i].style.borderWidth = "3px"; 
+                        } else {
+                            //document.getElementById("msgidcantidadV").style.display = "none";
+                            //document.getElementById("msgidcantidadV").innerHTML = ""
+                            cant[i].style.borderColor = "";
+                            cant[i].style.borderWidth = "2px";         
+                        }
+                    }else{
+                        
+                        if(cant[i].value>(disponible*1)){
+                            msg = "Insuficiente stock del "+[i+1]+"° producto, disponibles: "+disponible;
+                            //document.getElementById("msgidcantidadV").style.display = "block";
+                            cant[i].style.borderColor = "red";
+                            cant[i].style.borderWidth = "3px"; 
+                        } else {
+                            //document.getElementById("msgidcantidadV").style.display = "none";
+                            //document.getElementById("msgidcantidadV").innerHTML = ""
+                            cant[i].style.borderColor = "";
+                            cant[i].style.borderWidth = "2px";         
+                        }
+                        
+                    }                      
+                }
+                else {
+                    cant[i].style.borderColor = "";
+                    cant[i].style.borderWidth = "2px";         
+                }
+            }       
+            if(msg!=""){
+                document.getElementById("msgidcantidadV").innerHTML = msg;
+                document.getElementById("msgidcantidadV").style.display = "block";
+                $('#btmVentasTab').attr('disabled',true);
+                $('#btmsubmitV').attr('disabled',true); 
+            }else if(ctrl== 0){
+                document.getElementById("msgidcantidadV").style.display = "none";
+                document.getElementById("msgidcantidadV").innerHTML = "";
+                $('#btmVentasTab').attr('disabled',false);
+                $('#btmsubmitV').attr('disabled',false); 
+            }  
+                 
     }
 
 };
@@ -319,19 +361,23 @@ function Total(){
         }
     }
     
+    total = total.toFixed(2);
+
     TotalV.value= "$"+total;
 }
 function dispo(msg){
- dispos=msg;
-} 
+    dispos=msg;
+}
 if(TabVenta){
     TabVenta.addEventListener('click', () => {
+        //setTimeout(NombreProductoVenta,1000);
         NombreProductoVenta();     
-    })
-    TabVenta.addEventListener('change', () => {
+    }) 
+     TabVenta.addEventListener('change', () => {
         NombreProductoVenta();
+        Total(); 
              
-    })
+    }) 
     TabVenta.addEventListener('mousemove', () => {
         Total();     
     })
@@ -366,7 +412,9 @@ function NombreProductoCompra(){
         var NombrePC = document.querySelectorAll('input.a');
         var cantC = document.querySelectorAll('input.b');
         var precioC = document.querySelectorAll('input.c');
-        var totalC=0;
+        var msg="";
+        var msgPrecio = "";
+        var controlador = 1;
         for(var i=0;i<NombrePC.length;i++){
             if (NombrePC[i].value == "") {
                 document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
@@ -376,6 +424,8 @@ function NombreProductoCompra(){
                 cantC[i].disabled="true";
                 precioC[i].disabled="true";
                 $('#btmComprasTab').attr('disabled',true);
+                $('#btmsubmitC').attr('disabled',true);
+                var ctrl = 1;
             }
             else {
                 document.getElementById("msgnombreproducto").style.display = "none";
@@ -384,48 +434,99 @@ function NombreProductoCompra(){
                 NombrePC[i].style.borderWidth = "2px";
                 $('#btmComprasTab').attr('disabled',false);
                 cantC[i].disabled="";
-                precioC[i].disabled="";
+                var ctrl = 0;
 
                 if (cantC[i].value == "") {
-                    document.getElementById("msgidcantidad").innerHTML = "La cantidad ingresada debe ser superior a 0 ";
-                    document.getElementById("msgidcantidad").style.display = "block";
+                    msg = "La cantidad ingresada debe ser superior a 0 ";
                     cantC[i].style.borderColor = "red";
-                    cantC[i].style.borderWidth = "3px";
-                    $('#btmComprasTab').attr('disabled',true);
-                    
+                    cantC[i].style.borderWidth = "3px";  
+                    precioC[i].disabled="true";
+
                 }
                 else if(!(cantC[i].value - Math.floor(cantC[i].value)) == 0){
-                    document.getElementById("msgidcantidad").innerHTML = "Utilize solo números enteros";
-                    document.getElementById("msgidcantidad").style.display = "block";
+                    msg = "La cantidad ingresada debe ser entera ";
                     cantC[i].style.borderColor = "red";
                     cantC[i].style.borderWidth = "3px";
-                    $('#btmComprasTab').attr('disabled',true);
+                    precioC[i].disabled="true";
+
                 }
                 else {
-                    document.getElementById("msgidcantidad").style.display = "none";
-                    document.getElementById("msgidcantidad").innerHTML = ""
                     cantC[i].style.borderColor = "";
                     cantC[i].style.borderWidth = "2px";
-                    $('#btmComprasTab').attr('disabled',false);
-                }
+                    precioC[i].disabled="";
+
+                    if (precioC[i].value == "") {
+                        msgPrecio = "Debe de ingresar un precio para el producto";
+                        precioC[i].style.borderColor = "red";
+                        precioC[i].style.borderWidth = "3px";
+                        controlador = 1;
+                    }else{
+                        precioC[i].style.borderColor = "";
+                        precioC[i].style.borderWidth = "2px";
+                        controlador = 0;
+                    }
+                }               
             }
-    
-           totalC=totalC+((cantC[i].value*1)*(precioC[i].value*1));     
+            if(msg!="" ){
+                document.getElementById("msgidcantidad").innerHTML = msg;
+                document.getElementById("msgidcantidad").style.display = "block";               
+                $('#btmComprasTab').attr('disabled',true);
+                $('#btmsubmitC').attr('disabled',true);
+            }else if(ctrl== 0){
+                document.getElementById("msgidcantidad").style.display = "none";
+                document.getElementById("msgidcantidad").innerHTML = "";
+
+            }
+            
+            
+            if(msgPrecio!="" ){
+                document.getElementById("msgidprecioC").innerHTML = msgPrecio;
+                document.getElementById("msgidprecioC").style.display = "block";               
+                $('#btmComprasTab').attr('disabled',true);
+                $('#btmsubmitC').attr('disabled',true);
+            }else if(controlador == 0){
+                document.getElementById("msgidprecioC").style.display = "none";
+                document.getElementById("msgidprecioC").innerHTML = "";
+            }else if (controlador == 0 && ctrl == 0) {
+                $('#btmComprasTab').attr('disabled',false);
+                $('#btmsubmitC').attr('disabled',false);
+            }
         }
-        
-        TotalCompra.value='$'+totalC.toFixed(2);
-        
          
     }
 
 
 }
+
+function TotalC(){
+    var precio = document.querySelectorAll('input.c');
+    var cant = document.querySelectorAll('input.b');
+    var total=0; 
+    for(var i=0;i<precio.length;i++){
+        if(!isNaN(precio[i].value*1) && !isNaN((cant[i].value)*1)){
+            total = total+((precio[i].value*1)*(cant[i].value)*1);
+        }
+    }
+    
+    total = total.toFixed(2);
+
+    TotalCompra.value= "$"+total;
+}
+
+
+
+
 if(TabCompra){
     TabCompra.addEventListener('click', () => {
-        NombreProductoCompra();     
+        NombreProductoCompra();
+        TotalC();     
     })
     TabCompra.addEventListener('change', () => {
-        NombreProductoCompra();     
+        NombreProductoCompra();   
+        TotalC();     
+    })
+    TabCompra.addEventListener('mousemove', () => {   
+        TotalC();     
     })
 }
 //Formulario Clientes
@@ -577,7 +678,75 @@ if(DireccionC){
         
     })
 } 
-  
+
+//Proveedores
+if(NombreProveedor){
+    NombreProveedor.addEventListener('blur', () => {
+
+        if (NombreProveedor.value == "" ) {
+            document.getElementById("msgidnombreProve").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidnombreProve").style.display = "block";
+            NombreProveedor.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgidnombreProve").style.display = "none";
+            document.getElementById("msgidnombreProve").innerHTML = ""
+            NombreProveedor.style.borderColor = "";
+            
+            
+        }
+        
+    })
+}
+if(TelefonoProveedor){
+    TelefonoProveedor.addEventListener('blur', () => {
+
+        if (TelefonoProveedor.value == "") {
+            document.getElementById("msgidtelefonoProve").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidtelefonoProve").style.display = "block";
+            TelefonoProveedor.style.borderColor = "red";
+            
+        }
+        else if(!valtel.exec(TelefonoProveedor.value)){
+            document.getElementById("msgidtelefonoProve").innerHTML = "El formato correcto es 9999-9999 (8 digitos)"
+            document.getElementById("msgidtelefonoProve").style.display = "block";
+            TelefonoProveedor.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidtelefonoProve").style.display = "none";
+            document.getElementById("msgidtelefonoProve").innerHTML = ""
+            TelefonoProveedor.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(CorroProveedor){
+    CorroProveedor.addEventListener('blur', () => {
+
+        if (CorroProveedor.value == "") {
+            document.getElementById("msgidcorreoProve").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidcorreoProve").style.display = "block";
+            CorroProveedor.style.borderColor = "red";
+            
+        }
+        else if(!valcorreos.exec(CorroProveedor.value)){
+            document.getElementById("msgidcorreoProve").innerHTML = "El formato correcto es ejemplo@gmail.com"
+            document.getElementById("msgidcorreoProve").style.display = "block";
+            CorroProveedor.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidcorreoProve").style.display = "none";
+            document.getElementById("msgidcorreoProve").innerHTML = ""
+            CorroProveedor.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
 
 
 

@@ -35,10 +35,11 @@
 			<div class="panel panel-header">
 				<div class="row">
 					<div class="col-md-6">
+						<label for="nombreventa">Cliente</label>
                         <select class="custom-select" name='nombreventa' id="nombreventa" autocomplete="off">
                             <option value="0" disabled selected>Seleccione el cliente</option>
                             @foreach($cliente as $clienteiten)
-                            <option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}}</option>
+							<option value='{{$clienteiten->cod_cliente}}'>{{$clienteiten->nombre}} {{$clienteiten->apellido}}</option>
                             @endforeach
                         </select>
                         <span id="msgnombreventa" name="msgnombreventa" class="AlertaMsg"></span>
@@ -46,6 +47,7 @@
 
 					<div class="col-md-6">
 						<div class="form-group">
+							<label for="iddireccion">Dirección</label>
 							<input type="text" class="form-control" id="iddireccion" name="iddireccion" placeholder="Dirección..." value="{{ old('idnombre') }}">
                       		<span id="msgiddireccion" name="msgiddireccion" class="AlertaMsg"></span>
 						</div>
@@ -72,7 +74,7 @@
 								<input id="nombreproducto" name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off" required>
 								<datalist id="productos">
 									@foreach ($producto as $productoiten)
-									<option value="{{$productoiten->nombre}} ${{$productoiten->precioVenta}}"></option>
+									<option value="{{$productoiten->nombre}} ${{$productoiten->precioVenta}}">Disponibilidad: {{$productoiten->cantidad}}</option>
 									@endforeach
 								</datalist>
 							</td>
@@ -87,7 +89,7 @@
 					<tfoot>
 						<tr>
 							<td>
-								Total
+								<label for="idtotal">Total</label>
 								<input readonly type="text" class="form-control" id="idtotal" name="idtotal" placeholder="Total">
 							</td>
 						</tr>
@@ -98,6 +100,9 @@
 		<button id="btmsubmitV" type="submit" class="btn btn-primary" >Registrar Venta</button>
 		<button type="reset" class="btn btn-danger">Limpiar Campos</button>
 	</form>
+	@foreach ($producto as $productoiten)
+			<span class="s" hidden>{{$productoiten->nombre}} ${{$productoiten->cantidad}}</span>
+	@endforeach
 </div>
 
 @endsection

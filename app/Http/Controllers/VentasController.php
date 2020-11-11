@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use App\venta;
 use App\role;
 use App\empleado;
+use App\historialventa;
+use App\Http\Middleware\Ventas;
+
 class VentasController extends Controller
 {
 
@@ -78,6 +81,7 @@ class VentasController extends Controller
             $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
             $ventas->direccion = $request->iddireccion;
+            $ventas->estado ="pendiente";
             $ventas->total= substr($request->idtotal,1);
             $ventas->save();
 
@@ -206,54 +210,65 @@ class VentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-      // Actualizando venta
 
+        // Actualizando la venta
         $venta = venta::findOrFail($id);
+<<<<<<< HEAD
 
 
+=======
+        
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
         $venta->direccion = $request->iddireccion;
 
         $totalVenta = $request->idtotal;
 
         $totalVenta = substr($request->idtotal, 1);
 
-        // dd($totalVenta);
 
         $venta->total = $totalVenta;
 
-        // dd($request->nombreventa);
 
-        if ( $request->nombreventa) {
+        if ($request->nombreventa) {
           $venta->cod_cliente_fk = $request->nombreventa;
         }
 
         $venta->update();
 
 
+<<<<<<< HEAD
+
+=======
+      $pedidosVenta = pedidoventa::where('cod_venta_fk', $id)->get();
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
+
+      $productosNombre = array();
+      $productosVendidosNombre = array();
+      $cantidadesDiccionario = array();
+      $codigosPedidoDiccionario = array();
+      $cantidadesPedidoDiccionario = array();
+
+      $productosFormulario = $request->nombreproducto;
+      $cantidadesFormulario = $request->idcantidad;
 
 
-        $productosPedidoVenta = pedidoventa::where('cod_venta_fk', $id)->get();
-        // dd($productosPedidoVenta);
+      // Quitando el precio de los productos del formulario
+      $i = 0;
+      foreach ($productosFormulario as $productoForm) {
+        $productoArray = explode('$', $productoForm);
 
-        $productosFormulario = $request->nombreproducto;
-        // dd($productosFormulario);
+        $productoArray[0] = rtrim($productoArray[0]);
 
-        $cantidadesFormulario = $request->idcantidad;
-        // dd($cantidadesFormulario);
+        $cantidadesDiccionario[$productoArray[0]] = $cantidadesFormulario[$i];
+        $i++;
+        array_push($productosNombre, $productoArray[0]);
+      }
 
-        $i = 0;
-        $cantidadProductosVendidos = sizeof($productosPedidoVenta);
-        $cantidadProductosFormulario = sizeof($productosFormulario);
-        // dd($cantidadProductosFormulario);
+      // Recuperando los nombres de los productos vendidos
+      foreach ($pedidosVenta as $productoVenta) {
+        $nombreP = producto::where('cod_producto', $productoVenta->cod_producto_fk)->value('nombre');
 
-        //-------------------------- Eliminando Productos de pedidoventas ----------------------------
-        $j = 0;
-        if ($cantidadProductosVendidos > $cantidadProductosFormulario) {
-
-          $NombreProducto = array();
-
-          while ($j < $cantidadProductosVendidos) {
-
+<<<<<<< HEAD
             // $productoArray=explode("$",$productosFormulario[$j]);
             foreach ($productosFormulario as $productoFormulario) {
               $productoArray = explode("$", $productoFormulario);
@@ -266,46 +281,65 @@ class VentasController extends Controller
 
             // dd($productosPedidoVenta);
 
+=======
+        $codigosPedidoDiccionario[$nombreP] = $productoVenta->cod_pedidoventa;
 
-            $producto =  producto::find($productosPedidoVenta[$j]->cod_producto_fk);
+        $cantidadesPedidoDiccionario[$nombreP] = $productoVenta->cantidad;
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
-            // dd($producto);
-
-            // dd(in_array($producto, $NombreProducto, false));
-
-            if (!in_array($producto->nombre, $NombreProducto, false)) {
-              $eliminarProducto = pedidoventa::findOrFail($productosPedidoVenta[$j]->cod_pedidoventa);
-
-              // dd($eliminarProducto);
-
-              // Actualizando el stock
-              $producto->cantidad += $productosPedidoVenta[$j]->cantidad;
-
-              $producto->update();
-
-              $eliminarProducto->delete();
-            }
+        array_push($productosVendidosNombre, $nombreP);
+      }
 
 
-            $j++;
+      // Eliminar pedidosventas
 
-          }
+      foreach ($productosVendidosNombre as $productoVendido) {
+        
+
+        if (!in_array($productoVendido, $productosNombre, true)) {
+
+            $productoInventario = producto::where('nombre', $productoVendido)->first();
+
+            $productoInventario->cantidad += $cantidadesPedidoDiccionario[$productoVendido];
+
+            $productoInventario->update();
+
+            $codigoVentaModificar = $codigosPedidoDiccionario[$productoVendido];
+
+            $pedidoVentaModificar = pedidoventa::find($codigoVentaModificar);
+
+            $pedidoVentaModificar->delete();
         }
 
 
+      }
 
-        //------------------- Actualizando pedidoventa -------------------------------
 
+
+<<<<<<< HEAD
         while ($i < sizeof($productosFormulario)) {
 
           // Quitando el simbolo de $
           $productoArray=explode("$",$productosFormulario[$i]);
           $NombreProducto=$productoArray[0];
           // dd(producto::where('nombre', $NombreProducto)->first()->cod_producto);
+=======
+      // Modificar o agregar pedidosventas
+      foreach ($productosNombre as $producto) {
+        
+        // Agregando productos a la venta
+        if (!in_array($producto, $productosVendidosNombre, true)) {
+          
+          $productoInventario = producto::where('nombre', $producto)->first();
 
-          // Recuperando el codigo del producto
-          $codigoProducto = producto::where('nombre', $NombreProducto)->first()->cod_producto;
+          $nuevoPedidoVenta = new pedidoventa();
 
+          $nuevoPedidoVenta->cod_venta_fk = $id;
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
+
+          $nuevoPedidoVenta->cod_producto_fk = producto::where('nombre', $producto)->value('cod_producto');
+
+<<<<<<< HEAD
           // dd($codigoProducto);
 
           if ($cantidadProductosVendidos > $i) {
@@ -339,37 +373,69 @@ class VentasController extends Controller
 
               $productoInventario->update();
             }
+=======
+          $nuevoPedidoVenta->cantidad = $cantidadesDiccionario[$producto];
 
-            $productosPedidoVenta[$i]->update();
+          $productoInventario->cantidad -= $cantidadesDiccionario[$producto];
+          
+          $productoInventario->update();
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
-          }else{
+          $nuevoPedidoVenta->save();
 
-            $nuevoPedidoVenta = new pedidoventa();
+        }else{
 
+          $productoInventario = producto::where('nombre', $producto)->first();
+
+<<<<<<< HEAD
             $nuevoPedidoVenta->cod_venta_fk = $id;
 
             $nuevoPedidoVenta->cod_producto_fk = $codigoProducto;
+=======
+          $codigoVentaModificar = $codigosPedidoDiccionario[$producto];
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
-            $nuevoPedidoVenta->cantidad = $cantidadesFormulario[$i];
+          $pedidoVentaModificar = pedidoventa::find($codigoVentaModificar);
 
-            // Recuperando el producto desde inventario
-            $productoInventario = producto::where('nombre', $NombreProducto)->first();
 
+<<<<<<< HEAD
 
             //Actualizando el stock
             $productoInventario->cantidad -= $cantidadesFormulario[$i];
+=======
+          if ($cantidadesDiccionario[$producto] > $cantidadesPedidoDiccionario[$producto]) {
+            $diferencia = $cantidadesDiccionario[$producto] - $cantidadesPedidoDiccionario[$producto];
+
+            $productoInventario->cantidad -= $diferencia;
+
+            $productoInventario->update();
+          }else{
+
+            $diferencia = $cantidadesPedidoDiccionario[$producto] - $cantidadesDiccionario[$producto];
+
+            $productoInventario->cantidad += $diferencia;
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
             $productoInventario->update();
 
-            $nuevoPedidoVenta->save();
           }
 
+          $pedidoVentaModificar->cantidad = $cantidadesDiccionario[$producto];
 
-          $i++;
+          $pedidoVentaModificar->update();
+
         }
+      }
 
+      // Registrando el codigo del empleado 
 
-        return redirect('/PendienteVenta')->with('datos','Los datos se actualizaron correctamente');
+      $bitacora= new historialventa();
+      $bitacora->operacion="Modificar";
+      $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+      $bitacora->cod_venta_fk=$id;
+      $bitacora->save();
+
+      return redirect('/PendienteVenta')->with('datos', 'Los datos se actualizaron correctamente');
 
     }
 
@@ -386,6 +452,7 @@ class VentasController extends Controller
     public function cantidad (Request $request){
       if($request->ajax()){
         $query = trim($request->get('query'));
+        //$venta = trim($request->get('ventas'));
         $cant = producto::where('nombre', $query)->value('cantidad');
         $lel='ok';
         echo json_encode($cant);
@@ -418,11 +485,7 @@ class VentasController extends Controller
                   foreach($productos as $ItemP){
                       $pedidoVenta= pedidoventa::where('cod_producto_fk',$ItemP->cod_producto)
                                                   ->get();
-/*                         $output .='
-                      <tr>
-                          <th scope="row">'.$ItemP->cod_producto.'</th>
-                          <td>'.$ItemP->nombre.'</td>
-                      '; */
+
                       foreach($pedidoVenta as $hventa){
                         $Venta= venta::where('cod_venta',$hventa->cod_venta_fk)->value('cod_empleado_fk');
                         //echo($hventa->cantidad);
@@ -464,17 +527,187 @@ class VentasController extends Controller
       if($request->ajax()){
 
           $query = trim($request->get('query'));
+          $opc= $request->get('opc');
           if($query != ''){
+<<<<<<< HEAD
               $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
                           ->orWhere('direccion','LIKE','%'.$query.'%')
                           ->take(10)
                           ->get();
+=======
+              switch($opc){
+                case 1:{  
+                  $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
+                            ->get();
+                    if(isset($pedidoventa)){
+                      $total=$pedidoventa->count();
+                      $output='';
+                      if($total>0)
+                      {
+                          foreach($pedidoventa as $ItemP){
+                          $redireccion = route('Ventas.edit', $ItemP->cod_venta);
+                          $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                          $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                          $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
+                          $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
+                          $output .='
+                          <div class="col-sm-4">
+                          <div class="card">
+                          <div class="card-body">
+                              <h5 class="card-title">Special title treatment</h5>
+                              <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                              <ul class="list-group list-group-flush">
+                                  <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                  <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
+                                  <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
+                                  <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                              </ul>
+                              <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                          </div>
+                          </div>
+                        </div>
+                        
+        
+                          ';       
+                          }
+        
+                      }else{
+                          $output='
+                          <tr>
+                              <td align="center" colspan="5">Sin Registros</td>
+                          </tr>
+                          ';
+                      }
+        
+                  }
+                }
+                break;
+                case 2:{
+                  $empleados= empleado::where('nombre','LIKE','%'.$query.'%') 
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')                                     
+                                    ->get();
+                  if($empleados->count()>0){
+                    foreach($empleados as $emp){
+                      $Ventaemp= venta::where('cod_empleado_fk',$emp->cod_empleado)->get();
+                      $output='';
+                      foreach($Ventaemp as $vemp){
+                        $pedidoventa = venta::where('cod_venta',$vemp->cod_venta)
+                      ->get();
+                      if(isset($pedidoventa)){
+                        $total=$empleados->count();
+                        if($total>0)
+                        {
+                            foreach($pedidoventa as $ItemP){
+                            $redireccion = route('Ventas.edit', $ItemP->cod_venta);
+                            $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                            $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                            $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
+                            $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
+                            $output .='
+                            <div class="col-sm-4">
+                            <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
+                                    <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
+                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                </ul>
+                                <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                            </div>
+                            </div>
+                          </div>
+                          
+          
+                            ';
+          
+                            }
+          
+                        }       
+                        }
+                      }                   
+                    } 
+                    
+                  }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                  }                     
+                }
+                break;
+                case 3:{
+                  $Clientes= cliente::where('nombre','LIKE','%'.$query.'%')
+                                      ->orWhere('apellido','LIKE','%'.$query.'%')                                      
+                                      ->get();
+                  if($Clientes->count()>0){
+                    foreach($Clientes as $emp){
+                      $Ventaemp= venta::where('cod_cliente_fk',$emp->cod_cliente)->get();
+                      $output='';
+                      foreach($Ventaemp as $vemp){
+                        $pedidoventa = venta::where('cod_venta',$vemp->cod_venta)
+                      ->get();
+                      if(isset($pedidoventa)){
+                        $total=$Clientes->count();
+                      
+          
+                        if($total>0)
+                        {
+                            foreach($pedidoventa as $ItemP){
+                            $redireccion = route('Ventas.edit', $ItemP->cod_venta);
+                            $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
+                            $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
+                            $clienteN=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('nombre');
+                            $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
+                            $output .='
+                            <div class="col-sm-4">
+                            <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
+                                    <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
+                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                </ul>
+                                <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                            </div>
+                            </div>
+                          </div>
+                          
+          
+                            ';
+          
+                            }
+          
+                        }        
+                        }
+                      }                    
+                    } 
+                  }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                  }                                   
+                }
+                break;
+              }
+              
+              
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
           }else{
               $output='
               <tr>
-                  <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+                  <td align="center" colspan="5">Ingrese el valor correspondiente al filtro aplicado </td>
               </tr>
               ';
+<<<<<<< HEAD
           }
           if(isset($pedidoventa)){
               $total=$pedidoventa->count();
@@ -526,6 +759,9 @@ class VentasController extends Controller
         /*   $productos= array(
               'table_data'  => $output
           ); */
+=======
+          } 
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
           echo json_encode($output);
       }

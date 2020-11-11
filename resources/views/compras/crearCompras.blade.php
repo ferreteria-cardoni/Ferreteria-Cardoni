@@ -35,6 +35,7 @@
 				<div class="panel panel-header">
 					<div class="row">
 						<div class="col-md-6 mb-4">
+							<label for="idproveedor">Proveedor</label>
 							<select name="idproveedor" id="idproveedor" class="custom-select selectproveedor">
 								<option value="0" selected disabled>Seleccione un proveedor</option>
 								@foreach($proveedor as $pro)
@@ -55,7 +56,9 @@
 								<th>Cantidad
 								<span id="msgidcantidad" name="msgidcantidad" class="AlertaMsg"></span>
 								</th>
-								<th>Precio Compra</th>
+								<th>Precio Compra
+								<span id="msgidprecioC" name="msgidprecioC" class="AlertaMsg"></span>
+								</th>
 								{{-- <th><a href="#" class="addRow btn btn-success">Agregar</a></th> --}}
 								<td><button type="button" id="btmComprasTab" disabled class="addRow btn btn-success">Agregar</button></td>
 							</tr>
@@ -83,6 +86,7 @@
 						<tfoot>
 							<tr>
 								<td>
+									<label for="iddescripcion">Descripción</label>
 									<textarea type="text" disabled class="form-control" id="iddescripcion" name="iddescripcion"
 										placeholder="Descripción..." value="{{ old('iddescripcion') }}"></textarea>
 									<span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
@@ -91,13 +95,17 @@
 								
 							</tr>
 							<tr>
-								<td><input readonly id="totalc" name="totalc" type="text" class="form-control" placeholder="Total"></td>
+								
+								<td>
+									<label for="totalc">Total</label>
+									<input readonly id="totalc" name="totalc" type="text" class="form-control" placeholder="Total">
+								</td>
 							</tr>
 						</tfoot>
 					</table>
 				</div>
 			</section>
-			<button type="submit" class="btn btn-primary">Registrar Compra</button>
+			<button id="btmsubmitC" name="btmsubmitC" type="submit" class="btn btn-primary" disabled>Registrar Compra</button>
 			<a href="{{route('compras.create')}}"><button type="button" id="btnLimpiar" class="btn btn-danger">Limpiar Campos</button></a>
 		</form>
 	</div>
