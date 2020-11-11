@@ -8,7 +8,7 @@
       @if (session('datos'))
   <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
     {{session('datos')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -30,6 +30,13 @@
     </div>
 
     <br>
+<<<<<<< HEAD
+  <div class="row">
+      <div class="col-sm-4" id="ok1">
+
+        </div>
+  </div>
+=======
       <div class="row" id="ok1">
       @foreach ($pedidoVentas as $pedido)
         <div class="col-sm-4">
@@ -50,6 +57,7 @@
         @endforeach
     </div>
   
+>>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
 
   <!-- <table class="table table-hover" >
@@ -65,7 +73,7 @@
             @endcanany -->
      <!--      </tr>
         </thead>
-        <tbody id="ok1">
+        <tbody >
         <tr>
           <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
         </tr>

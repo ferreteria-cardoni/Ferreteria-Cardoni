@@ -195,7 +195,7 @@ class VentasController extends Controller
       $productosIventario = producto::all();
 
       // dd($productos);
-      
+
 
 
       return view('ventas.modiVentasPendientes', compact('id','codCliente', 'direccion', 'clientes', 'nombreCliente', 'apellidoCliente', 'productosVenta', 'total', 'productosIventario'));
@@ -213,7 +213,7 @@ class VentasController extends Controller
 
         // Actualizando la venta
         $venta = venta::findOrFail($id);
-        
+
         $venta->direccion = $request->iddireccion;
 
         $totalVenta = $request->idtotal;
@@ -270,7 +270,7 @@ class VentasController extends Controller
       // Eliminar pedidosventas
 
       foreach ($productosVendidosNombre as $productoVendido) {
-        
+
 
         if (!in_array($productoVendido, $productosNombre, true)) {
 
@@ -294,10 +294,10 @@ class VentasController extends Controller
 
       // Modificar o agregar pedidosventas
       foreach ($productosNombre as $producto) {
-        
+
         // Agregando productos a la venta
         if (!in_array($producto, $productosVendidosNombre, true)) {
-          
+
           $productoInventario = producto::where('nombre', $producto)->first();
 
           $nuevoPedidoVenta = new pedidoventa();
@@ -309,7 +309,7 @@ class VentasController extends Controller
           $nuevoPedidoVenta->cantidad = $cantidadesDiccionario[$producto];
 
           $productoInventario->cantidad -= $cantidadesDiccionario[$producto];
-          
+
           $productoInventario->update();
 
           $nuevoPedidoVenta->save();
@@ -346,7 +346,7 @@ class VentasController extends Controller
         }
       }
 
-      // Registrando el codigo del empleado 
+      // Registrando el codigo del empleado
 
       $bitacora= new historialventa();
       $bitacora->operacion="Modificar";
@@ -417,7 +417,6 @@ class VentasController extends Controller
                           <td>'.$hventa->cantidad.'</td>
                           <td>'.\Carbon\Carbon::parse($hventa->created_at)->format('d/m/Y').'</td>
                           <td>'.$empleadoN.' '.$empleadoA.'</td>
-
                       ';
                       }
                       $output .= '<tr>';
@@ -449,7 +448,7 @@ class VentasController extends Controller
           $opc= $request->get('opc');
           if($query != ''){
               switch($opc){
-                case 1:{  
+                case 1:{
                   $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
                             ->get();
                     if(isset($pedidoventa)){
@@ -479,11 +478,11 @@ class VentasController extends Controller
                           </div>
                           </div>
                         </div>
-                        
-        
-                          ';       
+
+
+                          ';
                           }
-        
+
                       }else{
                           $output='
                           <tr>
@@ -491,13 +490,13 @@ class VentasController extends Controller
                           </tr>
                           ';
                       }
-        
+
                   }
                 }
                 break;
                 case 2:{
-                  $empleados= empleado::where('nombre','LIKE','%'.$query.'%') 
-                                    ->orWhere('apellido','LIKE','%'.$query.'%')                                     
+                  $empleados= empleado::where('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')
                                     ->get();
                   if($empleados->count()>0){
                     foreach($empleados as $emp){
@@ -532,29 +531,29 @@ class VentasController extends Controller
                             </div>
                             </div>
                           </div>
-                          
-          
+
+
                             ';
-          
+
                             }
-          
-                        }       
+
                         }
-                      }                   
-                    } 
-                    
+                        }
+                      }
+                    }
+
                   }else{
                     $output='
                     <tr>
                         <td align="center" colspan="5">Sin Registros</td>
                     </tr>
                     ';
-                  }                     
+                  }
                 }
                 break;
                 case 3:{
                   $Clientes= cliente::where('nombre','LIKE','%'.$query.'%')
-                                      ->orWhere('apellido','LIKE','%'.$query.'%')                                      
+                                      ->orWhere('apellido','LIKE','%'.$query.'%')
                                       ->get();
                   if($Clientes->count()>0){
                     foreach($Clientes as $emp){
@@ -565,8 +564,8 @@ class VentasController extends Controller
                       ->get();
                       if(isset($pedidoventa)){
                         $total=$Clientes->count();
-                      
-          
+
+
                         if($total>0)
                         {
                             foreach($pedidoventa as $ItemP){
@@ -591,35 +590,35 @@ class VentasController extends Controller
                             </div>
                             </div>
                           </div>
-                          
-          
+
+
                             ';
-          
+
                             }
-          
-                        }        
+
                         }
-                      }                    
-                    } 
+                        }
+                      }
+                    }
                   }else{
                     $output='
                     <tr>
                         <td align="center" colspan="5">Sin Registros</td>
                     </tr>
                     ';
-                  }                                   
+                  }
                 }
                 break;
               }
-              
-              
+
+
           }else{
               $output='
               <tr>
                   <td align="center" colspan="5">Ingrese el valor correspondiente al filtro aplicado </td>
               </tr>
               ';
-          } 
+          }
 
           echo json_encode($output);
       }

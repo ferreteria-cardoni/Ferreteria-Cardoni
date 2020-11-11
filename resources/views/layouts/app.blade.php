@@ -218,7 +218,7 @@
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Ventas<i class="fas fa-angle-left right"></i></p>
                                 </a>
-                                
+
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('Ventas.create')}}" class="nav-link">
@@ -244,7 +244,7 @@
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Compras<i class="fas fa-angle-left right"></i></p>
                                 </a>
-                                
+
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('compras.create')}}" class="nav-link">
@@ -404,7 +404,7 @@
 
 {{-- Se carga en la vista de modificar ventas --}}
 @if (Request::is('Ventas/*/edit'))
-    
+
 <script type="text/javascript">
 
     $(document).on('click', '.addRow', function(){
@@ -433,6 +433,7 @@
     });
 </script>
 @endif
+
 
 
 {{-- Solo se cargara el script cuando se encuentre en la vista de crear ventas --}}
@@ -641,7 +642,7 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        
+
                         //console.log(data);
                         $('#ok1').html(data);
                     }
@@ -667,7 +668,7 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        
+
                         //console.log(data);
                         $('#ok2').html(data);
                     }
@@ -732,8 +733,8 @@
 
 
 <script type="text/javascript">
-    function Disponibilidad(query=''){    
-                //let ventas= 'prueba';         
+    function Disponibilidad(query=''){
+                //let ventas= 'prueba';
                 $.ajax({
                     url:"{{ route('cantidad') }}",
                     method: 'GET',

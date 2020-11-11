@@ -34,7 +34,7 @@ class ClienteController extends Controller
 
 
         return view('Clientes.vistaClientes', compact('clientes'));
-        
+
     }
 
     /**
@@ -115,7 +115,18 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $searchClient = cliente::findOrFail($id);
+    //    $searchClient->cod_cliente = $codCliente;
+        $searchClient->nombre = $request->idnombreC;
+        $searchClient->apellido = $request->idapellidoC;
+        $searchClient->direccion = $request->DireccionC;
+        $searchClient->telefono = $request->idtelefonoC;
+        $searchClient->rubro = $request->idrubro;
+        $searchClient->nit = $request->NIT;
+        $searchClient->num_consumidor = $request->NCF;
+        $searchClient->save();
+
+        return redirect(route('Clientes.create'))->with('datos','Modification exitoso');
     }
 
     /**
