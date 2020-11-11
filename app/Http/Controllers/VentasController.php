@@ -370,10 +370,7 @@ class VentasController extends Controller
 
 
         return redirect('/PendienteVenta')->with('datos','Los datos se actualizaron correctamente');
-<<<<<<< HEAD
-=======
 
->>>>>>> 1bf022fb1183cc95c04591d472de16ca61f6a7df
     }
 
     /**
