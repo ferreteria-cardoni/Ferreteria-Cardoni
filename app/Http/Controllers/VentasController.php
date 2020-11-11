@@ -220,11 +220,9 @@ class VentasController extends Controller
 
         $totalVenta = substr($request->idtotal, 1);
 
-        // dd($totalVenta);
 
         $venta->total = $totalVenta;
 
-        // dd($request->nombreventa);
 
         if ($request->nombreventa) {
           $venta->cod_cliente_fk = $request->nombreventa;
@@ -234,7 +232,6 @@ class VentasController extends Controller
 
 
       $pedidosVenta = pedidoventa::where('cod_venta_fk', $id)->get();
-      // dd($pedidosVenta);
 
       $productosNombre = array();
       $productosVendidosNombre = array();
@@ -245,7 +242,6 @@ class VentasController extends Controller
       $productosFormulario = $request->nombreproducto;
       $cantidadesFormulario = $request->idcantidad;
 
-      // dd($cantidadesFormulario);
 
       // Quitando el precio de los productos del formulario
       $i = 0;
@@ -262,7 +258,6 @@ class VentasController extends Controller
       // Recuperando los nombres de los productos vendidos
       foreach ($pedidosVenta as $productoVenta) {
         $nombreP = producto::where('cod_producto', $productoVenta->cod_producto_fk)->value('nombre');
-        // dd($nombreP);
 
         $codigosPedidoDiccionario[$nombreP] = $productoVenta->cod_pedidoventa;
 
@@ -271,12 +266,6 @@ class VentasController extends Controller
         array_push($productosVendidosNombre, $nombreP);
       }
 
-      // dd($cantidadesPedidoDiccionario);
-
-      // dd($codigosPedidoDiccionario);
-
-      // dd($productosVendidosNombre);
-
 
       // Eliminar pedidosventas
 
@@ -284,7 +273,6 @@ class VentasController extends Controller
         
 
         if (!in_array($productoVendido, $productosNombre, true)) {
-            // dd($productoVendido);
 
             $productoInventario = producto::where('nombre', $productoVendido)->first();
 
@@ -312,8 +300,6 @@ class VentasController extends Controller
           
           $productoInventario = producto::where('nombre', $producto)->first();
 
-          // dd($productoInventario);
-
           $nuevoPedidoVenta = new pedidoventa();
 
           $nuevoPedidoVenta->cod_venta_fk = $id;
@@ -339,8 +325,6 @@ class VentasController extends Controller
 
           if ($cantidadesDiccionario[$producto] > $cantidadesPedidoDiccionario[$producto]) {
             $diferencia = $cantidadesDiccionario[$producto] - $cantidadesPedidoDiccionario[$producto];
-
-            // dd($diferencia);
 
             $productoInventario->cantidad -= $diferencia;
 

@@ -9,6 +9,7 @@ use App\compra;
 use App\producto;
 use App\proveedor;
 use App\empleado;
+use App\historialcompra;
 use Illuminate\Support\Facades\Auth;
 
 class ComprasController extends Controller
@@ -75,6 +76,7 @@ class ComprasController extends Controller
         $compras->cod_empleado_fk = $codEmpleado;
         $compras->cod_proveedor_fk = $request->idproveedor;
         $compras->descripcion = $request->iddescripcion;
+        $compras->estado = "pendiente";
         $compras->total = substr($request->totalc,1);
         $compras->save();
         // Recuperando el codigo de la ultima compra
@@ -130,19 +132,21 @@ class ComprasController extends Controller
      */
     public function edit($id)
     { 
-    $codProveedor = compra::find($id)->cod_proveedor_fk;
+        $codProveedor = compra::find($id)->cod_proveedor_fk;
 
-    $total = compra::find($id)->total;
+        $total = compra::find($id)->total;
 
-    $proveedores = proveedor::all();
+        $proveedores = proveedor::all();
 
-    $nombreproveedor = proveedor::find($codProveedor)->nombre;
+        $nombreproveedor = proveedor::find($codProveedor)->nombre;
 
-    $productoscompra = pedidocompra::where('cod_compra_fk', $id)->get();
+        $productoscompra = pedidocompra::where('cod_compra_fk', $id)->get();
 
-    $productosIventario = producto::all();
+        $productosIventario = producto::where('cod_proveedor_fk', $codProveedor)->get();
 
-    return view('compras.modiComprasPendientes', compact('id','codProveedor', 'proveedores', 'nombreproveedor', 'productoscompra', 'total', 'productosIventario'));
+        // dd($productosIventario);
+
+        return view('compras.modiComprasPendientes', compact('id','codProveedor', 'proveedores', 'nombreproveedor', 'productoscompra', 'total', 'productosIventario'));
     }
 
     /**
@@ -154,7 +158,159 @@ class ComprasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Actualizando la compra
+        $compra = compra::findOrFail($id);
+
+        $totalCompra = $request->totalc;
+        // dd($totalCompra);
+
+        $totalCompra = substr($totalCompra, 1);
+
+        // dd($totalCompra);
+
+        $compra->total = $totalCompra;
+
+        $compra->descripcion = $request->iddescripcion;
+
+        // if ($request->nombreventa) {
+        //     $compra->cod_cliente_fk = $request->nombreventa;
+        // }
+
+        $compra->update();
+
+
+        $pedidosCompra = pedidocompra::where('cod_compra_fk', $id)->get();
+
+        $productosNombre = array();
+        $productosCompradosNombre = array();
+        $cantidadesDiccionario = array();
+        $codigosPedidoDiccionario = array();
+        $cantidadesPedidoDiccionario = array();
+        $precioCompraDiccionario = array();
+
+        $productosFormulario = $request->nombreproducto;
+        $cantidadesFormulario = $request->idcantidad;
+        $preciosCompra = $request->idprecioC;
+
+        // Quitando el precio de los productos del formulario
+        $i = 0;
+        foreach ($productosFormulario as $productoForm) {
+        $productoArray = explode('$', $productoForm);
+
+        $productoArray[0] = rtrim($productoArray[0]);
+
+        $cantidadesDiccionario[$productoArray[0]] = $cantidadesFormulario[$i];
+        $precioCompraDiccionario[$productoArray[0]] = $preciosCompra[$i]; 
+        $i++;
+        array_push($productosNombre, $productoArray[0]);
+        }
+
+        // Recuperando los nombres de los productos comprados
+        foreach ($pedidosCompra as $productoCompra) {
+            $nombreP = producto::where('cod_producto', $productoCompra->cod_producto_fk)->value('nombre');
+
+            $codigosPedidoDiccionario[$nombreP] = $productoCompra->cod_pedidocompra;
+
+            $cantidadesPedidoDiccionario[$nombreP] = $productoCompra->cantidad;
+
+            array_push($productosCompradosNombre, $nombreP);
+        }
+
+
+        // Eliminar pedidosventas
+
+        foreach ($productosCompradosNombre as $productoComprado) {
+        
+
+        if (!in_array($productoComprado, $productosNombre, true)) {
+
+            $productoInventario = producto::where('nombre', $productoComprado)->first();
+
+            $productoInventario->cantidad -= $cantidadesPedidoDiccionario[$productoComprado];
+
+            $productoInventario->update();
+
+            $codigoCompraModificar = $codigosPedidoDiccionario[$productoComprado];
+
+            $pedidoCompraModificar = pedidocompra::find($codigoCompraModificar);
+
+            $pedidoCompraModificar->delete();
+        }
+
+
+        }
+
+
+
+        // Modificar o agregar pedidoscompras
+        foreach ($productosNombre as $producto) {
+        
+        // Agregando productos a la compra
+        if (!in_array($producto, $productosCompradosNombre, true)) {
+            
+            $productoInventario = producto::where('nombre', $producto)->first();
+
+            $nuevoPedidoCompra = new pedidocompra();
+
+            $nuevoPedidoCompra->cod_compra_fk = $id;
+
+            $nuevoPedidoCompra->cod_producto_fk = producto::where('nombre', $producto)->value('cod_producto');
+
+            $nuevoPedidoCompra->cantidad = $cantidadesDiccionario[$producto];
+
+            $productoInventario->cantidad += $cantidadesDiccionario[$producto];
+
+            $productoInventario->precioCompra = $precioCompraDiccionario[$producto];
+            
+            $productoInventario->update();
+
+            $nuevoPedidoCompra->save();
+
+        }else{
+
+            $productoInventario = producto::where('nombre', $producto)->first();
+
+            $codigoCompraModificar = $codigosPedidoDiccionario[$producto];
+
+            $pedidoCompraModificar = pedidocompra::find($codigoCompraModificar);
+
+
+            if ($cantidadesDiccionario[$producto] > $cantidadesPedidoDiccionario[$producto]) {
+            $diferencia = $cantidadesDiccionario[$producto] - $cantidadesPedidoDiccionario[$producto];
+
+            $productoInventario->cantidad += $diferencia;
+
+            $productoInventario->precioCompra = $precioCompraDiccionario[$producto];
+
+            $productoInventario->update();
+            }else{
+
+            $diferencia = $cantidadesPedidoDiccionario[$producto] - $cantidadesDiccionario[$producto];
+
+            $productoInventario->cantidad -= $diferencia;
+
+            $productoInventario->precioCompra = $precioCompraDiccionario[$producto];
+
+            $productoInventario->update();
+
+            }
+
+            $pedidoCompraModificar->cantidad = $cantidadesDiccionario[$producto];
+
+            $pedidoCompraModificar->update();
+
+        }
+        }
+
+        // Registrando el codigo del empleado 
+
+        $bitacora= new historialcompra();
+        $bitacora->operacion="Modificar";
+        $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+        $bitacora->cod_compra_fk=$id;
+        $bitacora->save();
+
+        return redirect('/PendienteCompra')->with('datos', 'Los datos se actualizaron correctamente');
     }
 
     /**

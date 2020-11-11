@@ -412,8 +412,9 @@ function NombreProductoCompra(){
         var NombrePC = document.querySelectorAll('input.a');
         var cantC = document.querySelectorAll('input.b');
         var precioC = document.querySelectorAll('input.c');
-        var totalC=0;
         var msg="";
+        var msgPrecio = "";
+        var controlador = 1;
         for(var i=0;i<NombrePC.length;i++){
             if (NombrePC[i].value == "") {
                 document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
@@ -433,22 +434,37 @@ function NombreProductoCompra(){
                 NombrePC[i].style.borderWidth = "2px";
                 $('#btmComprasTab').attr('disabled',false);
                 cantC[i].disabled="";
-                precioC[i].disabled="";
                 var ctrl = 0;
 
                 if (cantC[i].value == "") {
                     msg = "La cantidad ingresada debe ser superior a 0 ";
                     cantC[i].style.borderColor = "red";
-                    cantC[i].style.borderWidth = "3px";                   
+                    cantC[i].style.borderWidth = "3px";  
+                    precioC[i].disabled="true";
+
                 }
                 else if(!(cantC[i].value - Math.floor(cantC[i].value)) == 0){
                     msg = "La cantidad ingresada debe ser entera ";
                     cantC[i].style.borderColor = "red";
-                    cantC[i].style.borderWidth = "3px";                   
+                    cantC[i].style.borderWidth = "3px";
+                    precioC[i].disabled="true";
+
                 }
                 else {
                     cantC[i].style.borderColor = "";
                     cantC[i].style.borderWidth = "2px";
+                    precioC[i].disabled="";
+
+                    if (precioC[i].value == "") {
+                        msgPrecio = "Debe de ingresar un precio para el producto";
+                        precioC[i].style.borderColor = "red";
+                        precioC[i].style.borderWidth = "3px";
+                        controlador = 1;
+                    }else{
+                        precioC[i].style.borderColor = "";
+                        precioC[i].style.borderWidth = "2px";
+                        controlador = 0;
+                    }
                 }               
             }
             if(msg!="" ){
@@ -459,26 +475,58 @@ function NombreProductoCompra(){
             }else if(ctrl== 0){
                 document.getElementById("msgidcantidad").style.display = "none";
                 document.getElementById("msgidcantidad").innerHTML = "";
+
+            }
+            
+            
+            if(msgPrecio!="" ){
+                document.getElementById("msgidprecioC").innerHTML = msgPrecio;
+                document.getElementById("msgidprecioC").style.display = "block";               
+                $('#btmComprasTab').attr('disabled',true);
+                $('#btmsubmitC').attr('disabled',true);
+            }else if(controlador == 0){
+                document.getElementById("msgidprecioC").style.display = "none";
+                document.getElementById("msgidprecioC").innerHTML = "";
+            }else if (controlador == 0 && ctrl == 0) {
                 $('#btmComprasTab').attr('disabled',false);
                 $('#btmsubmitC').attr('disabled',false);
-            }  
-    
-           totalC=totalC+((cantC[i].value*1)*(precioC[i].value*1));     
+            }
         }
-        
-        TotalCompra.value='$'+totalC.toFixed(2);
-        
          
     }
 
 
 }
+
+function TotalC(){
+    var precio = document.querySelectorAll('input.c');
+    var cant = document.querySelectorAll('input.b');
+    var total=0; 
+    for(var i=0;i<precio.length;i++){
+        if(!isNaN(precio[i].value*1) && !isNaN((cant[i].value)*1)){
+            total = total+((precio[i].value*1)*(cant[i].value)*1);
+        }
+    }
+    
+    total = total.toFixed(2);
+
+    TotalCompra.value= "$"+total;
+}
+
+
+
+
 if(TabCompra){
     TabCompra.addEventListener('click', () => {
-        NombreProductoCompra();     
+        NombreProductoCompra();
+        TotalC();     
     })
     TabCompra.addEventListener('change', () => {
-        NombreProductoCompra();     
+        NombreProductoCompra();   
+        TotalC();     
+    })
+    TabCompra.addEventListener('mousemove', () => {   
+        TotalC();     
     })
 }
 //Formulario Clientes
