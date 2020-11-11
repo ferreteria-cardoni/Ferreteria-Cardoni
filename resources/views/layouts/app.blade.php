@@ -459,6 +459,51 @@
 @endif
 
 
+{{-- Solo se cargara para la vista de modificar compras  --}}
+@if (Request::is('compras/*/edit'))
+
+<script type="text/javascript">
+
+
+    $(document).on('click', '.addRow', function(){
+        addRow();
+    });
+
+    // Agregando filas de compras
+    function addRow()
+    {
+        // Recuperando el select de productos
+        // var selectProducto = document.querySelector('#nombreproducto');
+
+        // console.log(selectProducto);
+
+        // console.log(selectProducto);
+        var tr = '<tr>';
+
+        tr += '<td><input id="nombreproducto"  name="nombreproducto[]" list="productos" class="a form-control" autocomplete="off" required>@foreach ($productoscompra as $productoCompra)<datalist id="productos">@foreach ($productosIventario as $producto)<option value="{{$producto->nombre}}"></option>@endforeach</datalist>@endforeach</td>'+
+        '<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required></td>'+
+        '<td><input type="number" min="0" step="any" name="idprecioC[]" class="c form-control" required></td>'+
+        '<td><a href="#" class="btn btn-danger remove">Eliminar</a></td>'
+        '<tr>';;
+        $('tbody').append(tr);
+
+    };
+
+    // Eliminando filas de compras
+    $(document).on('click', '.remove', function(){
+        var ultimaFila = $('tbody tr').length;
+        if (ultimaFila == 1) {
+            alert('Lo siento, no se puede eliminar la ultima fila');
+        }else{
+            $(this).parent().parent().remove();
+        }
+    });
+</script>
+@endif
+
+
+
+
 
 
 {{-- Solo se cargara para la vista de compras  --}}

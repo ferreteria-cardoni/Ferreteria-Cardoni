@@ -36,6 +36,7 @@
 			<div class="panel panel-header">
 				<div class="row">
 					<div class="col-md-6">
+						<label for="nombreventa">Cliente</label>
                         <select class="custom-select" name='nombreventa' id="nombreventa" autocomplete="off">
                             <option value='{{$codCliente}}' disabled selected>{{$nombreCliente}} {{$apellidoCliente}}</option>
                             @foreach($clientes as $clienteiten)
@@ -47,6 +48,7 @@
 
 					<div class="col-md-6">
 						<div class="form-group">
+							<label for="iddireccion">Dirección</label>
                             <input type="text" class="form-control" id="iddireccion" name="iddireccion" placeholder="Dirección..." value='{{$direccion}}'>
                       		<span id="msgiddireccion" name="msgiddireccion" class="AlertaMsg"></span>
 						</div>
@@ -121,7 +123,7 @@
 					<tfoot>
 						<tr>
 							<td>
-								Total
+								<label for="idtotal">Total</label>
                                 <input readonly type="text" class="form-control" id="idtotal" name="idtotal" placeholder="Total" value='${{$total}}'>
 							</td>
 						</tr>
