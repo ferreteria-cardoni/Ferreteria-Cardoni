@@ -218,33 +218,34 @@
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Ventas<i class="fas fa-angle-left right"></i></p>
                                 </a>
-                                @endcanany
+
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{route('Ventas.create')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Venta</p>
+                                        <p>Crear Venta</p>
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a href="/PendienteVenta" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Penientes</p>
+                                            <p>Ventas Pendientes</p>
                                         </a>
                                     </li>
                                 </ul>
+                                @endcanany
                             </li>
 
                               {{-- Ventas --}}
-                            @canany(['ventas'])
+                            {{-- @canany(['ventas'])
                             <li class="nav-item has-treeview">
                                 <a href="{{route('Ventas.create')}}" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Ventas<i class="fas fa-angle-left right"></i></p>
                                 </a>
                             </li>
-                            @endcanany
+                            @endcanany --}}
 
                                 {{-- <ul class="nav nav-treeview">
                                     <li class="nav-item">
@@ -433,6 +434,42 @@
         });
     });
 </script>
+
+
+// Se carga en la vista de modificar ventas
+@if (Request::is('Ventas/*/edit'))
+
+<script type="text/javascript">
+
+    $(document).on('click', '.addRow', function(){
+        addRow();
+    });
+
+    // Agregando filas de ventas
+    function addRow()
+    {
+        var tr = '<tr>'+
+        '<td><input name="nombreproducto[]" list="productos" class="a form-control" required><datalist id="productos">@foreach ($productosIventario as $producto)<option value="{{$producto->nombre}} ${{$producto->precio}}"></option>@endforeach</datalist></td>'+
+		'<td><input type="number" min="0" name="idcantidad[]" class="b form-control" required disabled></td>'+
+        '<td><button type="button" id="btmVentasTabDel" class="btn btn-danger remove">Eliminar</button></td>'
+        '<tr>';
+        $('tbody').append(tr);
+    };
+
+    // Eliminado filas de ventas
+    $(document).on('click', '.remove', function(){
+        var ultimaFila = $('tbody tr').length;
+        if (ultimaFila == 1) {
+            alert('Lo siento, no se puede eliminar la ultima fila');
+        }else{
+            $(this).parent().parent().remove();
+        }
+    });
+</script>
+@endif
+
+
+
 
 
 
