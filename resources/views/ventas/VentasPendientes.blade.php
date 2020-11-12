@@ -51,6 +51,7 @@
                     <li class="list-group-item">Total: ${{$pedido->total}}</li>
                 </ul>
                 <a href="{{route('Ventas.edit', $pedido->cod_venta)}}" class="btn btn-primary">Editar</a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="{{$pedido->cod_venta}}" data-total="{{$pedido->total}}" data-cliente=" {{App\cliente::find($pedido->cod_cliente_fk)->nombre}} {{App\cliente::find($pedido->cod_cliente_fk)->apellido}}">Eliminar</button>
             </div>
             </div>
         </div>
@@ -59,25 +60,5 @@
   
 >>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
-
-  <!-- <table class="table table-hover" >
-        <thead>
-          <tr>
-            <th scope="col">ID Pedido Venta</th>
-            <th scope="col">Cod Venta</th>
-            <th scope="col">Cod Producto</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Fecha Venta</th> -->
-            <!-- @canany(['bodega'])
-            <th scope="col">Acciones</th>
-            @endcanany -->
-     <!--      </tr>
-        </thead>
-        <tbody >
-        <tr>
-          <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
-        </tr>
-      </tbody>
-  </table> -->
-</div>
 @endsection
+

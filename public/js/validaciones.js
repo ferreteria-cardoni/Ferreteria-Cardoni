@@ -747,7 +747,17 @@ if(CorroProveedor){
         
     })
 }
-
+//modales
+$('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var cod = button.data('codigo')
+    var total = button.data('total')
+    var Cliente = button.data('cliente')
+    var modal = $(this)
+    modal.find('.modal-title').text('Esta Seguro de Emilinar el pedido: ' + cod)
+    modal.find('input[name="lel"]').val('$'+total)
+    modal.find('input[name="lol"]').val(Cliente)
+  })
 
 
 
