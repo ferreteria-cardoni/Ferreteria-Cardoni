@@ -366,8 +366,55 @@ class VentasController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+      // dd($id);
+
+      // Recuperando la venta
+       $venta = venta::findOrFail($id);
+      //  dd($venta);
+
+      //Recuperando los productos de la venta
+      $productosVendidos = pedidoventa::where('cod_venta_fk', $id)->get();
+      // dd($productosVendidos);
+
+      foreach ($productosVendidos as $productoVendido) {
+        // dd($productoVendido);
+
+        // Recuperando el producto desde el inventario
+        $productoInventario = producto::find($productoVendido->cod_producto_fk);
+        // dd($productoInventario);
+
+        // Regresando el stock
+        $productoInventario->cantidad += $productoVendido->cantidad; 
+        
+        // Actualizando el stock
+        $productoInventario->update();
+
+        // Eliminando el producto vendido
+        $productoVendido->delete();
+      }
+      
+
+      // Registrando la eliminacion de la venta
+      $bitacora= new historialventa();
+      $bitacora->operacion="Eliminar";
+      $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+      $bitacora->cod_venta_fk=$id;
+      $bitacora->save();
+
+
+      // Eliminando la venta
+      $venta->delete();
+
+
+
+      return redirect('/PendienteVenta')->with('datosE', 'Pedido cancelado exitosamente');
+
+
     }
+
+
+
     public function cantidad (Request $request){
       if($request->ajax()){
         $query = trim($request->get('query'));

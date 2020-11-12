@@ -748,15 +748,18 @@ if(CorroProveedor){
     })
 }
 //modales
-$('#exampleModal').on('show.bs.modal', function (event) {
+$('.exampleModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var cod = button.data('codigo')
+    console.log(cod);
     var total = button.data('total')
     var Cliente = button.data('cliente')
     var modal = $(this)
+    // var redireccion = ​"Ventas"+"/"+cod+"/destroy";
     modal.find('.modal-title').text('Esta Seguro de Emilinar el pedido: ' + cod)
     modal.find('input[name="lel"]').val('$'+total)
     modal.find('input[name="lol"]').val(Cliente)
+    // modal.find('form[name="formEliminarVenta"]').attr('action',  redireccion)
   })
 
 

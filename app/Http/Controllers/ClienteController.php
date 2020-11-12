@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\cliente;
+use App\historialcliente;
 use Illuminate\Http\Request;
 use App\Http\Requests\FormClientes;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class ClienteController extends Controller
 {
@@ -125,6 +125,14 @@ class ClienteController extends Controller
         $searchClient->nit = $request->NIT;
         $searchClient->num_consumidor = $request->NCF;
         $searchClient->save();
+
+        
+
+        $bitacora= new historialcliente();
+        $bitacora->operacion="Modificar";
+        $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+        $bitacora->cod_cliente_fk=$id;
+        $bitacora->save();
 
         return redirect(route('Clientes.index'))->with('datos','Registro actualizado exitosamente');
     }
