@@ -475,6 +475,7 @@ class VentasController extends Controller
                                   <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                               </ul>
                               <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
                           </div>
                           </div>
                         </div>
@@ -528,6 +529,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
                             </div>
                             </div>
                           </div>
@@ -587,6 +589,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
                             </div>
                             </div>
                           </div>
