@@ -322,6 +322,44 @@ class ComprasController extends Controller
     public function destroy($id)
     {
         // dd($id);
+         // Recuperando la compra
+       $compra = compra::findOrFail($id);
+
+      //Recuperando los productos de la compra
+      $productosComprados = pedidocompra::where('cod_compra_fk', $id)->get();
+    
+
+      foreach ($productosComprados as $productoComprado) {
+       
+        // Recuperando el producto desde el inventario
+        $productoInventario = producto::find($productoComprado->cod_producto_fk);
+      
+
+        // Regresando el stock
+        $productoInventario->cantidad += $productoComprado->cantidad; 
+        
+        // Actualizando el stock
+        $productoInventario->update();
+
+        // Eliminando el producto comprado
+        $productoComprado->delete();
+      }
+      
+
+      // Registrando la eliminacion de la comprado
+      $bitacora= new historialcompra();
+      $bitacora->operacion="Eliminar";
+      $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+      $bitacora->cod_compra_fk=$id;
+      $bitacora->save();
+
+
+      // Eliminando la compra
+      $compra->delete();
+
+
+
+      return redirect('/')->with('datosE', 'Pedido cancelado exitosamente');
     }
 
     public function buscador(Request $request){
