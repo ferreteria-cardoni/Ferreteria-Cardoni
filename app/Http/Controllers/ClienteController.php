@@ -126,7 +126,7 @@ class ClienteController extends Controller
         $searchClient->num_consumidor = $request->NCF;
         $searchClient->save();
 
-        return redirect(route('Clientes.create'))->with('datos','Modification exitoso');
+        return redirect(route('Clientes.index'))->with('datos','Registro actualizado exitosamente');
     }
 
     /**
