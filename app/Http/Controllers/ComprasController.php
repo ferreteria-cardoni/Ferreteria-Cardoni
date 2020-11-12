@@ -321,7 +321,7 @@ class ComprasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // dd($id);
     }
 
     public function buscador(Request $request){
