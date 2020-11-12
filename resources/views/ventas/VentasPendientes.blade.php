@@ -30,13 +30,6 @@
     </div>
 
     <br>
-<<<<<<< HEAD
-  <div class="row">
-      <div class="col-sm-4" id="ok1">
-
-        </div>
-  </div>
-=======
       <div class="row" id="ok1">
       @foreach ($pedidoVentas as $pedido)
         <div class="col-sm-4">
@@ -58,7 +51,6 @@
         @endforeach
     </div>
   
->>>>>>> 59cdc868766d8f0bd509d1bb306dfc37853f251e
 
 @endsection
 
