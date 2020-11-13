@@ -99,16 +99,15 @@
 				value="{{ old('idcorreoProve') }}">
 			<span id="msgidcorreoProve" name="msgidcorreoProve" class="AlertaMsg"></span>
 		</div>
-		
+
 		<div class="form-group col-md-5">
 			<label for="idrol" class="mb-2">Rol</label>
 			<select class='mi-selector' name='idrol[]' id="idrol" multiple='multiple'>
 				<option disabled="true">Seleccione el Rol </option>
 			</select>
 		</div>
+		
 </div>
-
-
 
 <button type="submit" class="btn btn-primary">Registrar Empleado</button>
 <button type="reset" class="btn btn-danger">Limpiar Campos</button>
