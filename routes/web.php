@@ -64,6 +64,7 @@ Route::resource('Ventas', 'VentasController');
 
 Route::resource('Proveedores', 'ProveedorController');
 
+Route::resource('Empleados', 'EmpleadoController');
 
 Route::get('/cantidad', 'VentasController@cantidad')->name('cantidad');
 
