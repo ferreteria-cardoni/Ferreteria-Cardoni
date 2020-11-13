@@ -50,59 +50,58 @@
 	  <div class="form-row">
 				  	<div class="form-group col-md-5">
 				      <label>Nombre</label>
-				      <input autocomplete="off" type="text" class="form-control" name="idEmpleado" id="idEmpleado" placeholder="Escriba el nombre..." value="{{ old('idproducto') }}">
-              <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
+				      <input autocomplete="off" type="text" class="form-control" name="NombreEmpleado" id="NombreEmpleado" placeholder="Escriba el nombre..." value="{{ old('NombreEmpleado') }}" required>
+              <span id="msgNombreEmpleado" name="msgNombreEmpleado" class="AlertaMsg"></span>
 				    </div>
 
 				    <div class="form-group col-md-5">
 						<label>Apellido</label>
-						<input type="text" class="form-control" id="idnombreempleado" name="idnombreempleado" placeholder="Escriba el apellido..." value="{{ old('idnombreProve') }}">
-						<span id="msgidnombreProve" name="msgidnombreProve" class="AlertaMsg"></span>
+						<input type="text" class="form-control" id="ApellidoEmpleado" name="ApellidoEmpleado" placeholder="Escriba el apellido..." value="{{ old('ApellidoEmpleado') }}" required>
+						<span id="msgApellidoEmpleado" name="msgApellidoEmpleado" class="AlertaMsg"></span>
 					</div>
-
 		<div class="form-group col-md-5">
 		<label>DUI</label>
-		<input type="numeric" class="form-control" id="DUI" name="DUI" maxlength="14" placeholder="Escriba el DUI..."
-			value="{{ old('NIT') }}">
-		<span id="msgNIT" name="msgNIT" class="AlertaMsg"></span>
+		<input type="numeric" class="form-control" id="DUIE" name="DUIE" maxlength="14" placeholder="Escriba el DUI..."
+			value="{{ old('DUIE') }}" required>
+		<span id="msgDUIE" name="msgDUIE" class="AlertaMsg"></span>
 	</div>
 
 	<div class="form-group col-md-5">
 				      <label>Edad</label>
-				      <input autocomplete="off" type="text" class="form-control" maxlength="6" minlength="6" name="idEdad" id="idEdad" placeholder="Escriba la edad..." value="{{ old('idproducto') }}">
-              <span id="msgidproducto" name="msgidproducto" class="AlertaMsg"></span>
+				      <input autocomplete="off" type="text" class="form-control" maxlength="6" minlength="6" name="idEdadE" id="idEdadE" placeholder="Escriba la edad..." value="{{ old('idEdadE') }}" required>
+              <span id="msgidEdadE" name="msgidEdadE" class="AlertaMsg"></span>
 				    </div>
-
 
 	<div class="form-group col-md-5">
 				      <label>Sexo</label>
-      	<select class="browser-default custom-select">
-			<option selected> Seleccione</option>
+      	<select class="browser-default custom-select" id="sexoE" name="sexoE" required>
+			<option value="0" selected> Seleccione</option>
 			<option value="1">Masculino</option>
 			<option value="2">Femenino</option>
 			<option value="3">Otro</option>
 		</select>
+		<span id="msgsexoE" name="msgsexoE" class="AlertaMsg"></span>
 	</div>
 
 
 
 		<div class="form-group col-md-5">
 			<label>Teléfono</label>
-			<input type="text" class="form-control" id="idtelefonoProve" name="idtelefonoProve"
-				placeholder="Escribe el teléfono..." maxlength="8" value="{{ old('idtelefonoProve') }}">
-			<span id="msgidtelefonoProve" name="msgidtelefonoProve" class="AlertaMsg"></span>
+			<input type="text" class="form-control" id="idtelefonoE" name="idtelefonoE"
+				placeholder="Escribe el teléfono..." maxlength="8" value="{{ old('idtelefonoProve') }}" required>
+			<span id="msgidtelefonoE" name="msgidtelefonoE" class="AlertaMsg"></span>
 		</div>
 
 		<div class="form-group col-md-5">
 			<label>Correo electrónico</label>
-			<input type="text" class="form-control" id="idcorreoProve" name="idcorreoProve" placeholder="Email..."
-				value="{{ old('idcorreoProve') }}">
-			<span id="msgidcorreoProve" name="msgidcorreoProve" class="AlertaMsg"></span>
+			<input type="text" class="form-control" id="idcorreoE" name="idcorreoE" placeholder="Email..."
+				value="{{ old('idcorreoE') }}">
+			<span id="msgidcorreoE" name="msgidcorreoE" class="AlertaMsg"></span>
 		</div>
 
 		<div class="form-group col-md-5">
 			<label for="idrol" class="mb-2">Rol</label>
-			<select class='mi-selector' name='idrol[]' id="idrol" multiple='multiple'>
+			<select class='mi-selector' name='idrol[]' id="idrol" multiple='multiple' required>
 				<option disabled="true">Seleccione el Rol </option>
 			</select>
 		</div>
