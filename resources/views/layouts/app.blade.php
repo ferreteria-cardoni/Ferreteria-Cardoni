@@ -353,15 +353,6 @@
                                 <ul class="nav nav-treeview">
 
                                     <li class="nav-item">
-                                        <a href="{{route('Clientes.index')}}"
-                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ver Empleados</p>
-                                        </a>
-                                    </li>
-
-
-                                    <li class="nav-item">
                                         <a href="{{route('Empleados.create')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
