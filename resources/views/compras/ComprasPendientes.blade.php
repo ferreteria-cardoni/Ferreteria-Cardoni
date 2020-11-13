@@ -15,6 +15,18 @@
 @endif
 @endsection
 
+@section('alert2')
+<div class="container">
+      @if (session('datosE'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+    {{session('datosE')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+@endif
+@endsection
+
 @section('content')
     <div class="input-group-prepend">
       <div class="col-sm-8">

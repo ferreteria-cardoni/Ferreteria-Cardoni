@@ -336,7 +336,7 @@ class ComprasController extends Controller
       
 
         // Regresando el stock
-        $productoInventario->cantidad += $productoComprado->cantidad; 
+        $productoInventario->cantidad -= $productoComprado->cantidad; 
         
         // Actualizando el stock
         $productoInventario->update();
@@ -359,7 +359,7 @@ class ComprasController extends Controller
 
 
 
-      return redirect('/')->with('datosE', 'Pedido cancelado exitosamente');
+      return redirect('/PendienteCompra')->with('datosE', 'Pedido cancelado exitosamente');
     }
 
     public function buscador(Request $request){
