@@ -51,6 +51,14 @@ const NombreProveedor = document.querySelector('#idnombreProve');
 const TelefonoProveedor = document.querySelector('#idtelefonoProve');
 const CorroProveedor = document.querySelector('#idcorreoProve');
 
+//Formulario de Empleado
+const idnombreE = document.querySelector('#NombreEmpleado');
+const idapellidoE = document.querySelector('#ApellidoEmpleado');
+const edadE = document.querySelector('#idEdadE');
+const sexoE = document.querySelector('#sexoE');
+const DUIE = document.querySelector('#DUIE');
+const telefonoE = document.querySelector('#idtelefonoE');
+const correoE = document.querySelector('#idcorreoE');
 
 //expresiones regulares usadas en las validaciones
 var solotexto = new RegExp('[a-zA-Z\s]+$');
@@ -58,7 +66,7 @@ var NITval = new RegExp('[0-9]{14}');
 var NCfinal = new RegExp('[0-9]{11}');
 var valtel = new RegExp('[0-9]{8}');
 var valcorreos = new RegExp('[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.([a-zA-Z]{2,4})+');
-var valdui = new RegExp('[0-9]{8}-[0-9]{1}');
+var valdui = new RegExp('[0-9]{9}');
 var valcodProducto= new RegExp('([A-Z]|[a-z]){3}([0-9]){3}');
 
 
@@ -513,9 +521,6 @@ function TotalC(){
     TotalCompra.value= "$"+total;
 }
 
-
-
-
 if(TabCompra){
     TabCompra.addEventListener('click', () => {
         NombreProductoCompra();
@@ -741,6 +746,162 @@ if(CorroProveedor){
             document.getElementById("msgidcorreoProve").style.display = "none";
             document.getElementById("msgidcorreoProve").innerHTML = ""
             CorroProveedor.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+
+//Empleados
+if(idnombreE){
+    idnombreE.addEventListener('blur', () => {
+
+        if (idnombreE.value == "") {
+            document.getElementById("msgNombreEmpleado").innerHTML = "Este campo es requerido"
+            document.getElementById("msgNombreEmpleado").style.display = "block";
+            idnombreE.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgNombreEmpleado").style.display = "none";
+            document.getElementById("msgNombreEmpleado").innerHTML = ""
+            idnombreE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(idapellidoE){
+    idapellidoE.addEventListener('blur', () => {
+
+        if (idapellidoE.value == "") {
+            document.getElementById("msgApellidoEmpleado").innerHTML = "Este campo es requerido"
+            document.getElementById("msgApellidoEmpleado").style.display = "block";
+            idapellidoE.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgApellidoEmpleado").style.display = "none";
+            document.getElementById("msgApellidoEmpleado").innerHTML = ""
+            idapellidoE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(DUIE){
+    DUIE.addEventListener('blur', () => {
+
+        if (DUIE.value == "") {
+            document.getElementById("msgDUIE").innerHTML = "Este campo es requerido"
+            document.getElementById("msgDUIE").style.display = "block";
+            DUIE.style.borderColor = "red";
+            
+        }
+        else if(!valdui.exec(DUIE.value)){
+            document.getElementById("msgDUIE").innerHTML = "El formato correcto es 999999999 (9 digitos, sin guión)"
+            document.getElementById("msgDUIE").style.display = "block";
+            DUIE.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgDUIE").style.display = "none";
+            document.getElementById("msgDUIE").innerHTML = ""
+            DUIE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}   
+if(edadE){
+    edadE.addEventListener('blur', () => {
+
+        if (edadE.value == "") {
+            document.getElementById("msgidEdadE").innerHTML = "La edad de el empleado es obligatoria";
+            document.getElementById("msgidEdadE").style.display = "block";
+            edadE.style.borderColor = "red";
+            
+        }
+        else if(!(edadE.value - Math.floor(edadE.value)) == 0){
+            document.getElementById("msgidEdadE").innerHTML = "Utilize solo números enteros";
+            document.getElementById("msgidEdadE").style.display = "block";
+            edadE.style.borderColor = "red";
+        }
+
+        else {
+            document.getElementById("msgidEdadE").style.display = "none";
+            document.getElementById("msgidEdadE").innerHTML = ""
+            edadE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(sexoE){
+    sexoE.addEventListener('blur', () => {
+
+        if (sexoE.value == 0) {
+            document.getElementById("msgsexoE").innerHTML = "Este campo es requerido"
+            document.getElementById("msgsexoE").style.display = "block";
+            sexoE.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgsexoE").style.display = "none";
+            document.getElementById("msgsexoE").innerHTML = ""
+            sexoE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(telefonoE){
+    telefonoE.addEventListener('blur', () => {
+
+        if (telefonoE.value == "") {
+            document.getElementById("msgidtelefonoE").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidtelefonoE").style.display = "block";
+            telefonoE.style.borderColor = "red";
+            
+        }
+        else if(!valtel.exec(telefonoE.value)){
+            document.getElementById("msgidtelefonoE").innerHTML = "El formato correcto es 9999-9999 (8 digitos)"
+            document.getElementById("msgidtelefonoE").style.display = "block";
+            telefonoE.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidtelefonoE").style.display = "none";
+            document.getElementById("msgidtelefonoE").innerHTML = ""
+            telefonoE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(correoE){
+    correoE.addEventListener('blur', () => {
+
+        if (correoE.value == "") {
+            document.getElementById("msgidcorreoE").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidcorreoE").style.display = "block";
+            correoE.style.borderColor = "red";
+            
+        }
+        else if(!valcorreos.exec(correoE.value)){
+            document.getElementById("msgidcorreoE").innerHTML = "El formato correcto es ejemplo@gmail.com"
+            document.getElementById("msgidcorreoE").style.display = "block";
+            correoE.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidcorreoE").style.display = "none";
+            document.getElementById("msgidcorreoE").innerHTML = ""
+            correoE.style.borderColor = "green";
             
             
         }
