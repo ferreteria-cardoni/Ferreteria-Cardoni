@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Empleado;
+use App\empleado;
 use Illuminate\Http\Request;
 use App\Http\Requests\FormEmpleados;
+use App\role;
 
 class EmpleadoController extends Controller
 {
@@ -24,8 +25,11 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('empleados.crearEmpleados');
+    {   
+
+        $roles = role::all();
+
+        return view('empleados.crearEmpleados', compact('roles'));
     }
 
     /**
@@ -36,7 +40,43 @@ class EmpleadoController extends Controller
      */
     public function store(FormEmpleados $request)
     {
+
+        $utlimoEmpleado = empleado::orderBy('created_at', 'desc')->first();
+
+        if ($utlimoEmpleado) {
+
+            $codUtlimoEmpleado = substr($utlimoEmpleado->cod_empleado, 2);
+
+            $contador = $codUtlimoEmpleado + 1;
+
+        }else{
+            $contador = 1;
+        }
+
+
+        $nombrePrimeraLetra = $request->NombreEmpleado[0];
+
+        $apellidoPrimeraLetra = $request->ApellidoEmpleado[0];
+
+
+        $codigoNuevoEmpleado = $nombrePrimeraLetra . $apellidoPrimeraLetra . $contador;
+
+        $nuevoEmpleado = new empleado();
         
+        $correo = $request->idcorreoE;
+        $codRol = $request->idrol;
+
+        $nuevoEmpleado->cod_empleado = $codigoNuevoEmpleado;
+        $nuevoEmpleado->nombre = $request->NombreEmpleado;
+        $nuevoEmpleado->apellido = $request->ApellidoEmpleado;
+        $nuevoEmpleado->dui = $request->DUIE;
+        $nuevoEmpleado->telefono = $request->idtelefonoE;
+        $nuevoEmpleado->edad = $request->idEdadE;
+        $nuevoEmpleado->sexo = $request->sexoE;
+
+        $nuevoEmpleado->save();
+
+        return redirect(route('Empleados.create'))->with('datos', 'Empleado registrado correctamente');
 
     }
 
