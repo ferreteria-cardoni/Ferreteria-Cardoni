@@ -46,7 +46,8 @@
 
 
 
-
+<form method="POST" action="{{route('Empleados.store')}}" >
+	@csrf
 	  <div class="form-row">
 				  	<div class="form-group col-md-5">
 				      <label>Nombre</label>
@@ -61,24 +62,24 @@
 					</div>
 		<div class="form-group col-md-5">
 		<label>DUI</label>
-		<input type="numeric" class="form-control" id="DUIE" name="DUIE" maxlength="14" placeholder="Escriba el DUI..."
+		<input type="numeric" class="form-control" id="DUIE" name="DUIE" maxlength="9" placeholder="Escriba el DUI..."
 			value="{{ old('DUIE') }}" required>
 		<span id="msgDUIE" name="msgDUIE" class="AlertaMsg"></span>
 	</div>
 
 	<div class="form-group col-md-5">
 				      <label>Edad</label>
-				      <input autocomplete="off" type="text" class="form-control" maxlength="6" minlength="6" name="idEdadE" id="idEdadE" placeholder="Escriba la edad..." value="{{ old('idEdadE') }}" required>
+				      <input autocomplete="off" type="number" min="18" class="form-control" maxlength="6" minlength="6" name="idEdadE" id="idEdadE" placeholder="Escriba la edad..." value="{{ old('idEdadE') }}" required>
               <span id="msgidEdadE" name="msgidEdadE" class="AlertaMsg"></span>
 				    </div>
 
 	<div class="form-group col-md-5">
-				      <label>Sexo</label>
+		<label>Sexo</label>
       	<select class="browser-default custom-select" id="sexoE" name="sexoE" required>
 			<option value="0" selected> Seleccione</option>
-			<option value="1">Masculino</option>
-			<option value="2">Femenino</option>
-			<option value="3">Otro</option>
+			<option value="masculino">Masculino</option>
+			<option value="femenino">Femenino</option>
+			<option value="otro">Otro</option>
 		</select>
 		<span id="msgsexoE" name="msgsexoE" class="AlertaMsg"></span>
 	</div>
@@ -98,13 +99,31 @@
 				value="{{ old('idcorreoE') }}">
 			<span id="msgidcorreoE" name="msgidcorreoE" class="AlertaMsg"></span>
 		</div>
-		
+
+
 		<div class="form-group col-md-5">
+			<label>Rol</label>
+			<select class="browser-default custom-select" id="idrol" name="idrol" required>
+				<option value="0" selected disabled> Seleccione un rol</option>
+				@foreach ($roles as $rol)
+				<option value="{{$rol->id}}">{{$rol->nombre}}</option>
+				@endforeach
+			</select>
+			<span id="msgsexoE" name="msgsexoE" class="AlertaMsg"></span>
+		</div>
+
+
+
+
+		{{-- <div class="form-group col-md-5">
 			<label for="idrol" class="mb-2">Rol</label>
 			<select class='mi-selector' name='idrol[]' id="idrol" multiple='multiple' required>
 				<option disabled="true">Seleccione el Rol </option>
 			</select>
-		</div>
+		</div> --}}
+
+
+		
 </div>
 
 <button type="submit" class="btn btn-primary">Registrar Empleado</button>
