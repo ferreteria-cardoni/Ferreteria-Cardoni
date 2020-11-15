@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\empleado;
+use App\historialempleado;
 use Illuminate\Http\Request;
 use App\Http\Requests\FormEmpleados;
 use App\role;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class EmpleadoController extends Controller
 {
@@ -21,7 +22,10 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-      
+        $empleados = empleado::paginate(10);
+
+        return view('empleados.vistaEmpleados', compact('empleados'));
+        
     }
 
     /**
@@ -97,18 +101,7 @@ class EmpleadoController extends Controller
 
         $nuevoUsuario->save();
 
-
-        // Ingresando valores en la tabla role_user
-        
-        // $nuevoRolUsuario = DB::table('role_user');
-
-
-        // $nuevoRolUsuario->user_id = User::orderBy('id', 'desc')->first()->id; 
-
-        // $nuevoRolUsuario->role_id = $codRol;
-
-        // $nuevoRolUsuario->save();
-
+        // Ultimo usuario
         $codUsuario = User::orderBy('id', 'desc')->first()->id;
 
 
@@ -143,7 +136,26 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
- 
+        // dd($id);
+
+        $empleado = empleado::findOrFail($id);
+
+        $roles = role::all();
+
+        $usuario = User::where('cod_empleado_fk', $empleado->cod_empleado)->first();
+
+        // Devuelve un objeto
+        $rolid = DB::select('select role_id from role_user where user_id = ?', [$usuario->id]);
+
+        // dd($rolid);
+
+        foreach ($rolid as $rid) {
+           
+            $rolUsuario = role::where('id', $rid->role_id)->first();
+        }
+
+
+        return view('empleados.modiEmpleados', compact('empleado', 'roles', 'id', 'rolUsuario'));
     }
 
     /**
@@ -153,9 +165,41 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request, $id)
     {
-      
+        // Actualizando el empleado
+        $empleado = empleado::findOrFail($id);
+        //dd($empleado);
+
+        $empleado->nombre = $request->NombreEmpleado;
+
+        $empleado->apellido = $request->ApellidoEmpleado;
+
+        $empleado->dui = $request->DUIE;
+
+        $empleado->edad = $request->idEdadE;
+
+        $empleado->sexo = $request->sexoE;
+
+        $empleado->telefono = $request->idtelefonoE;
+
+        $empleado->update();
+
+        $usuario = User::where('cod_empleado_fk', $empleado->cod_empleado)->first();
+
+        //Atualizando el rol
+        DB::update('update role_user set role_id = ?, updated_at = ? where user_id = ?', [$request->idrol, Carbon::now(), $usuario->id]);
+
+        // Registrando el codigo de la secretaria
+        
+        $bitacora= new historialempleado();
+        $bitacora->operacion="Modificar";
+        $bitacora->cod_secretaria_fk=Auth::user()->cod_empleado_fk;
+        $bitacora->cod_empleado_fk=$id;
+        $bitacora->save();
+        
+        return redirect(route('Empleados.index'))->with('datos', 'Empleado actualizado exitosamente');
+
     }
 
     /**
