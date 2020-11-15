@@ -6,6 +6,11 @@ use App\empleado;
 use Illuminate\Http\Request;
 use App\Http\Requests\FormEmpleados;
 use App\role;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
 class EmpleadoController extends Controller
 {
@@ -50,7 +55,7 @@ class EmpleadoController extends Controller
             $contador = $codUtlimoEmpleado + 1;
 
         }else{
-            $contador = 1;
+            $contador = 10;
         }
 
 
@@ -61,10 +66,10 @@ class EmpleadoController extends Controller
 
         $codigoNuevoEmpleado = $nombrePrimeraLetra . $apellidoPrimeraLetra . $contador;
 
+
+        // Creando el empleado
+
         $nuevoEmpleado = new empleado();
-        
-        $correo = $request->idcorreoE;
-        $codRol = $request->idrol;
 
         $nuevoEmpleado->cod_empleado = $codigoNuevoEmpleado;
         $nuevoEmpleado->nombre = $request->NombreEmpleado;
@@ -76,6 +81,45 @@ class EmpleadoController extends Controller
 
         $nuevoEmpleado->save();
 
+
+        // Creando el usuario
+
+        $nuevoUsuario = new User();
+
+        $correo = $request->idcorreoE;
+        $codRol = $request->idrol;
+        $contraseña = $request->idcontraseña1;
+
+        $nuevoUsuario->cod_empleado_fk = $codigoNuevoEmpleado;
+        $nuevoUsuario->name = $request->NombreEmpleado . " " . $request->ApellidoEmpleado;
+        $nuevoUsuario->email = $correo;
+        $nuevoUsuario->password = Hash::make($contraseña);
+
+        $nuevoUsuario->save();
+
+
+        // Ingresando valores en la tabla role_user
+        
+        // $nuevoRolUsuario = DB::table('role_user');
+
+
+        // $nuevoRolUsuario->user_id = User::orderBy('id', 'desc')->first()->id; 
+
+        // $nuevoRolUsuario->role_id = $codRol;
+
+        // $nuevoRolUsuario->save();
+
+        $codUsuario = User::orderBy('id', 'desc')->first()->id;
+
+
+        // Insertando en la tabla role_user
+
+        DB::insert('insert into role_user (user_id, role_id, created_at, 
+                    updated_at) values (?, ?, ?, ?)', 
+                    [$codUsuario, $codRol, Carbon::now(), Carbon::now()]);
+
+
+                    
         return redirect(route('Empleados.create'))->with('datos', 'Empleado registrado correctamente');
 
     }
