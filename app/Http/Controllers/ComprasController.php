@@ -69,7 +69,7 @@ class ComprasController extends Controller
      */
     public function store(FormCrearCompras $request)
     {
-        $codEmpleado = Auth::user()->id;
+        $codEmpleado = Auth::user()->cod_empleado_fk;
         
         $compras = new compra;
 
@@ -422,6 +422,7 @@ class ComprasController extends Controller
                 switch($opc){
                     case 1:{  
                     $pedidocompra = compra::where('cod_compra','LIKE','%'.$query.'%')
+                                ->where('estado','pendiente')
                                 ->get();
                         if(isset($pedidocompra)){
                         $total=$pedidocompra->count();
@@ -437,14 +438,15 @@ class ComprasController extends Controller
                             <div class="col-sm-4">
                             <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <h5 class="card-title">Código del pedido: '.$ItemP->cod_compra.'</h5>                      
+                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                     <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                   
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Eliminar</button>
                             </div>
                             </div>
                             </div>
@@ -469,12 +471,14 @@ class ComprasController extends Controller
                                         ->orWhere('apellido','LIKE','%'.$query.'%')                                     
                                         ->get();
                     if($empleados->count()>0){
+                        $output='';
                         foreach($empleados as $emp){
                         $Ventaemp= compra::where('cod_empleado_fk',$emp->cod_empleado)->get();
-                        $output='';
+                        
                         foreach($Ventaemp as $vemp){
                             $pedidocompra = compra::where('cod_compra',$vemp->cod_compra)
-                        ->get();
+                            ->where('estado','pendiente')
+                            ->get();
                         if(isset($pedidocompra)){
                             $total=$empleados->count();
                             if($total>0)
@@ -488,14 +492,15 @@ class ComprasController extends Controller
                                 <div class="col-sm-4">
                                 <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <h5 class="card-title">Código del pedido: '.$ItemP->cod_compra.'</h5>
+                                    <p class="card-text"></p>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                         <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                     
                                         <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                     </ul>
                                     <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Eliminar</button>
                                 </div>
                                 </div>
                             </div>
@@ -523,12 +528,14 @@ class ComprasController extends Controller
                     $Proveedors= proveedor::where('nombre','LIKE','%'.$query.'%')                                      
                                         ->get();
                     if($Proveedors->count()>0){
+                        $output='';
                         foreach($Proveedors as $emp){
                         $Ventaemp= compra::where('cod_proveedor_fk',$emp->cod_proveedor)->get();
-                        $output='';
+                        
                         foreach($Ventaemp as $vemp){
                             $pedidocompra = compra::where('cod_compra',$vemp->cod_compra)
-                        ->get();
+                            ->where('estado','pendiente')
+                            ->get();
                         if(isset($pedidocompra)){
                             $total=$Proveedors->count();
                         
@@ -544,14 +551,15 @@ class ComprasController extends Controller
                                 <div class="col-sm-4">
                                 <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <h5 class="card-title">Código del pedido: '.$ItemP->cod_compra.'</h5>
+                                    <p class="card-text"></p>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                         <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                       
                                         <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                     </ul>
                                     <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Eliminar</button>
                                 </div>
                                 </div>
                             </div>
