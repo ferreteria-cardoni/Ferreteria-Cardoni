@@ -236,66 +236,323 @@ class EmpleadoController extends Controller
     {
         //
     }
-    public function buscador(Request $request){
-
+    public function buscadoremp(Request $request)
+    {
         if($request->ajax()){
 
             $query = trim($request->get('query'));
-            if($query != ''){
-                $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
-                            ->orWhere('nombre','LIKE','%'.$query.'%')
-                            ->take(10)
-                            ->get();
-            }else{
-                $output='
-                <tr>
-                    <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
-                </tr>
-                ';
-            }
-            if(isset($productos)){
-                $total=$productos->count();
-                $output='';
-
-                if($total>0)
-                {
-                    foreach($productos as $ItemP){
-                    $redireccion = route('Productos.edit', $ItemP->cod_producto);
-                    $output .='
-                    <tr>
-                        <th scope="row">'.$ItemP->cod_producto.'</th>
-                        <td>'.$ItemP->nombre.'</td>
-
-                        <td>'.$ItemP->cantidad.'</td>
-                        // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
-
-                    ';
-
-                    // Comprobando el rol del usuario que esta usando el sistema
-                    if (Auth::user()->tieneRol()->first() == "bodega") {
-                        // Agregando el boton junto con el tr al final
-                        $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';
+            $opc= $request->get('opc');
+            $output='';
+            switch($opc){
+                case 1:{
+                    if($query != ''){
+                        $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->orWhere('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')
+                                    ->take(10)
+                                    ->get();
                     }else{
-                        // Agregando el tr sin el boton
-                        $output .= '<tr>';
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
+                        </tr>
+                        ';
                     }
-
+                    if(isset($empleados)){
+                        $total=$empleados->count();
+                        $output='';
+        
+                        if($total>0)
+                        {
+                            foreach($empleados as $ItemP){
+                            $usuarios = User::where('cod_empleado_fk',$ItemP->cod_empleado)->first();  
+                            $redireccion = route('Empleados.edit', $ItemP->cod_empleado);
+                            $output .='
+                            <tr>
+                                <td>'.$ItemP->cod_empleado.'</td>
+                                <td>'.$ItemP->nombre.'</td>
+                                <td>'.$ItemP->apellido.'</td>
+                                <td>'.$ItemP->edad.'</td>
+                                <td>'.$ItemP->dui.'</td>
+                                <td>'.$usuarios->email.'</td>
+                                <td>'.$ItemP->telefono.'</td>
+                                <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
+                            ';
+                            }
+        
+                        }else{
+                            $output='
+                            <tr>
+                                <td align="center" colspan="5">Sin Registros</td>
+                            </tr>
+                            ';
+                        }
                     }
-
-                }else{
-                    $output='
-                    <tr>
-                        <td align="center" colspan="5">Sin Registros</td>
-                    </tr>
-                    ';
+                break;
                 }
-
+                case 2:{
+                    if($query != ''){
+                        $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->orWhere('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')                 
+                                    ->get();
+                    }else{
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
+                        </tr>
+                        ';
+                    }
+                    if(isset($empleados)){
+                        $total=$empleados->count();
+                        $output='';
+        
+                        if($total>0)
+                        {
+                            foreach($empleados as $ItemP){
+                                $usuarios = User::where('cod_empleado_fk',$ItemP->cod_empleado)->first();  
+                                $rolid = DB::select('select * from role_user where user_id = ?', [$usuarios->id]);
+                                foreach($rolid as $rol){
+                                    if($rol->role_id ==1){
+                                        $redireccion = route('Empleados.edit', $ItemP->cod_empleado);
+                                        $output .='
+                                        <tr>
+                                            <td>'.$ItemP->cod_empleado.'</td>
+                                            <td>'.$ItemP->nombre.'</td>
+                                            <td>'.$ItemP->apellido.'</td>
+                                            <td>'.$ItemP->edad.'</td>
+                                            <td>'.$ItemP->dui.'</td>
+                                            <td>'.$usuarios->email.'</td>
+                                            <td>'.$ItemP->telefono.'</td>
+                                        ';
+                                        
+                                    }
+                                }
+                                
+                            
+                            }
+        
+                        }else{
+                            $output='
+                            <tr>
+                                <td align="center" colspan="5">Sin Registros</td>
+                            </tr>
+                            ';
+                        }
+                    }
+                break;
+                }
+                case 3:{
+                    if($query != ''){
+                        $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->orWhere('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')                 
+                                    ->get();
+                    }else{
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
+                        </tr>
+                        ';
+                    }
+                    if(isset($empleados)){
+                        $total=$empleados->count();
+                        $output='';
+        
+                        if($total>0)
+                        {
+                            foreach($empleados as $ItemP){
+                                $usuarios = User::where('cod_empleado_fk',$ItemP->cod_empleado)->first();  
+                                $rolid = DB::select('select * from role_user where user_id = ?', [$usuarios->id]);
+                                foreach($rolid as $rol){
+                                    if($rol->role_id ==3){
+                                        $redireccion = route('Empleados.edit', $ItemP->cod_empleado);
+                                        $output .='
+                                        <tr>
+                                            <td>'.$ItemP->cod_empleado.'</td>
+                                            <td>'.$ItemP->nombre.'</td>
+                                            <td>'.$ItemP->apellido.'</td>
+                                            <td>'.$ItemP->edad.'</td>
+                                            <td>'.$ItemP->dui.'</td>
+                                            <td>'.$usuarios->email.'</td>
+                                            <td>'.$ItemP->telefono.'</td>
+                                            <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
+                                        ';
+                                        
+                                    }
+                                }
+                                
+                            
+                            }
+        
+                        }else{
+                            $output='
+                            <tr>
+                                <td align="center" colspan="5">Sin Registros</td>
+                            </tr>
+                            ';
+                        }
+                    }
+                break;
+                }
+                case 4:{
+                    if($query != ''){
+                        $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->orWhere('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')                 
+                                    ->get();
+                    }else{
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
+                        </tr>
+                        ';
+                    }
+                    if(isset($empleados)){
+                        $total=$empleados->count();
+                        $output='';
+        
+                        if($total>0)
+                        {
+                            foreach($empleados as $ItemP){
+                                $usuarios = User::where('cod_empleado_fk',$ItemP->cod_empleado)->first();  
+                                $rolid = DB::select('select * from role_user where user_id = ?', [$usuarios->id]);
+                                foreach($rolid as $rol){
+                                    if($rol->role_id ==4){
+                                        $redireccion = route('Empleados.edit', $ItemP->cod_empleado);
+                                        $output .='
+                                        <tr>
+                                            <td>'.$ItemP->cod_empleado.'</td>
+                                            <td>'.$ItemP->nombre.'</td>
+                                            <td>'.$ItemP->apellido.'</td>
+                                            <td>'.$ItemP->edad.'</td>
+                                            <td>'.$ItemP->dui.'</td>
+                                            <td>'.$usuarios->email.'</td>
+                                            <td>'.$ItemP->telefono.'</td>
+                                        ';
+                                        
+                                    }
+                                }
+                                
+                            
+                            }
+        
+                        }else{
+                            $output='
+                            <tr>
+                                <td align="center" colspan="5">Sin Registros</td>
+                            </tr>
+                            ';
+                        }
+                    }
+                break;
+                }
+                case 5:{
+                    if($query != ''){
+                        $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->orWhere('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')                 
+                                    ->get();
+                    }else{
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
+                        </tr>
+                        ';
+                    }
+                    if(isset($empleados)){
+                        $total=$empleados->count();
+                        $output='';
+        
+                        if($total>0)
+                        {
+                            foreach($empleados as $ItemP){
+                                $usuarios = User::where('cod_empleado_fk',$ItemP->cod_empleado)->first();  
+                                $rolid = DB::select('select * from role_user where user_id = ?', [$usuarios->id]);
+                                foreach($rolid as $rol){
+                                    if($rol->role_id ==5){
+                                        $redireccion = route('Empleados.edit', $ItemP->cod_empleado);
+                                        $output .='
+                                        <tr>
+                                            <td>'.$ItemP->cod_empleado.'</td>
+                                            <td>'.$ItemP->nombre.'</td>
+                                            <td>'.$ItemP->apellido.'</td>
+                                            <td>'.$ItemP->edad.'</td>
+                                            <td>'.$ItemP->dui.'</td>
+                                            <td>'.$usuarios->email.'</td>
+                                            <td>'.$ItemP->telefono.'</td>
+                                        ';
+                                        
+                                    }
+                                }
+                                
+                            
+                            }
+        
+                        }else{
+                            $output='
+                            <tr>
+                                <td align="center" colspan="5">Sin Registros</td>
+                            </tr>
+                            ';
+                        }
+                    }
+                break;
+                }
+                case 6:{
+                    if($query != ''){
+                        $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->orWhere('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')                 
+                                    ->get();
+                    }else{
+                        $output='
+                        <tr>
+                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
+                        </tr>
+                        ';
+                    }
+                    if(isset($empleados)){
+                        $total=$empleados->count();
+                        $output='';
+        
+                        if($total>0)
+                        {
+                            foreach($empleados as $ItemP){
+                                $usuarios = User::where('cod_empleado_fk',$ItemP->cod_empleado)->first();  
+                                $rolid = DB::select('select * from role_user where user_id = ?', [$usuarios->id]);
+                                foreach($rolid as $rol){
+                                    if($rol->role_id ==2){
+                                        $redireccion = route('Empleados.edit', $ItemP->cod_empleado);
+                                        $output .='
+                                        <tr>
+                                            <td>'.$ItemP->cod_empleado.'</td>
+                                            <td>'.$ItemP->nombre.'</td>
+                                            <td>'.$ItemP->apellido.'</td>
+                                            <td>'.$ItemP->edad.'</td>
+                                            <td>'.$ItemP->dui.'</td>
+                                            <td>'.$usuarios->email.'</td>
+                                            <td>'.$ItemP->telefono.'</td>
+                                        ';
+                                        
+                                    }
+                                }
+                                
+                            
+                            }
+        
+                        }else{
+                            $output='
+                            <tr>
+                                <td align="center" colspan="5">Sin Registros</td>
+                            </tr>
+                            ';
+                        }
+                    }
+                break;
+                }
             }
-            echo json_encode($output);
         }
-
-
-
-
+        echo json_encode($output);        
     }
 }
