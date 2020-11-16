@@ -22,7 +22,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = empleado::paginate(10);
+        $empleados = empleado::paginate(50);
 
         return view('empleados.vistaEmpleados', compact('empleados'));
         

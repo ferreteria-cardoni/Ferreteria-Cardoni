@@ -988,11 +988,23 @@ $('.exampleModal').on('show.bs.modal', function (event) {
     var total = button.data('total')
     var Cliente = button.data('cliente')
     var modal = $(this)
-    modal.find('.modal-title').text('Esta Seguro de Emilinar el pedido: ' + cod)
+    modal.find('.modal-title').text('Esta Seguro de Eliminar el pedido: ' + cod)
     modal.find('input[name="lel"]').val('$'+total)
     modal.find('input[name="lol"]').val(Cliente)
   })
 
+
+  $('.exampleModalEmpleado').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var cod = button.data('codigo')
+    console.log(cod);
+    var total = button.data('total')
+    var Cliente = button.data('cliente')
+    var modal = $(this)
+    modal.find('.modal-title').text('Esta Seguro de Eliminar al empleado con el código: ' + cod)
+    modal.find('input[name="lel"]').val(total)
+    modal.find('input[name="lol"]').val(Cliente)
+  })
  
 
 
