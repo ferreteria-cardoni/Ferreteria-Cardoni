@@ -84,8 +84,13 @@
                     <td>{{$empleado->telefono}}</td>
 
                     @if ($usuario->tieneRol()->first() == "ventas")
+
+                        @include('empleados.modalEliminar')
                         
-                        <td><a href="{{route('Empleados.edit', $empleado->cod_empleado)}}"><button type="button" class="btn btn-success">Editar</button></a></td>
+                        <td>
+                          <a href="{{route('Empleados.edit', $empleado->cod_empleado)}}"><button type="button" class="btn btn-success">Editar</button></a>
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$empleado->cod_empleado}}" data-codigo="{{$empleado->cod_empleado}}" data-total="{{$usuario->tieneRol()->first()}}" data-cliente="{{$empleado->nombre}} {{$empleado->apellido}}">Eliminar</button>
+                        </td>
                     @endif
                 @endforeach
             </tr>
