@@ -76,7 +76,7 @@ class VentasController extends Controller
     {
 
         $codEmpleado = Auth::user()->id; //jordan
-
+        
             $ventas = new venta;
             $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
