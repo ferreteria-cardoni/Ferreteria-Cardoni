@@ -75,8 +75,8 @@ class VentasController extends Controller
     public function store(FormVentasIngresar $request)
     {
 
-        $codEmpleado = Auth::user()->id; //jordan
-        
+        $codEmpleado = Auth::user()->cod_empleado_fk; //jordan
+
             $ventas = new venta;
             $ventas->cod_empleado_fk = $codEmpleado; //Jordan Logueo
             $ventas->cod_cliente_fk = $request->nombreventa;
@@ -497,13 +497,14 @@ class VentasController extends Controller
               switch($opc){
                 case 1:{
                   $pedidoventa = venta::where('cod_venta','LIKE','%'.$query.'%')
+                            ->where('estado','pendiente')
                             ->get();
                     if(isset($pedidoventa)){
                       $total=$pedidoventa->count();
                       $output='';
                       if($total>0)
                       {
-                          foreach($pedidoventa as $ItemP){
+                          foreach($pedidoventa as $ItemP){       
                           $redireccion = route('Ventas.edit', $ItemP->cod_venta);
                           $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
                           $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
@@ -513,8 +514,9 @@ class VentasController extends Controller
                           <div class="col-sm-4">
                           <div class="card">
                           <div class="card-body">
-                              <h5 class="card-title">Special title treatment</h5>
-                              <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                          <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
+                             
+                              <p class="card-text"></p>
                               <ul class="list-group list-group-flush">
                                   <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                   <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -522,7 +524,7 @@ class VentasController extends Controller
                                   <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                               </ul>
                               <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                           </div>
                           </div>
                         </div>
@@ -547,9 +549,11 @@ class VentasController extends Controller
                                     ->orWhere('apellido','LIKE','%'.$query.'%')
                                     ->get();
                   if($empleados->count()>0){
+                    $output='';
                     foreach($empleados as $emp){
-                      $Ventaemp= venta::where('cod_empleado_fk',$emp->cod_empleado)->get();
-                      $output='';
+                      $Ventaemp= venta::where('cod_empleado_fk',$emp->cod_empleado)
+                      ->where('estado','pendiente')
+                      ->get();                     
                       foreach($Ventaemp as $vemp){
                         $pedidoventa = venta::where('cod_venta',$vemp->cod_venta)
                       ->get();
@@ -567,8 +571,8 @@ class VentasController extends Controller
                             <div class="col-sm-4">
                             <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
+                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                     <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -576,7 +580,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                             </div>
                             </div>
                           </div>
@@ -605,12 +609,14 @@ class VentasController extends Controller
                                       ->orWhere('apellido','LIKE','%'.$query.'%')
                                       ->get();
                   if($Clientes->count()>0){
+                    $output='';
                     foreach($Clientes as $emp){
-                      $Ventaemp= venta::where('cod_cliente_fk',$emp->cod_cliente)->get();
-                      $output='';
+                      $Ventaemp= venta::where('cod_cliente_fk',$emp->cod_cliente)
+                      ->where('estado','pendiente')
+                      ->get();                    
                       foreach($Ventaemp as $vemp){
                         $pedidoventa = venta::where('cod_venta',$vemp->cod_venta)
-                      ->get();
+                        ->get();
                       if(isset($pedidoventa)){
                         $total=$Clientes->count();
 
@@ -627,8 +633,8 @@ class VentasController extends Controller
                             <div class="col-sm-4">
                             <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
+                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                     <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -636,7 +642,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                             </div>
                             </div>
                           </div>

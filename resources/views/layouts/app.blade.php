@@ -712,6 +712,33 @@
 
         })
 
+        window.addEventListener("load", function() {
+            var opc= document.querySelector('#opcBuscadorE');
+            console.log(opc.value);
+            function buscaE(query = '') {
+                $.ajax({
+                    url: "{{ route('buscadorEmpleados') }}",
+                    method: 'GET',
+                    data: {
+                        query: query, opc: opc.value
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+
+                        //console.log(data);
+                        $('#ok4').html(data);
+                    }
+                })
+            }
+
+            $(document).on('keyup', '#textoempleado', function() {
+                var query = $(this).val();
+                //console.log(query);
+                buscaE(query);
+            })
+
+        })
+
 
 
 </script>

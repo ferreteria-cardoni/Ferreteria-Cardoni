@@ -59,6 +59,9 @@ const sexoE = document.querySelector('#sexoE');
 const DUIE = document.querySelector('#DUIE');
 const telefonoE = document.querySelector('#idtelefonoE');
 const correoE = document.querySelector('#idcorreoE');
+const rolE = document.querySelector('#idrol');
+const ContraE = document.querySelector('#idcontraseña1');
+const confContraE = document.querySelector('#idcontraseña2');
 
 //expresiones regulares usadas en las validaciones
 var solotexto = new RegExp('[a-zA-Z\s]+$');
@@ -422,7 +425,7 @@ function NombreProductoCompra(){
         var precioC = document.querySelectorAll('input.c');
         var msg="";
         var msgPrecio = "";
-        var controlador = 1;
+        
         for(var i=0;i<NombrePC.length;i++){
             if (NombrePC[i].value == "") {
                 document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
@@ -440,7 +443,7 @@ function NombreProductoCompra(){
                 document.getElementById("msgnombreproducto").innerHTML = ""
                 NombrePC[i].style.borderColor = "";
                 NombrePC[i].style.borderWidth = "2px";
-                $('#btmComprasTab').attr('disabled',false);
+                //$('#btmComprasTab').attr('disabled',false);
                 cantC[i].disabled="";
                 var ctrl = 0;
 
@@ -475,6 +478,7 @@ function NombreProductoCompra(){
                     }
                 }               
             }
+
             if(msg!="" ){
                 document.getElementById("msgidcantidad").innerHTML = msg;
                 document.getElementById("msgidcantidad").style.display = "block";               
@@ -484,8 +488,7 @@ function NombreProductoCompra(){
                 document.getElementById("msgidcantidad").style.display = "none";
                 document.getElementById("msgidcantidad").innerHTML = "";
 
-            }
-            
+            } 
             
             if(msgPrecio!="" ){
                 document.getElementById("msgidprecioC").innerHTML = msgPrecio;
@@ -495,7 +498,9 @@ function NombreProductoCompra(){
             }else if(controlador == 0){
                 document.getElementById("msgidprecioC").style.display = "none";
                 document.getElementById("msgidprecioC").innerHTML = "";
-            }else if (controlador == 0 && ctrl == 0) {
+            }
+            
+            if (controlador == 0 && ctrl == 0) {
                 $('#btmComprasTab').attr('disabled',false);
                 $('#btmsubmitC').attr('disabled',false);
             }
@@ -902,6 +907,73 @@ if(correoE){
             document.getElementById("msgidcorreoE").style.display = "none";
             document.getElementById("msgidcorreoE").innerHTML = ""
             correoE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(rolE){
+    rolE.addEventListener('blur', () => {
+
+        if (rolE.value == 0) {
+            document.getElementById("msgidrol").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidrol").style.display = "block";
+            rolE.style.borderColor = "red";
+            
+        }
+        else {
+            document.getElementById("msgidrol").style.display = "none";
+            document.getElementById("msgidrol").innerHTML = ""
+            rolE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(ContraE){
+    ContraE.addEventListener('blur', () => {
+
+        if (ContraE.value == "") {
+            document.getElementById("msgidcontraseña1").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidcontraseña1").style.display = "block";
+            ContraE.style.borderColor = "red";
+            
+        }
+        else if(ContraE.value.length<8){
+            document.getElementById("msgidcontraseña1").innerHTML = "La contraseña debe tener almenos 8 digitos"
+            document.getElementById("msgidcontraseña1").style.display = "block";
+            ContraE.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidcontraseña1").style.display = "none";
+            document.getElementById("msgidcontraseña1").innerHTML = ""
+            ContraE.style.borderColor = "green";
+            
+            
+        }
+        
+    })
+}
+if(confContraE){
+    confContraE.addEventListener('blur', () => {
+
+        if (confContraE.value == "") {
+            document.getElementById("msgidcontraseña2").innerHTML = "Este campo es requerido"
+            document.getElementById("msgidcontraseña2").style.display = "block";
+            confContraE.style.borderColor = "red";
+            
+        }
+        else if(confContraE.value != ContraE.value){
+            document.getElementById("msgidcontraseña2").innerHTML = "La contraseñas no coinciden"
+            document.getElementById("msgidcontraseña2").style.display = "block";
+            confContraE.style.borderColor = "red";
+        }
+        else {
+            document.getElementById("msgidcontraseña2").style.display = "none";
+            document.getElementById("msgidcontraseña2").innerHTML = ""
+            confContraE.style.borderColor = "green";
             
             
         }
