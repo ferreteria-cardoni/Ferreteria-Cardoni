@@ -715,9 +715,9 @@
         window.addEventListener("load", function() {
             var opc= document.querySelector('#opcBuscadorE');
             console.log(opc.value);
-            function buscaC(query = '') {
+            function buscaE(query = '') {
                 $.ajax({
-                    url: "{{ route('buscadorCompras') }}",
+                    url: "{{ route('buscadorEmpleados') }}",
                     method: 'GET',
                     data: {
                         query: query, opc: opc.value
@@ -734,7 +734,7 @@
             $(document).on('keyup', '#textoempleado', function() {
                 var query = $(this).val();
                 //console.log(query);
-                buscaC(query);
+                buscaE(query);
             })
 
         })
