@@ -712,6 +712,33 @@
 
         })
 
+        window.addEventListener("load", function() {
+            var opc= document.querySelector('#opcBuscadorE');
+            console.log(opc.value);
+            function buscaC(query = '') {
+                $.ajax({
+                    url: "{{ route('buscadorCompras') }}",
+                    method: 'GET',
+                    data: {
+                        query: query, opc: opc.value
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+
+                        //console.log(data);
+                        $('#ok4').html(data);
+                    }
+                })
+            }
+
+            $(document).on('keyup', '#textoempleado', function() {
+                var query = $(this).val();
+                //console.log(query);
+                buscaC(query);
+            })
+
+        })
+
 
 
 </script>

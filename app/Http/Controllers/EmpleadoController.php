@@ -68,6 +68,21 @@ class EmpleadoController extends Controller
         $apellidoPrimeraLetra = $request->ApellidoEmpleado[0];
 
 
+        $DUIval = empleado::where('dui', $request->DUIE)->first();
+        $correoval = User::where('email', $request->idcorreoE)->first();
+
+        if($DUIval && $correoval){
+            return redirect(route('Empleados.create'))->with('datos2', 'El dui y el correo deben ser unicos en el sistema');
+        }
+        else if ($DUIval) {
+            return redirect(route('Empleados.create'))->with('datos2', 'El dui ya esta registrado en el sistema');
+        }else if($correoval){
+            return redirect(route('Empleados.create'))->with('datos2', 'El correo del empleado debe ser único');
+        }
+        else{
+
+        
+
         $codigoNuevoEmpleado = $nombrePrimeraLetra . $apellidoPrimeraLetra . $contador;
 
 
@@ -114,6 +129,7 @@ class EmpleadoController extends Controller
 
                     
         return redirect(route('Empleados.create'))->with('datos', 'Empleado registrado correctamente');
+    }
 
     }
 
@@ -211,5 +227,67 @@ class EmpleadoController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function buscador(Request $request){
+
+        if($request->ajax()){
+
+            $query = trim($request->get('query'));
+            if($query != ''){
+                $productos = producto::where('cod_producto','LIKE','%'.$query.'%')
+                            ->orWhere('nombre','LIKE','%'.$query.'%')
+                            ->take(10)
+                            ->get();
+            }else{
+                $output='
+                <tr>
+                    <td align="center" colspan="5">Ingrese el nombre o codigo de producto que desea ver </td>
+                </tr>
+                ';
+            }
+            if(isset($productos)){
+                $total=$productos->count();
+                $output='';
+
+                if($total>0)
+                {
+                    foreach($productos as $ItemP){
+                    $redireccion = route('Productos.edit', $ItemP->cod_producto);
+                    $output .='
+                    <tr>
+                        <th scope="row">'.$ItemP->cod_producto.'</th>
+                        <td>'.$ItemP->nombre.'</td>
+
+                        <td>'.$ItemP->cantidad.'</td>
+                        // Quite el tr de aqui para concatenarlo despues y asi no aparezca abajo el boton de editar
+
+                    ';
+
+                    // Comprobando el rol del usuario que esta usando el sistema
+                    if (Auth::user()->tieneRol()->first() == "bodega") {
+                        // Agregando el boton junto con el tr al final
+                        $output .= '<td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td></tr>';
+                    }else{
+                        // Agregando el tr sin el boton
+                        $output .= '<tr>';
+                    }
+
+                    }
+
+                }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                }
+
+            }
+            echo json_encode($output);
+        }
+
+
+
+
     }
 }

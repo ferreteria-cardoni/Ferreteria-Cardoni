@@ -13,6 +13,13 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
+	@elseif (session('datos2'))
+		<div class="alert alert-danger alert-dismissible fade show" role="alert" align="center">
+			{{session('datos2')}}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
 	@endif
 	@endsection
 
@@ -27,6 +34,7 @@
 		</div>
 		@endif
 		@endsection
+
 
 
 @section('content')
@@ -120,7 +128,7 @@
 						<option value="{{$rol->id}}">{{$rol->nombre}}</option>
 						@endforeach
 					</select>
-					<span id="msgsexoE" name="msgsexoE" class="AlertaMsg"></span>
+					<span id="msgidrol" name="msgidrol" class="AlertaMsg"></span>
 				</div>
 
 				<div class="form-group col-md-5">

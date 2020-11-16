@@ -29,7 +29,8 @@ class FormEmpleados extends FormRequest
             'DUIE' => ['required', 'regex:/([0-9]){9}/'],
             'idEdadE' => 'required',
             'idtelefonoE' => ['required', 'regex:/([0-9]){8}/'],
-            'idcorreoE' => ['required', 'regex:/[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.([a-zA-Z]{2,4})+/'],           
+            'idcorreoE' => ['required', 'regex:/[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.([a-zA-Z]{2,4})+/'],
+            'idrol' => 'required',            
         ];
     }
 
@@ -45,6 +46,7 @@ class FormEmpleados extends FormRequest
             'idtelefonoE.regex' => 'El campo télefono debe tener el siguiente formato 0000-0000',
             'idcorreoE.required' => 'El correo es indispensable ',
             'idcorreoE.regex' => 'El campo correo debe tener el siguiente formato ejemplo@gmail.com',
+            'idrol.required' => 'Por favor asiganr el rol corrrespondiente al usuario ',
         ];
     }
 }
