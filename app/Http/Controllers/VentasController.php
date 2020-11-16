@@ -503,7 +503,7 @@ class VentasController extends Controller
                       $output='';
                       if($total>0)
                       {
-                          foreach($pedidoventa as $ItemP){
+                          foreach($pedidoventa as $ItemP){       
                           $redireccion = route('Ventas.edit', $ItemP->cod_venta);
                           $empleadoN= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('nombre');
                           $empleadoA= empleado::where('cod_empleado',$ItemP->cod_empleado_fk)->value('apellido');
@@ -513,8 +513,9 @@ class VentasController extends Controller
                           <div class="col-sm-4">
                           <div class="card">
                           <div class="card-body">
-                              <h5 class="card-title">Special title treatment</h5>
-                              <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                          <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
+                             
+                              <p class="card-text"></p>
                               <ul class="list-group list-group-flush">
                                   <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                   <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -522,7 +523,7 @@ class VentasController extends Controller
                                   <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                               </ul>
                               <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                           </div>
                           </div>
                         </div>
@@ -567,8 +568,8 @@ class VentasController extends Controller
                             <div class="col-sm-4">
                             <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
+                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                     <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -576,7 +577,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                             </div>
                             </div>
                           </div>
@@ -627,8 +628,8 @@ class VentasController extends Controller
                             <div class="col-sm-4">
                             <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content</p>
+                                <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
+                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                     <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -636,7 +637,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-codigo="'.$ItemP->cod_venta.'" data-total="'.$ItemP->total.'" data-cliente="'.$clienteN.' '. $clienteA.'">Eliminar</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                             </div>
                             </div>
                           </div>
