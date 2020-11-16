@@ -187,6 +187,12 @@ class EmpleadoController extends Controller
         $empleado = empleado::findOrFail($id);
         //dd($empleado);
 
+        $duiemp = empleado::where('cod_empleado', $id)->first();
+        $DUIval = empleado::where('dui', $request->DUIE)->first();
+        if ($DUIval && $DUIval->dui != $duiemp->dui) {
+            return redirect(route('Empleados.index'))->with('datos2', 'El dui ya esta registrado en el sistema, trate de nuevo');
+        }else{
+
         $empleado->nombre = $request->NombreEmpleado;
 
         $empleado->apellido = $request->ApellidoEmpleado;
@@ -215,6 +221,8 @@ class EmpleadoController extends Controller
         $bitacora->save();
         
         return redirect(route('Empleados.index'))->with('datos', 'Empleado actualizado exitosamente');
+        }
+        
 
     }
 
