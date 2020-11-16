@@ -42,6 +42,10 @@
     </div>
 
     <br>
+    @foreach ($pedidoCompras as $pedido)
+      @include('compras.modalEliminar')
+    @endforeach
+    
       <div class="row" id="ok2">
       @foreach ($pedidoCompras as $pedido)
 
@@ -51,7 +55,7 @@
             <div class="card">
             <div class="card-body">
               <h5 class="card-title">Código del pedido: {{$pedido->cod_compra}}</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <p class="card-text"></p>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Comprado por: {{App\empleado::find($pedido->cod_empleado_fk)->nombre}} {{App\empleado::find($pedido->cod_empleado_fk)->apellido}}</li>
                     <li class="list-group-item">Proveedor: {{App\proveedor::find($pedido->cod_proveedor_fk)->nombre}}</li>
