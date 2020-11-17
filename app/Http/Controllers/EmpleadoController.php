@@ -236,6 +236,19 @@ class EmpleadoController extends Controller
     {
         //
     }
+    public function desactivar($id){
+        $empleado = empleado::findOrFail($id);
+        $empleado->estado="inactivo";
+        $empleado->save();
+
+        $bitacora= new historialempleado();
+        $bitacora->operacion="Eliminar";
+        $bitacora->cod_secretaria_fk=Auth::user()->cod_empleado_fk;
+        $bitacora->cod_empleado_fk=$id;
+        $bitacora->save();
+        return redirect(route('Empleados.index'))->with('datos', 'Empleado inhabilitado exitosamente');
+        //dd($id);
+    }
     public function buscadoremp(Request $request)
     {
         if($request->ajax()){
@@ -247,16 +260,13 @@ class EmpleadoController extends Controller
                 case 1:{
                     if($query != ''){
                         $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->where('estado','activo')
                                     ->orWhere('nombre','LIKE','%'.$query.'%')
                                     ->orWhere('apellido','LIKE','%'.$query.'%')
                                     ->take(10)
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::where('estado','activo')->get();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -293,15 +303,12 @@ class EmpleadoController extends Controller
                 case 2:{
                     if($query != ''){
                         $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->where('estado','activo')
                                     ->orWhere('nombre','LIKE','%'.$query.'%')
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::where('estado','activo')->get();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -345,17 +352,14 @@ class EmpleadoController extends Controller
                 case 3:{
                     if($query != ''){
                         $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->where('estado','activo')
                                     ->orWhere('nombre','LIKE','%'.$query.'%')
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
-                    }
-                    if(isset($empleados)){
+                        $empleados = empleado::where('estado','activo')->get();              
+                    }           
+                    if($empleados){
                         $total=$empleados->count();
                         $output='';
         
@@ -376,7 +380,10 @@ class EmpleadoController extends Controller
                                             <td>'.$ItemP->dui.'</td>
                                             <td>'.$usuarios->email.'</td>
                                             <td>'.$ItemP->telefono.'</td>
-                                            <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
+                                            <td>
+                                            <a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_empleado.'" data-codigo="'.$ItemP->cod_empleado.'" data-total="Ventas" data-cliente="'.$ItemP->nombre.' '.$ItemP->apellido.'">Eliminar</button>
+                                            </td>
                                         ';
                                         
                                     }
@@ -398,15 +405,12 @@ class EmpleadoController extends Controller
                 case 4:{
                     if($query != ''){
                         $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->where('estado','activo')
                                     ->orWhere('nombre','LIKE','%'.$query.'%')
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::where('estado','activo')->get();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -450,15 +454,12 @@ class EmpleadoController extends Controller
                 case 5:{
                     if($query != ''){
                         $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->where('estado','activo')
                                     ->orWhere('nombre','LIKE','%'.$query.'%')
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::where('estado','activo')->get();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -502,15 +503,12 @@ class EmpleadoController extends Controller
                 case 6:{
                     if($query != ''){
                         $empleados = empleado::where('cod_empleado','LIKE','%'.$query.'%')
+                                    ->where('estado','activo')
                                     ->orWhere('nombre','LIKE','%'.$query.'%')
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::where('estado','activo')->get();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();

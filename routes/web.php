@@ -88,3 +88,4 @@ Route::get('/PendienteCompra', 'ComprasController@index2')->name('PendienteC');
 Route::get('/buscadorCompras1', 'ComprasController@buscadorCompras')->name('buscadorCompras');
 
 Route::get('/buscaemp', 'EmpleadoController@buscadoremp')->name('buscadorEmpleados');
+Route::get('/desactivar/{id}', 'EmpleadoController@desactivar')->name('desactivar');

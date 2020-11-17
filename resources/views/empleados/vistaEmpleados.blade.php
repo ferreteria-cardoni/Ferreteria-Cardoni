@@ -57,6 +57,9 @@
     </div>
     <br>
 <!-- fin del html agregado-->
+@foreach ($empleados as $empleado)
+@include('empleados.modalEliminar')
+@endforeach
   <table class="table table-hover" >
         <thead>
           <tr>
