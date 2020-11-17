@@ -260,9 +260,13 @@ function NombreProductoVenta(){
     var cantMod = document.querySelectorAll('input.m');
     var stock = document.querySelectorAll('span.s');   
     var msg="";
+    var filtro = false;
+    var msgFiltro = "";
     for(var i=0;i<NombrePV.length;i++){
         var uno=NombrePV[i].value.split("$");
-        var disponible=0;     
+        var disponible=0;
+        var opcion = $('#productos').find("option[value='"+NombrePV[i].value+"']").val(); 
+        // console.log(opcion);    
         //console.log(stock[18].innerHTML);
         for(var j=0;j<stock.length;j++){
             var ver =stock[j].innerHTML.split("$");
@@ -277,15 +281,24 @@ function NombreProductoVenta(){
         }
         //Disponibilidad(uno[0]); 
             if (NombrePV[i].value == "") {
-                document.getElementById("msgnombreproductoV").style.display = "block";
-                document.getElementById("msgnombreproductoV").innerHTML = "Seleccione un producto"
+                msgFiltro = "Seleccione un producto"
                 NombrePV[i].style.borderColor = "red";
                 NombrePV[i].style.borderWidth = "3px";
                 $('#btmVentasTab').attr('disabled',true);
                 cant[i].disabled="true";
                 var ctrl=1;
+                filtro = false;
+            }else if(!opcion){
+                msgFiltro = "El producto " + NombrePV[i].value + " no es un producto registrado"
+                NombrePV[i].style.borderColor = "red";
+                NombrePV[i].style.borderWidth = "3px";
+                $('#btmVentasTab').attr('disabled',true);
+                cant[i].disabled="true";
+                var ctrl=1;
+                filtro = false;
             }
             else {
+                filtro = true;
                 document.getElementById("msgnombreproductoV").style.display = "none";
                 document.getElementById("msgnombreproductoV").innerHTML = ""
                 NombrePV[i].style.borderColor = "";
@@ -345,21 +358,37 @@ function NombreProductoVenta(){
                     cant[i].style.borderColor = "";
                     cant[i].style.borderWidth = "2px";         
                 }
-            }       
-            if(msg!=""){
-                document.getElementById("msgidcantidadV").innerHTML = msg;
-                document.getElementById("msgidcantidadV").style.display = "block";
-                $('#btmVentasTab').attr('disabled',true);
-                $('#btmsubmitV').attr('disabled',true); 
-            }else if(ctrl== 0){
-                document.getElementById("msgidcantidadV").style.display = "none";
-                document.getElementById("msgidcantidadV").innerHTML = "";
-                $('#btmVentasTab').attr('disabled',false);
-                $('#btmsubmitV').attr('disabled',false); 
-            }  
-                 
-    }
+            }
 
+            
+            
+        }
+        
+        if (msgFiltro != "") {
+            
+            document.getElementById("msgnombreproductoV").style.display = "block";
+            document.getElementById("msgnombreproductoV").innerHTML = msgFiltro;
+            $('#btmVentasTab').attr('disabled',true);
+            $('#btmsubmitV').attr('disabled',true);     
+        }else{
+            document.getElementById("msgnombreproductoV").style.display = "none";
+            document.getElementById("msgnombreproductoV").innerHTML = "";
+        }
+
+        if(msg!=""){
+            document.getElementById("msgidcantidadV").innerHTML = msg;
+            document.getElementById("msgidcantidadV").style.display = "block";
+            $('#btmVentasTab').attr('disabled',true);
+            $('#btmsubmitV').attr('disabled',true); 
+        }else{
+            document.getElementById("msgidcantidadV").style.display = "none";
+            document.getElementById("msgidcantidadV").innerHTML = "";
+        }
+        
+        if(msg == "" && msgFiltro == ""){
+            $('#btmVentasTab').attr('disabled',false);
+            $('#btmsubmitV').attr('disabled',false); 
+        }
 };
 function Total(){
     var NombrePV = document.querySelectorAll('input.a');
@@ -425,11 +454,20 @@ function NombreProductoCompra(){
         var precioC = document.querySelectorAll('input.c');
         var msg="";
         var msgPrecio = "";
-        
+        var msgFiltro = "";
         for(var i=0;i<NombrePC.length;i++){
+            var opcion = $('#productos').find("option[value='"+NombrePC[i].value+"']").val();
             if (NombrePC[i].value == "") {
-                document.getElementById("msgnombreproducto").innerHTML = "Este campo es requerido"
-                document.getElementById("msgnombreproducto").style.display = "block";
+                msgFiltro = "Este campo es requerido"
+                NombrePC[i].style.borderColor = "red";
+                NombrePC[i].style.borderWidth = "3px";
+                cantC[i].disabled="true";
+                precioC[i].disabled="true";
+                $('#btmComprasTab').attr('disabled',true);
+                $('#btmsubmitC').attr('disabled',true);
+                var ctrl = 1;
+            }else if(!opcion){
+                msgFiltro= "Este producto " + NombrePC[i].value + " no pertenece a este proveedor"
                 NombrePC[i].style.borderColor = "red";
                 NombrePC[i].style.borderWidth = "3px";
                 cantC[i].disabled="true";
@@ -479,33 +517,44 @@ function NombreProductoCompra(){
                 }               
             }
 
-            if(msg!="" ){
-                document.getElementById("msgidcantidad").innerHTML = msg;
-                document.getElementById("msgidcantidad").style.display = "block";               
-                $('#btmComprasTab').attr('disabled',true);
-                $('#btmsubmitC').attr('disabled',true);
-            }else if(ctrl== 0){
-                document.getElementById("msgidcantidad").style.display = "none";
-                document.getElementById("msgidcantidad").innerHTML = "";
-
-            } 
-            
-            if(msgPrecio!="" ){
-                document.getElementById("msgidprecioC").innerHTML = msgPrecio;
-                document.getElementById("msgidprecioC").style.display = "block";               
-                $('#btmComprasTab').attr('disabled',true);
-                $('#btmsubmitC').attr('disabled',true);
-            }else if(controlador == 0){
-                document.getElementById("msgidprecioC").style.display = "none";
-                document.getElementById("msgidprecioC").innerHTML = "";
-            }
-            
-            if (controlador == 0 && ctrl == 0) {
-                $('#btmComprasTab').attr('disabled',false);
-                $('#btmsubmitC').attr('disabled',false);
-            }
         }
-         
+        
+        if (msgFiltro != "") {
+            
+            document.getElementById("msgnombreproducto").innerHTML = msgFiltro;
+            document.getElementById("msgnombreproducto").style.display = "block";
+            $('#btmComprasTab').attr('disabled',true);
+            $('#btmsubmitC').attr('disabled',true);
+        }else{
+            document.getElementById("msgnombreproducto").innerHTML = "";
+            document.getElementById("msgnombreproducto").style.display = "none";
+        }
+
+        if(msg!="" ){
+            document.getElementById("msgidcantidad").innerHTML = msg;
+            document.getElementById("msgidcantidad").style.display = "block";               
+            $('#btmComprasTab').attr('disabled',true);
+            $('#btmsubmitC').attr('disabled',true);
+        }else {
+            document.getElementById("msgidcantidad").style.display = "none";
+            document.getElementById("msgidcantidad").innerHTML = "";
+
+        } 
+        
+        if(msgPrecio!="" ){
+            document.getElementById("msgidprecioC").innerHTML = msgPrecio;
+            document.getElementById("msgidprecioC").style.display = "block";               
+            $('#btmComprasTab').attr('disabled',true);
+            $('#btmsubmitC').attr('disabled',true);
+        }else {
+            document.getElementById("msgidprecioC").style.display = "none";
+            document.getElementById("msgidprecioC").innerHTML = "";
+        }
+        
+        if (msgPrecio == "" && msgFiltro == "" && msg == "") {
+            $('#btmComprasTab').attr('disabled',false);
+            $('#btmsubmitC').attr('disabled',false);
+        }
     }
 
 
