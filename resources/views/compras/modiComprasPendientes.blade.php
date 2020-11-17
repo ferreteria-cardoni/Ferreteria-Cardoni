@@ -114,7 +114,7 @@
 				</table>
 			</div>
 		</section>
-        <button id="btmsubmitV" type="submit" class="btn btn-primary">Modificar Compra</button>
+        <button id="btmsubmitC" type="submit" class="btn btn-primary">Modificar Compra</button>
         <a href="{{route('PendienteC')}}"><button type="button" class="btn btn-danger">Cancelar</button></a> 
 		@foreach ($productosIventario as $producto)
 			<span class="s" hidden>{{$producto->nombre}} ${{$producto->cantidad}}</span>
