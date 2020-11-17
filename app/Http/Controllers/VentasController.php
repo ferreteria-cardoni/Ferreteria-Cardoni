@@ -113,23 +113,42 @@ class VentasController extends Controller
               $i = 0;
 
               while ($i < sizeof($productos) ) {
+
                 if($productos[$i]!=null){
-                  $pedidoventa = new pedidoventa;
+
                   $productoArray=explode("$",$productos[$i]);
                   $NombreProducto=$productoArray[0];
 
-                  $pedidoventa->cod_venta_fk = $codUltimaVenta;
+                  $codProducto = producto::where('nombre', $NombreProducto)->first()->cod_producto;
 
-                  // Recuperando el codigo del producto
-                  $pedidoventa->cod_producto_fk = producto::where('nombre', $NombreProducto)->first()->cod_producto;
+                  $productoRepetido = pedidoventa::where('cod_venta_fk', $codUltimaVenta)
+                                                   ->where('cod_producto_fk', $codProducto)->first();
+                  
+                  
+                  if ($productoRepetido) {
+                    // dd($productoRepetido);
 
-                  // Recuperando el precio del producto
-                  //$precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
+                    $productoRepetido->cantidad +=  $cantidades[$i];
+                    $productoRepetido->update();                   
 
-                  $pedidoventa->cantidad = $cantidades[$i];
-                  //$pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
-                  $pedidoventa->save();
+                  }else{
 
+                    $pedidoventa = new pedidoventa;
+  
+                    $pedidoventa->cod_venta_fk = $codUltimaVenta;
+  
+                    // Recuperando el codigo del producto
+                    $pedidoventa->cod_producto_fk = $codProducto;
+  
+                    // Recuperando el precio del producto
+                    //$precioProducto = producto::where('nombre', $NombreProducto)->first()->precio;
+  
+                    $pedidoventa->cantidad = $cantidades[$i];
+                    //$pedidoventa->total = $pedidoventa->cantidad * $precioProducto;
+                    $pedidoventa->save();
+  
+                  }
+                  
                   $cant=producto::where('nombre', $NombreProducto)->first()->cantidad;
                   $cant=$cant-$cantidades[$i];
                   $pro=producto::find(producto::where('nombre', $NombreProducto)->first()->cod_producto);
