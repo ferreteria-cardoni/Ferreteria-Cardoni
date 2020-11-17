@@ -736,6 +736,11 @@
                 //console.log(query);
                 buscaE(query);
             })
+            $(document).on('change', '#opcBuscadorE', function() {
+                var query = document.querySelector('#textoempleado');
+                //console.log(query);
+                buscaE(query.value);
+            })
 
         })
 

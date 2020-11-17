@@ -252,11 +252,7 @@ class EmpleadoController extends Controller
                                     ->take(10)
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::all();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -297,11 +293,7 @@ class EmpleadoController extends Controller
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::all();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -349,12 +341,8 @@ class EmpleadoController extends Controller
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
-                    }
+                        $empleados = empleado::all();              
+                    }           
                     if(isset($empleados)){
                         $total=$empleados->count();
                         $output='';
@@ -376,7 +364,10 @@ class EmpleadoController extends Controller
                                             <td>'.$ItemP->dui.'</td>
                                             <td>'.$usuarios->email.'</td>
                                             <td>'.$ItemP->telefono.'</td>
-                                            <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
+                                            <td>
+                                            <a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_empleado.'" data-codigo="'.$ItemP->cod_empleado.'" data-total="Ventas" data-cliente="'.$ItemP->nombre.' '.$ItemP->apellido.'">Eliminar</button>
+                                            </td>
                                         ';
                                         
                                     }
@@ -402,11 +393,7 @@ class EmpleadoController extends Controller
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::all();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -454,11 +441,7 @@ class EmpleadoController extends Controller
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::all();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
@@ -506,11 +489,7 @@ class EmpleadoController extends Controller
                                     ->orWhere('apellido','LIKE','%'.$query.'%')                 
                                     ->get();
                     }else{
-                        $output='
-                        <tr>
-                            <td align="center" colspan="5">Ingrese el nombre o codigo del empleado que desea ver </td>
-                        </tr>
-                        ';
+                        $empleados = empleado::all();  
                     }
                     if(isset($empleados)){
                         $total=$empleados->count();
