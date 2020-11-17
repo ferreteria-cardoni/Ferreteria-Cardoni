@@ -98,7 +98,7 @@
 			</div>
 		</section>
 		<button id="btmsubmitV" type="submit" class="btn btn-primary" >Registrar Venta</button>
-		<button type="reset" class="btn btn-danger">Limpiar Campos</button>
+		<a href="{{route('Ventas.create')}}"><button type="button" class="btn btn-danger">Limpiar Campos</button></a>
 	</form>
 	@foreach ($producto as $productoiten)
 			<span class="s" hidden>{{$productoiten->nombre}} ${{$productoiten->cantidad}}</span>
