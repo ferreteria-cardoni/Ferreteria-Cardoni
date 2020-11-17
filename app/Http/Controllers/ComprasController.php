@@ -472,6 +472,7 @@ class ComprasController extends Controller
                                     <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                   
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Recibir Compra</button>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Eliminar</button>
                             </div>
@@ -526,6 +527,7 @@ class ComprasController extends Controller
                                         <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                     
                                         <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                     </ul>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Recibir Compra</button>
                                     <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Eliminar</button>
                                 </div>
@@ -585,6 +587,7 @@ class ComprasController extends Controller
                                         <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                       
                                         <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                     </ul>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Recibir Compra</button>
                                     <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Eliminar</button>
                                 </div>
