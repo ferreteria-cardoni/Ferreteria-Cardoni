@@ -266,19 +266,48 @@ function NombreProductoVenta(){
         var uno=NombrePV[i].value.split("$");
         var disponible=0;
         var opcion = $('#productos').find("option[value='"+NombrePV[i].value+"']").val(); 
-        // console.log(opcion);    
-        //console.log(stock[18].innerHTML);
+
+        
+        
+        
         for(var j=0;j<stock.length;j++){
             var ver =stock[j].innerHTML.split("$");
             //console.log(uno[0]);
             //console.log(ver[0]);
             if(uno[0] == ver[0]){
-                disponible=ver[1]; 
+                disponible=ver[1]*1; 
                 //console.log(disponible);
                 break;
             }
             //console.log(stock[j].innerHTML); 
         }
+
+        for(var j=0;j<NombrePV.length;j++){
+
+            if (NombrePV[j].value == NombrePV[i].value) {
+                if (j != i) {
+                    if (j < i) {
+                        // console.log(j);
+                        if (disponible > 0) {
+                            
+                            disponible = disponible*1 - cant[j].value*1;
+                        }else{
+                            disponible = 0;
+                            
+                        }
+
+                        if (disponible == 0) {
+                            msg = "Se agoto el producto " + uno[0];
+                            cant[i].style.borderColor = "red";
+                            cant[i].style.borderWidth = "3px"; 
+                        }
+                    }
+                }
+            }
+        }
+
+        console.log(disponible);
+
         //Disponibilidad(uno[0]); 
             if (NombrePV[i].value == "") {
                 msgFiltro = "Seleccione un producto"
@@ -327,6 +356,7 @@ function NombreProductoVenta(){
                 else if(disponible){
                     if(cantMod[i]){                        
                         var totmod=disponible*1+cantMod[i].value*1;
+
                         if(cant[i].value>totmod){
                             msg = "Insuficiente stock del "+[i+1]+"° producto, disponibles: "+totmod;
                             //document.getElementById("msgidcantidadV").style.display = "block";
@@ -340,6 +370,8 @@ function NombreProductoVenta(){
                         }
                     }else{
                         
+
+
                         if(cant[i].value>(disponible*1)){
                             msg = "Insuficiente stock del "+[i+1]+"° producto, disponibles: "+disponible;
                             //document.getElementById("msgidcantidadV").style.display = "block";
@@ -349,7 +381,7 @@ function NombreProductoVenta(){
                             //document.getElementById("msgidcantidadV").style.display = "none";
                             //document.getElementById("msgidcantidadV").innerHTML = ""
                             cant[i].style.borderColor = "";
-                            cant[i].style.borderWidth = "2px";         
+                            cant[i].style.borderWidth = "2px";       
                         }
                         
                     }                      
