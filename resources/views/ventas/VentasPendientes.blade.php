@@ -44,11 +44,13 @@
     <br>
     @foreach ($pedidoVentas as $pedido)
       @include('ventas.modalEliminar')
+      @include('ventas.modalRecibir')
     @endforeach
       <div class="row" id="ok1">
       @foreach ($pedidoVentas as $pedido)
 
         @include('ventas.modalEliminar')
+        @include('ventas.modalRecibir')
 
         <div class="col-sm-4">
             <div class="card">
@@ -61,6 +63,7 @@
                     <li class="list-group-item">Direccion: {{$pedido->direccion}}</li>
                     <li class="list-group-item">Total: ${{$pedido->total}}</li>
                 </ul>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-{{$pedido->cod_venta}}" data-codigo="{{$pedido->cod_venta}}" data-total="{{$pedido->total}}" data-cliente=" {{App\cliente::find($pedido->cod_cliente_fk)->nombre}} {{App\cliente::find($pedido->cod_cliente_fk)->apellido}}">Confirmar Venta</button>
                 <a href="{{route('Ventas.edit', $pedido->cod_venta)}}" class="btn btn-primary">Editar</a>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$pedido->cod_venta}}" data-codigo="{{$pedido->cod_venta}}" data-total="{{$pedido->total}}" data-cliente=" {{App\cliente::find($pedido->cod_cliente_fk)->nombre}} {{App\cliente::find($pedido->cod_cliente_fk)->apellido}}">Eliminar</button>
             </div>

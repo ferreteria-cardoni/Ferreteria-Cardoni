@@ -98,6 +98,7 @@ class ComprasController extends Controller
             // dd(producto::where('nombre', $productos[$i])->first()->cod_producto);
             $pedidoCompra->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
             $pedidoCompra->cantidad = $cantidades[$i];
+            $pedidoCompra->preciocompra = $precio[$i];
             $pedidoCompra->save();
 
             $cant=producto::where('nombre', $productos[$i])->first()->cantidad;
@@ -105,7 +106,7 @@ class ComprasController extends Controller
             $pro=producto::find(producto::where('nombre', $productos[$i])->first()->cod_producto);
             $pro->precioCompra=$precio[$i];
             $pro->cantidad=$cant;
-            $pro->save();
+            //$pro->save();
 
             $i++;
         }
@@ -228,7 +229,7 @@ class ComprasController extends Controller
 
             $productoInventario->cantidad -= $cantidadesPedidoDiccionario[$productoComprado];
 
-            $productoInventario->update();
+            //$productoInventario->update();
 
             $codigoCompraModificar = $codigosPedidoDiccionario[$productoComprado];
 
@@ -258,11 +259,13 @@ class ComprasController extends Controller
 
             $nuevoPedidoCompra->cantidad = $cantidadesDiccionario[$producto];
 
+            $nuevoPedidoCompra->preciocompra = $precioCompraDiccionario[$producto];
+
             $productoInventario->cantidad += $cantidadesDiccionario[$producto];
 
             $productoInventario->precioCompra = $precioCompraDiccionario[$producto];
             
-            $productoInventario->update();
+            //$productoInventario->update();
 
             $nuevoPedidoCompra->save();
 
@@ -282,7 +285,7 @@ class ComprasController extends Controller
 
             $productoInventario->precioCompra = $precioCompraDiccionario[$producto];
 
-            $productoInventario->update();
+            //$productoInventario->update();
             }else{
 
             $diferencia = $cantidadesPedidoDiccionario[$producto] - $cantidadesDiccionario[$producto];
@@ -291,11 +294,12 @@ class ComprasController extends Controller
 
             $productoInventario->precioCompra = $precioCompraDiccionario[$producto];
 
-            $productoInventario->update();
+            //$productoInventario->update();
 
             }
 
             $pedidoCompraModificar->cantidad = $cantidadesDiccionario[$producto];
+            $pedidoCompraModificar->preciocompra = $precioCompraDiccionario[$producto];
 
             $pedidoCompraModificar->update();
 
@@ -324,6 +328,7 @@ class ComprasController extends Controller
         // dd($id);
          // Recuperando la compra
        $compra = compra::findOrFail($id);
+       $compra->estado='cancelada';
 
       //Recuperando los productos de la compra
       $productosComprados = pedidocompra::where('cod_compra_fk', $id)->get();
@@ -339,10 +344,10 @@ class ComprasController extends Controller
         $productoInventario->cantidad -= $productoComprado->cantidad; 
         
         // Actualizando el stock
-        $productoInventario->update();
+        //$productoInventario->update();
 
         // Eliminando el producto comprado
-        $productoComprado->delete();
+        //$productoComprado->delete();
       }
       
 
@@ -355,11 +360,33 @@ class ComprasController extends Controller
 
 
       // Eliminando la compra
-      $compra->delete();
+      $compra->update();
 
 
 
-      return redirect('/PendienteCompra')->with('datosE', 'Pedido cancelado exitosamente');
+      return redirect('/PendienteCompra')->with('datos', 'Pedido cancelado exitosamente');
+    }
+
+    public function confirmarC($id){
+        $compra = compra::findOrFail($id);
+        $compra->estado="Recibido";
+
+        $pedidoCompra= pedidocompra::where('cod_compra_fk',$id)->get();
+        foreach($pedidoCompra as $pedido){
+            $producto= producto::where('cod_producto',$pedido->cod_producto_fk)->first();
+            $producto->cantidad +=$pedido->cantidad;
+            $producto->precioCompra =$pedido->preciocompra;
+            $producto->update();
+        }
+        $compra->update();
+
+        $bitacora= new historialcompra();
+        $bitacora->operacion="Realizada";
+        $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+        $bitacora->cod_compra_fk=$id;
+        $bitacora->save();
+
+        return redirect('/PendienteCompra')->with('datos', 'Compra recibida');
     }
 
     public function buscador(Request $request){

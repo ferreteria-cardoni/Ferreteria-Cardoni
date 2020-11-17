@@ -391,7 +391,7 @@ class VentasController extends Controller
         $productoInventario->update();
 
         // Eliminando el producto vendido
-        $productoVendido->delete();
+        //$productoVendido->delete();
       }
       
 
@@ -404,13 +404,30 @@ class VentasController extends Controller
 
 
       // Eliminando la venta
-      $venta->delete();
+      $venta->estado="cancelada";
+      $venta->update();
 
 
 
       return redirect('/PendienteVenta')->with('datosE', 'Pedido cancelado exitosamente');
 
 
+    }
+
+    public function confirmar($id){
+
+      $venta = venta::findOrFail($id);
+      $venta->estado="Entregada";
+      $venta->update();
+
+      $bitacora= new historialventa();
+      $bitacora->operacion="Realizada";
+      $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+      $bitacora->cod_venta_fk=$id;
+      $bitacora->save();
+
+      return redirect('/PendienteVenta')->with('datosE', 'Pedido entregado exitosamente');
+      
     }
 
 
@@ -523,6 +540,7 @@ class VentasController extends Controller
                                   <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
                                   <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                               </ul>
+                              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente=" '.$clienteN.' '.$clienteA.' ">Confirmar Venta</button>
                               <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
                               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                           </div>
@@ -579,6 +597,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente=" '.$clienteN.' '.$clienteA.' ">Confirmar Venta</button>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                             </div>
@@ -641,6 +660,7 @@ class VentasController extends Controller
                                     <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
                                     <li class="list-group-item">Total: $'.$ItemP->total.'</li>
                                 </ul>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente=" '.$clienteN.' '.$clienteA.' ">Confirmar Venta</button>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente="'.$clienteN.' '.$clienteA.' ">Eliminar</button>
                             </div>
