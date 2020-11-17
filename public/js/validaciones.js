@@ -1006,6 +1006,29 @@ $('.exampleModal').on('show.bs.modal', function (event) {
     modal.find('input[name="lol"]').val(Cliente)
   })
  
+  $('.ModalR').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var cod = button.data('codigo')
+    console.log(cod);
+    var total = button.data('total')
+    var Cliente = button.data('cliente')
+    var modal = $(this)
+    modal.find('.modal-title').text('Esta Seguro de Confirmar la Venta: ' + cod)
+    modal.find('input[name="lel"]').val('$'+total)
+    modal.find('input[name="lol"]').val(Cliente)
+  })
+
+  $('.ModalC').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var cod = button.data('codigo')
+    console.log(cod);
+    var total = button.data('total')
+    var Cliente = button.data('cliente')
+    var modal = $(this)
+    modal.find('.modal-title').text('Esta Seguro de Recibir la compra: ' + cod)
+    modal.find('input[name="lel"]').val('$'+total)
+    modal.find('input[name="lol"]').val(Cliente)
+  })
 
 
 

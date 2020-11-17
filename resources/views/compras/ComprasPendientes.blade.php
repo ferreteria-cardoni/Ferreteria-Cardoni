@@ -50,6 +50,7 @@
       @foreach ($pedidoCompras as $pedido)
 
         @include('compras.modalEliminar')
+        @include('compras.modalRecibir')
 
         <div class="col-sm-4">
             <div class="card">
@@ -61,6 +62,7 @@
                     <li class="list-group-item">Proveedor: {{App\proveedor::find($pedido->cod_proveedor_fk)->nombre}}</li>
                     <li class="list-group-item">Total: ${{$pedido->total}}</li>
                 </ul>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-{{$pedido->cod_compra}}" data-codigo="{{$pedido->cod_compra}}" data-total="{{$pedido->total}}" data-cliente=" {{App\proveedor::find($pedido->cod_proveedor_fk)->nombre}}">Confirmar Venta</button>
                 <a href="{{route('compras.edit', $pedido->cod_compra)}}" class="btn btn-primary">Editar</a>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$pedido->cod_compra}}" data-codigo="{{$pedido->cod_compra}}" data-total="{{$pedido->total}}" data-cliente=" {{App\proveedor::find($pedido->cod_proveedor_fk)->nombre}}">Eliminar</button>
             </div>
