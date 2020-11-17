@@ -16,9 +16,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <form action="{{route('Empleados.destroy', $empleado->cod_empleado)}}" method="post" name="formEliminarVenta">
-              @csrf
-              @method('DELETE')
+          <form action="{{route('desactivar', $empleado->cod_empleado)}}" method="get" name="formEliminarVenta">
               <button type="submit" class="btn btn-primary">Confirmar</button>
           </form>
         </div>
