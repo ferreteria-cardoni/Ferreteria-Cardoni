@@ -42,11 +42,11 @@
 <!-- <form> -->
 <div class="input-group-prepend">
       <div class="col-sm-8">
-        <input class="form-control mr-sm-2" name="textoempleado" id="textoempleado" type="text" placeholder="Buscar empleados" aria-label="Search">
+        <input class="form-control mr-sm-2" name="textoempleado" disabled id="textoempleado" type="text" placeholder="Buscar empleados" aria-label="Search">
       </div>
       <div class="col-sm-4">
         <select class="custom-select" name='opcBuscadorE' id="opcBuscadorE" autocomplete="off">
-          <option value="1"selected>Todos</option>
+          <option value="0" disabled selected>Seleccione un rol</option>
           <option value="2">Bodega</option>
           <option value="3">Ventas</option>
           <option value="4">Compras</option>
