@@ -92,14 +92,31 @@ class ComprasController extends Controller
 
         while ($i < sizeof($productos) ) {
             
-            $pedidoCompra = new pedidocompra;           
-            $pedidoCompra->cod_compra_fk = $codUltimaCompra;
             
-            // dd(producto::where('nombre', $productos[$i])->first()->cod_producto);
-            $pedidoCompra->cod_producto_fk = producto::where('nombre', $productos[$i])->first()->cod_producto;
-            $pedidoCompra->cantidad = $cantidades[$i];
-            $pedidoCompra->preciocompra = $precio[$i];
-            $pedidoCompra->save();
+            $codProductoCompra = producto::where('nombre', $productos[$i])->first()->cod_producto;
+
+            $productoRepetido = pedidocompra::where('cod_compra_fk', $codUltimaCompra)
+                                                   ->where('cod_producto_fk', $codProductoCompra)->first();
+                  
+                  
+            if ($productoRepetido) {
+            // dd($productoRepetido);
+
+                $productoRepetido->cantidad +=  $cantidades[$i];
+                $productoRepetido->preciocompra = $precio[$i];
+                $productoRepetido->update();                   
+
+            }else{
+
+                // dd(producto::where('nombre', $productos[$i])->first()->cod_producto);
+                $pedidoCompra = new pedidocompra;           
+                $pedidoCompra->cod_compra_fk = $codUltimaCompra;
+                $pedidoCompra->cod_producto_fk = $codProductoCompra;
+                $pedidoCompra->cantidad = $cantidades[$i];
+                $pedidoCompra->preciocompra = $precio[$i];
+                $pedidoCompra->save();
+            }
+            
 
             $cant=producto::where('nombre', $productos[$i])->first()->cantidad;
             $cant=$cant+$cantidades[$i];
@@ -196,14 +213,20 @@ class ComprasController extends Controller
         // Quitando el precio de los productos del formulario
         $i = 0;
         foreach ($productosFormulario as $productoForm) {
-        $productoArray = explode('$', $productoForm);
+            $productoArray = explode('$', $productoForm);
 
-        $productoArray[0] = rtrim($productoArray[0]);
+            $productoArray[0] = rtrim($productoArray[0]);
 
-        $cantidadesDiccionario[$productoArray[0]] = $cantidadesFormulario[$i];
-        $precioCompraDiccionario[$productoArray[0]] = $preciosCompra[$i]; 
-        $i++;
-        array_push($productosNombre, $productoArray[0]);
+            if (array_key_exists($productoArray[0], $cantidadesDiccionario)) {
+                $cantidadesDiccionario[$productoArray[0]] += $cantidadesFormulario[$i];
+              }else{
+      
+                $cantidadesDiccionario[$productoArray[0]] = $cantidadesFormulario[$i];
+                array_push($productosNombre, $productoArray[0]);
+                $precioCompraDiccionario[$productoArray[0]] = $preciosCompra[$i]; 
+            }
+
+            $i++;
         }
 
         // Recuperando los nombres de los productos comprados
@@ -212,6 +235,7 @@ class ComprasController extends Controller
 
             $codigosPedidoDiccionario[$nombreP] = $productoCompra->cod_pedidocompra;
 
+            
             $cantidadesPedidoDiccionario[$nombreP] = $productoCompra->cantidad;
 
             array_push($productosCompradosNombre, $nombreP);

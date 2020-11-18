@@ -504,6 +504,7 @@ function NombreProductoCompra(){
         var msgFiltro = "";
         for(var i=0;i<NombrePC.length;i++){
             var opcion = $('#productos').find("option[value='"+NombrePC[i].value+"']").val();
+
             if (NombrePC[i].value == "") {
                 msgFiltro = "Este campo es requerido"
                 NombrePC[i].style.borderColor = "red";
@@ -608,10 +609,29 @@ function NombreProductoCompra(){
 }
 
 function TotalC(){
+    
+    var NombrePC = document.querySelectorAll('input.a');
     var precio = document.querySelectorAll('input.c');
     var cant = document.querySelectorAll('input.b');
     var total=0; 
     for(var i=0;i<precio.length;i++){
+        
+        for(var j=0;j<NombrePC.length;j++){
+            
+            if (NombrePC[j].value == NombrePC[i].value) {
+                if (j != i) {
+                    if (j > i) {
+                        if (precio[j].value*1 == "" || precio[j].value*1 != 0) {
+                            precio[i].value = precio[j].value*1;
+                            console.log("mundo")
+                        }else{
+                            console.log("probando")
+                        }
+                    }   
+                }
+            }
+        }
+
         if(!isNaN(precio[i].value*1) && !isNaN((cant[i].value)*1)){
             total = total+((precio[i].value*1)*(cant[i].value)*1);
         }
