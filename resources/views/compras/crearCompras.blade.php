@@ -73,10 +73,10 @@
 								</td>
 
 								<td>
-									<input type="number" min="0" disabled name="idcantidad[]" id="idcantidad" class="b form-control" required>
+									<input type="number" min="1" disabled name="idcantidad[]" id="idcantidad" class="b form-control" required>
 								</td>
 								<td>
-									<input type="number" min="0" disabled step="any" name="idprecioC[]" class="c form-control" required>
+									<input type="number" min="0.1" disabled step="any" name="idprecioC[]" class="c form-control" required>
 								</td>
 								
 								<!-- {{-- <td><a href="#" class="btn btn-danger remove">Eliminar</a></td> --}} -->
