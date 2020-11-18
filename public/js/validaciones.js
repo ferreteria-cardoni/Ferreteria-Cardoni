@@ -282,6 +282,7 @@ function NombreProductoVenta(){
             //console.log(stock[j].innerHTML); 
         }
 
+        // Disponibilidad para productos repetidos
         for(var j=0;j<NombrePV.length;j++){
 
             if (NombrePV[j].value == NombrePV[i].value) {
@@ -306,7 +307,9 @@ function NombreProductoVenta(){
             }
         }
 
-        console.log(disponible);
+        // console.log(disponible);
+
+        
 
         //Disponibilidad(uno[0]); 
             if (NombrePV[i].value == "") {
@@ -327,6 +330,17 @@ function NombreProductoVenta(){
                 filtro = false;
             }
             else {
+
+                if (cantMod[i]) {
+                    disponible = disponible*1 + cantMod[i].value*1;
+                }
+        
+                if (disponible == 0) {
+                    msg = "Producto "+ uno[0] + "agotado "
+                }
+
+                console.log(disponible);
+
                 filtro = true;
                 document.getElementById("msgnombreproductoV").style.display = "none";
                 document.getElementById("msgnombreproductoV").innerHTML = ""
@@ -355,8 +369,7 @@ function NombreProductoVenta(){
                 }
                 else if(disponible){
                     if(cantMod[i]){                        
-                        var totmod=disponible*1+cantMod[i].value*1;
-
+                        var totmod=disponible*1;
                         if(cant[i].value>totmod){
                             msg = "Insuficiente stock del "+[i+1]+"° producto, disponibles: "+totmod;
                             //document.getElementById("msgidcantidadV").style.display = "block";
@@ -366,7 +379,9 @@ function NombreProductoVenta(){
                             //document.getElementById("msgidcantidadV").style.display = "none";
                             //document.getElementById("msgidcantidadV").innerHTML = ""
                             cant[i].style.borderColor = "";
-                            cant[i].style.borderWidth = "2px";         
+                            cant[i].style.borderWidth = "2px";  
+                            console.log(totmod);
+
                         }
                     }else{
                         
