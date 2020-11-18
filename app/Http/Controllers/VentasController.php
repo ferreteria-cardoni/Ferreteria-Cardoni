@@ -269,9 +269,15 @@ class VentasController extends Controller
 
         $productoArray[0] = rtrim($productoArray[0]);
 
-        $cantidadesDiccionario[$productoArray[0]] = $cantidadesFormulario[$i];
+        if (array_key_exists($productoArray[0], $cantidadesDiccionario)) {
+          $cantidadesDiccionario[$productoArray[0]] += $cantidadesFormulario[$i];
+        }else{
+
+          $cantidadesDiccionario[$productoArray[0]] = $cantidadesFormulario[$i];
+          array_push($productosNombre, $productoArray[0]);
+        }
+
         $i++;
-        array_push($productosNombre, $productoArray[0]);
       }
 
       // Recuperando los nombres de los productos vendidos
