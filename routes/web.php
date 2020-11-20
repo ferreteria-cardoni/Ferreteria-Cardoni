@@ -94,3 +94,5 @@ Route::get('/desactivar/{id}', 'EmpleadoController@desactivar')->name('desactiva
 Route::get('/confirmar/{id}', 'VentasController@confirmar')->name('confirmarE');
 
 Route::get('/confirmarC/{id}', 'ComprasController@confirmarC')->name('confirmarC');
+
+Route::get('/pdfproductos', 'PDFController@PDFProductos')->name('generarpdf');
