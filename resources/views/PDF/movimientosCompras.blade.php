@@ -46,7 +46,6 @@
                         <th scope="col">Cantidad comprada</th>
                         <th scope="col">Proveedor</th>
                         <th scope="col">Precio compra</th>
-                        <th scope="col">Fecha de compra</th>
                         <th scope="col">Fecha de recibido</th>
                     </tr>
                 </thead>
@@ -59,7 +58,6 @@
                                 <td>{{$pedido->cantidad}}</td>
                                 <td>{{App\proveedor::find($compra->cod_proveedor_fk)->nombre}}</td>
                                 <td>${{$pedido->preciocompra}}</td>
-                                <td>{{\Carbon\Carbon::parse($compra->created_at)->format('d/m/Y')}}</td>
                                 <td>{{\Carbon\Carbon::parse($compra->updated_at)->format('d/m/Y')}}</td>
                             </tr>
                         @endif
