@@ -374,7 +374,7 @@
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
-                                    <p>Reportes<i class="fas fa-angle-left right"></i></p>
+                                    <p>Reportes Productos<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
 
@@ -385,12 +385,31 @@
                                             <p>Stock</p>
                                         </a>
                                     </li>
+                                </ul>
+                            </li>
+
+
+
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon far fa-sticky-note"></i>
+                                    <p>Reportes movimientos<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
 
                                     <li class="nav-item">
-                                        <a href=""
-                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="{{route('pdfventas')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" target="_blank">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Movimientos</p>
+                                            <p>Ventas</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{route('pdfcompras')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" target="_blank">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Compras</p>
                                         </a>
                                     </li>
                                 </ul>
