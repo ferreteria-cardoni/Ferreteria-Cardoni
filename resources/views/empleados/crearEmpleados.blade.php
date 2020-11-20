@@ -81,7 +81,7 @@
 
 				<div class="form-group col-md-5">
 					<label>Edad</label>
-					<input autocomplete="off" type="number" min="18" class="form-control"
+					<input autocomplete="off" type="numeric" min="18" class="form-control" maxlength="2"
 						name="idEdadE" id="idEdadE" placeholder="Escriba la edad..." value="{{ old('idEdadE') }}"
 						required>
 					<span id="msgidEdadE" name="msgidEdadE" class="AlertaMsg"></span>

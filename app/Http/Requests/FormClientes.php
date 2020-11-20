@@ -47,6 +47,7 @@ class FormClientes extends FormRequest
             'NCF.required' => 'El campo numero de consumidor final es requerido',
             'NCF.regex' => 'El formato del campo numero de consumidor final es 99999999999 (11 digitos)',
             'DireccionC.required' => 'El Campo direccion no puede estar vacio',
+            'idrubro.required' => 'El Campo rubro es obligatorio',
         ];
     }
 }

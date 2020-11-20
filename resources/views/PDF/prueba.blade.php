@@ -4,8 +4,33 @@
     <meta charset="UTF-8">
     <title>Tabla de Productos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <style>
+      @page {
+          margin: 0cm 0cm;
+          font-family: Arial;
+      }
+
+      body {
+          margin: 3cm 2cm 2cm;
+      }
+
+      header {
+          position: fixed;
+          top: 0cm;
+          left: 0cm;
+          right: 0cm;
+          height: 2cm;
+          background-color: #8d93ab;
+          color: white;
+          text-align: center;
+          line-height: 30px;
+      }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Ferretería Cardoni</h1>
+  </header>
     <div class="container">
     <table class="table">
   <thead class="thead-dark">
