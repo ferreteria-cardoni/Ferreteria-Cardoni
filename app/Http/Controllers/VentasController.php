@@ -571,10 +571,10 @@ class VentasController extends Controller
                           <h5 class="card-header bg-secondary mb-3">Código del pedido: '. $ItemP->cod_venta.'</h5>
                           <div class="card-body">
                               <ul class="list-group list-group-flush">
-                                  <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
-                                  <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
-                                  <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
-                                  <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                  <li class="list-group-item"><b>Vendido por:</b> '.$empleadoN.' '.$empleadoA.'</li>
+                                  <li class="list-group-item"><b>Cliente:</b> '.$clienteN.' '. $clienteA.'</li>
+                                  <li class="list-group-item"><b>Direccion:</b> '.$ItemP->direccion.' </li>
+                                  <li class="list-group-item"><b>Total:</b> $'.$ItemP->total.'</li>
                               </ul>
                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente=" '.$clienteN.' '.$clienteA.' ">Confirmar Venta</button>
                               <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
@@ -627,10 +627,10 @@ class VentasController extends Controller
                             <h5 class="card-header bg-secondary mb-3">Código del pedido: '. $ItemP->cod_venta.'</h5>
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
-                                    <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
-                                    <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
-                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                    <li class="list-group-item"><b>Vendido por:</b> '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item"><b>Cliente:</b> '.$clienteN.' '. $clienteA.'</li>
+                                    <li class="list-group-item"><b>Direccion:</b> '.$ItemP->direccion.' </li>
+                                    <li class="list-group-item"><b>Total:</b> $'.$ItemP->total.'</li>
                                 </ul>
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente=" '.$clienteN.' '.$clienteA.' ">Confirmar Venta</button>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
@@ -689,10 +689,10 @@ class VentasController extends Controller
                             <h5 class="card-header bg-secondary mb-3">Código del pedido: '. $ItemP->cod_venta.'</h5>
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
-                                    <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
-                                    <li class="list-group-item">Direccion: '.$ItemP->direccion.' </li>
-                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                    <li class="list-group-item"><b>Vendido por:</b> '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item"><b>Cliente:</b> '.$clienteN.' '. $clienteA.'</li>
+                                    <li class="list-group-item"><b>Direccion:</b> '.$ItemP->direccion.' </li>
+                                    <li class="list-group-item"><b>Total:</b> $'.$ItemP->total.'</li>
                                 </ul>
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-'. $ItemP->cod_venta.'" data-codigo="'. $ItemP->cod_venta.'" data-total="'. $ItemP->total.'" data-cliente=" '.$clienteN.' '.$clienteA.' ">Confirmar Venta</button>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
