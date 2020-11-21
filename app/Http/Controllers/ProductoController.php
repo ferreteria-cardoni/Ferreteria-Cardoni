@@ -26,7 +26,10 @@ class ProductoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('bodega')->only(['edit']);
+        $this->middleware('bodega')->only(['edit', 'create']);
+
+        $this->middleware('pdf2')->only(['index']);
+
     }
 
 
