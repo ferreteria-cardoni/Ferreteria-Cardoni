@@ -33,10 +33,10 @@
 <div class="container">
 <!-- html agregado-->
 <!-- <form> -->
-  {{-- <div class="input-group-prepend">
-    <input class="form-control mr-sm-2" name="texto" id="texto" type="text" placeholder="Buscar Productos" aria-label="Search">
+   <div class="input-group-prepend">
+    <input class="form-control mr-sm-2" name="textoClientes" id="textoClientes" type="text" placeholder="Buscar Clientes (Codigo, Nombre o Apellido)" aria-label="Search">
     <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button> -->
-  </div> --}}
+  </div>
   <!-- </form> -->
   <br>
 <!-- fin del html agregado-->
@@ -54,7 +54,7 @@
             <th scope="col">Acciones</th>
           </tr>
         </thead>
-        <tbody id="ok">
+        <tbody id="okC">
         @foreach ($clientes as $cliente)
             <tr>
                 <td>{{$cliente->cod_cliente}}</td>

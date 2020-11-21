@@ -690,6 +690,7 @@
 
 <!-- buscadores -->
 <script type="text/javascript">
+//productos
     window.addEventListener("load", function() {
         function busca(query = '') {
             $.ajax({
@@ -713,8 +714,7 @@
     })
 
 
-
-
+//Buscar pedidos 
         window.addEventListener("load", function() {
             var opc= document.querySelector('#opcBuscador');
             console.log(opc.value);
@@ -741,6 +741,7 @@
             })
 
         })
+        //buscar compras
         window.addEventListener("load", function() {
             var opc= document.querySelector('#opcBuscadorC');
             console.log(opc.value);
@@ -767,7 +768,7 @@
             })
 
         })
-
+        //busca empleados
         window.addEventListener("load", function() {
             var opc= document.querySelector('#opcBuscadorE');
             console.log(opc.value);
@@ -800,6 +801,29 @@
             })
 
         })
+
+        //buscador clientes
+        window.addEventListener("load", function() {
+        function buscaClientes(query = '') {
+            $.ajax({
+                url: "{{ route('buscadorClientes') }}",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                dataType: 'json',
+                success: function(data) {
+                    //console.log(data);
+                    $('#okC').html(data);
+                }
+            })
+        }
+        $(document).on('keyup', '#textoClientes', function() {
+            var query = $(this).val();
+            //console.log(query);
+            buscaClientes(query);
+        })
+    })
 
 
 
