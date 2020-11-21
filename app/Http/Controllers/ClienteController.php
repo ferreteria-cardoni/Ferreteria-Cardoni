@@ -197,4 +197,54 @@ class ClienteController extends Controller
     {
         //
     }
+
+    public function buscadorClientes(Request $request){
+
+        if($request->ajax()){
+
+            $query = trim($request->get('query'));
+            if($query != ''){
+                $Clientes= cliente::where('nombre','LIKE','%'.$query.'%')
+                                    ->orWhere('apellido','LIKE','%'.$query.'%')
+                                    ->orWhere('cod_cliente','LIKE','%'.$query.'%')
+                                    ->get();
+            }else{
+                $Clientes= cliente::all();
+            }
+            if(isset($Clientes)){
+                $total=$Clientes->count();
+                $output='';
+
+                if($total>0)
+                {
+                    foreach($Clientes as $cliente){
+                    $redireccion = route('Clientes.edit', $cliente->cod_cliente);
+                    $output .='
+                    <tr>
+                    <td>'.$cliente->cod_cliente.'</td>
+                    <td>'.$cliente->nombre.'</td>
+                    <td>'.$cliente->apellido.'</td>
+                    <td>'.$cliente->direccion.'</td>
+                    <td>'.$cliente->telefono.'</td>
+                    <td>'.$cliente->rubro.'</td>
+                    <td>'.$cliente->nit.'</td>
+                    <td>'.$cliente->num_consumidor.'</td>
+                    <td><a href="'.$redireccion.'"><button type="button" class="btn btn-success">Editar</button></a></td>
+
+                    ';
+
+                    }
+
+                }else{
+                    $output='
+                    <tr>
+                        <td align="center" colspan="5">Sin Registros</td>
+                    </tr>
+                    ';
+                }
+
+            }
+            echo json_encode($output);
+        }
+    }
 }

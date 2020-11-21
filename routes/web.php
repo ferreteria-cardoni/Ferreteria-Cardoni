@@ -101,6 +101,7 @@ Route::get('/ReporteCompras', 'PDFMovimientosController@elegirFechasCompras')->n
 
 Route::get('/ReporteVentas', 'PDFMovimientosController@elegirFechasVentas')->name('ventasReporte');
 
+Route::get('/buscadorClientes', 'ClienteController@buscadorClientes')->name('buscadorClientes');
 
 Route::post('/PdfMovimientosCompras', 'PDFMovimientosController@movimientosCompras')->name('pdfcompras');
 
