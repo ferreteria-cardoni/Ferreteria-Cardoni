@@ -18,7 +18,11 @@ class Bodega
     public function handle($request, Closure $next)
     {
 
-        if (Auth::user()->tieneRol()->first() != 'bodega') {
+        if (!Auth::user()) {
+            return redirect('/login');
+        }
+        
+        else if (Auth::user()->tieneRol()->first() != 'bodega') {
             
             return redirect('/');
         }

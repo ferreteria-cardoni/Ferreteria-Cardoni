@@ -25,7 +25,7 @@ class ComprasController extends Controller
     public function __construct()
     {
         $this->middleware('bodega')->only(['index']);
-        $this->middleware('compras')->only(['create']);
+        $this->middleware('compras')->only(['create', 'edit', 'index2']);
 
     }
 

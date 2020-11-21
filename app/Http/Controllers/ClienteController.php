@@ -15,7 +15,7 @@ class ClienteController extends Controller
 
     public function __construct()
     {
-        $this->middleware('secretaria')->only(['create']);
+        $this->middleware('secretaria')->only(['create', 'index', 'edit']);
     }
 
 

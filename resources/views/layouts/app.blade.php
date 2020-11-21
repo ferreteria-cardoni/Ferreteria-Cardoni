@@ -319,6 +319,7 @@
                             </li>
                             @endcanany
 
+                            @canany(['compras'])
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -342,6 +343,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endcanany
 
                                    {{-- Empleados --}}
                             @canany(['secretaria'])
@@ -371,6 +373,8 @@
                             </li>
                             @endcanany
 
+
+                            @canany(['compras'])
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
@@ -387,16 +391,17 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endcanany
 
 
-
+                            @canany(['bodega', 'gerente', 'ventas', 'compras'])
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-sticky-note"></i>
                                     <p>Reportes movimientos<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
-
+                                    @canany(['bodega', 'gerente', 'ventas'])
                                     <li class="nav-item">
                                         <a href="{{route('pdfventas')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" target="_blank">
@@ -404,7 +409,9 @@
                                             <p>Ventas</p>
                                         </a>
                                     </li>
+                                    @endcanany
 
+                                    @canany(['bodega', 'gerente', 'compras'])
                                     <li class="nav-item">
                                         <a href="{{route('pdfcompras')}}"
                                             class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" target="_blank">
@@ -412,9 +419,10 @@
                                             <p>Compras</p>
                                         </a>
                                     </li>
+                                    @endcanany
                                 </ul>
                             </li>
-
+                            @endcanany
 
                         </ul>
                     </nav>

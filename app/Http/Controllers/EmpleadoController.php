@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Auth;
 
 class EmpleadoController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('secretaria')->only(['create', 'index', 'edit']);
+    }
+
     /**
      * Display a listing of the resource.
      *
