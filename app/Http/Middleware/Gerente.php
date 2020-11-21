@@ -4,9 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-
-
-class Secretaria
+class Gerente
 {
     /**
      * Handle an incoming request.
@@ -17,11 +15,10 @@ class Secretaria
      */
     public function handle($request, Closure $next)
     {
-
         if (!Auth::user()) {
             return redirect('/login');
         }
-        else if (Auth::user()->tieneRol()->first() != 'secretaria') {
+        else if (Auth::user()->tieneRol()->first() != 'gerente') {
             
             return redirect('/');
         }

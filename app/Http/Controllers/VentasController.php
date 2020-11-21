@@ -23,7 +23,7 @@ class VentasController extends Controller
   public function __construct()
   {
         $this->middleware('bodega')->only(['index']);
-        $this->middleware('ventas')->only(['create']);
+        $this->middleware('ventas')->only(['create', 'edit', 'index2']);
 
   }
 

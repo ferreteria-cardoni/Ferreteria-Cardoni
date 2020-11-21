@@ -13,6 +13,12 @@ use PDF;
 class PDFMovimientosController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('pdf')->only(['movimientosCompras']);
+        $this->middleware('pdf2')->only(['movimientosVentas']);
+        
+    }
 
     public function movimientosCompras()
     {

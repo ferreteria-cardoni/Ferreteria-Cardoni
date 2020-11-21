@@ -8,6 +8,15 @@ use App\Http\Requests\FormProveedores;
 
 class ProveedorController extends Controller
 {
+
+
+
+    function __construct()
+    {
+        $this->middleware('compras')->only(['create', 'index', 'edit']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
