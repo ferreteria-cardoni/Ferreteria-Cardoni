@@ -400,6 +400,7 @@ class ComprasController extends Controller
             $producto= producto::where('cod_producto',$pedido->cod_producto_fk)->first();
             $producto->cantidad +=$pedido->cantidad;
             $producto->precioCompra =$pedido->preciocompra;
+            $producto->precioVenta = $pedido->preciocompra * 1.19;
             $producto->update();
         }
         $compra->update();
