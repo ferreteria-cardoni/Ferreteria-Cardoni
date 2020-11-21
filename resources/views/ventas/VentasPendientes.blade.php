@@ -53,15 +53,14 @@
         @include('ventas.modalRecibir')
 
         <div class="col-sm-4">
-            <div class="card">
+            <div class="card border-dark mb-3">
+            <h5 class="card-header bg-secondary mb-3">Código del pedido: {{$pedido->cod_venta}}</h5>
             <div class="card-body">
-              <h5 class="card-title">Código del pedido: {{$pedido->cod_venta}}</h5>
-                <p class="card-text"></p>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Vendido por: {{App\empleado::find($pedido->cod_empleado_fk)->nombre}} {{App\empleado::find($pedido->cod_empleado_fk)->apellido}}</li>
-                    <li class="list-group-item">Cliente: {{App\cliente::find($pedido->cod_cliente_fk)->nombre}} {{App\cliente::find($pedido->cod_cliente_fk)->apellido}}</li>
-                    <li class="list-group-item">Direccion: {{$pedido->direccion}}</li>
-                    <li class="list-group-item">Total: ${{$pedido->total}}</li>
+                    <li class="list-group-item"><b>Vendido por:</b> {{App\empleado::find($pedido->cod_empleado_fk)->nombre}} {{App\empleado::find($pedido->cod_empleado_fk)->apellido}}</li>
+                    <li class="list-group-item"><b> Cliente:</b> {{App\cliente::find($pedido->cod_cliente_fk)->nombre}} {{App\cliente::find($pedido->cod_cliente_fk)->apellido}}</li>
+                    <li class="list-group-item"><b> Direccion:</b> {{$pedido->direccion}}</li>
+                    <li class="list-group-item"><b> Total:</b> ${{$pedido->total}}</li>
                 </ul>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalR-{{$pedido->cod_venta}}" data-codigo="{{$pedido->cod_venta}}" data-total="{{$pedido->total}}" data-cliente=" {{App\cliente::find($pedido->cod_cliente_fk)->nombre}} {{App\cliente::find($pedido->cod_cliente_fk)->apellido}}">Confirmar Venta</button>
                 <a href="{{route('Ventas.edit', $pedido->cod_venta)}}" class="btn btn-primary">Editar</a>
