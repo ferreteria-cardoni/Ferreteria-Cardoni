@@ -28,7 +28,7 @@ class ayudacontroller extends Controller
     }
 
     public function download(){
-        if(!$this->downloadFile(app_path()."/files/manual de ayuda.docx")){
+        if(!$this->downloadFile(app_path()."/files/manual de ayuda.pdf")){
             return redirect()->back();
         }
     }
