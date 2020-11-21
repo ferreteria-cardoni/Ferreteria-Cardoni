@@ -97,8 +97,12 @@ Route::get('/confirmarC/{id}', 'ComprasController@confirmarC')->name('confirmarC
 
 Route::get('/pdfproductos', 'PDFController@PDFProductos')->name('generarpdf');
 
+Route::get('/ReporteCompras', 'PDFMovimientosController@elegirFechasCompras')->name('comprasReporte');
 
-Route::get('/PdfMovimientosCompras', 'PDFMovimientosController@movimientosCompras')->name('pdfcompras');
+Route::get('/ReporteVentas', 'PDFMovimientosController@elegirFechasVentas')->name('ventasReporte');
 
-Route::get('/PdfMovimientosVentas', 'PDFMovimientosController@movimientosVentas')->name('pdfventas');
+
+Route::post('/PdfMovimientosCompras', 'PDFMovimientosController@movimientosCompras')->name('pdfcompras');
+
+Route::post('/PdfMovimientosVentas', 'PDFMovimientosController@movimientosVentas')->name('pdfventas');
 

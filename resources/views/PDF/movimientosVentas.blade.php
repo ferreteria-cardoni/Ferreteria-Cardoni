@@ -34,40 +34,45 @@
         <h1>Ferretería Cardoni</h1>
     </header>
     <div class="container">
-        @foreach ($ventasEntregadas as $venta)
-            <table class="table table-hover table-dark">
-                <thead>
-                    <tr>
-                        <th colspan="7" style="text-align: center">Código de la venta: {{$venta->cod_venta}}</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Código</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Cantidad vendida</th>
-                        <th scope="col">Vendedor</th>
-                        <th scope="col">Fecha de entrega</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pedidosVentas as $pedido)
-                        @if ($pedido->cod_venta_fk == $venta->cod_venta)
-                            <tr>
-                                <th scope="row">{{$pedido->cod_producto_fk}}</th>
-                                <td>{{App\producto::find($pedido->cod_producto_fk)->nombre}}</td>
-                                <td>{{$pedido->cantidad}}</td>
-                                <td>{{App\empleado::find($venta->cod_empleado_fk)->nombre}} {{App\empleado::find($venta->cod_empleado_fk)->apellido}}</td>
-                                <td>{{\Carbon\Carbon::parse($venta->updated_at)->format('d/m/Y')}}</td>
-                            </tr>
-                        @endif
-                    @endforeach  
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="7" style="text-align: right"><strong>Total:</strong> ${{$venta->total}}</td>
-                    </tr>
-                </tfoot>
-            </table>
-        @endforeach   
+        @if ($existe == "no")
+            <h3>NO SE ENCONTRARON REGISTROS EN LAS FECHAS ESPECIFICADAS</h3>
+        @else
+            
+            @foreach ($ventasEntregadas as $venta)
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="text-align: center">Código de la venta: {{$venta->cod_venta}}</th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad vendida</th>
+                            <th scope="col">Vendedor</th>
+                            <th scope="col">Fecha de entrega</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pedidosVentas as $pedido)
+                            @if ($pedido->cod_venta_fk == $venta->cod_venta)
+                                <tr>
+                                    <th scope="row">{{$pedido->cod_producto_fk}}</th>
+                                    <td>{{App\producto::find($pedido->cod_producto_fk)->nombre}}</td>
+                                    <td>{{$pedido->cantidad}}</td>
+                                    <td>{{App\empleado::find($venta->cod_empleado_fk)->nombre}} {{App\empleado::find($venta->cod_empleado_fk)->apellido}}</td>
+                                    <td>{{\Carbon\Carbon::parse($venta->updated_at)->format('d/m/Y')}}</td>
+                                </tr>
+                            @endif
+                        @endforeach  
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" style="text-align: right"><strong>Total:</strong> ${{$venta->total}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            @endforeach   
+        @endif
     </div>
 </body>
 </html>

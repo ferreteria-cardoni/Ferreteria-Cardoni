@@ -403,8 +403,8 @@
                                 <ul class="nav nav-treeview">
                                     @canany(['bodega', 'gerente', 'ventas'])
                                     <li class="nav-item">
-                                        <a href="{{route('pdfventas')}}"
-                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" target="_blank">
+                                        <a href="{{route('ventasReporte')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ventas</p>
                                         </a>
@@ -413,8 +413,8 @@
 
                                     @canany(['bodega', 'gerente', 'compras'])
                                     <li class="nav-item">
-                                        <a href="{{route('pdfcompras')}}"
-                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" target="_blank">
+                                        <a href="{{route('comprasReporte')}}"
+                                            class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Compras</p>
                                         </a>

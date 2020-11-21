@@ -2,6 +2,18 @@
 
 @section('titulo','Compras')
 
+@section('alert')
+<div class="container">
+	@if (session('datos'))
+	<div class="alert alert-danger alert-dismissible fade show" role="alert" align="center">
+		{{session('datos')}}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	@endif
+@endsection
+
 @section('content')
     <table class="table table-hover table-condensed">
     <div class="input-group-prepend">
