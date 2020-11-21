@@ -440,6 +440,7 @@ class ComprasController extends Controller
                         $pedidoCompra= pedidocompra::where('cod_producto_fk',$ItemP->cod_producto)
                                                     ->get();
                         foreach($pedidoCompra as $hcompra){
+                            $estado=compra::where('cod_compra',$hcompra->cod_compra_fk)->value('estado');
                             $output .='
                             <tr>
                             <th scope="row">'.$ItemP->cod_producto.'</th>
@@ -447,6 +448,17 @@ class ComprasController extends Controller
                             <td>'.$hcompra->cantidad.'</td>
                             <td>'.\Carbon\Carbon::parse($hcompra->created_at)->format('d/m/Y').'</td>
                         ';
+                        switch($estado){
+                            case 'Recibido':
+                                $output .='<td class="badge badge-success">'.$estado.'</td>';
+                            break;
+                            case 'cancelada':
+                                $output .='<td class="badge badge-danger">'.$estado.'</td>';
+                            break;
+                            case 'pendiente':
+                                $output .='<td class="badge badge-warning">'.$estado.'</td>';
+                            break;
+                        }
                         }
                         $output .= '<tr>';
                     }
@@ -487,14 +499,13 @@ class ComprasController extends Controller
                             $proveedorN=proveedor::where('cod_proveedor',$ItemP->cod_proveedor_fk)->value('nombre');
                             $output .='
                             <div class="col-sm-4">
-                            <div class="card">
+                            <div class="card border-dark mb-3">
+                            <h5 class="card-header bg-secondary mb-3">Código del pedido: '.$ItemP->cod_compra.'</h5>
                             <div class="card-body">
-                                <h5 class="card-title">Código del pedido: '.$ItemP->cod_compra.'</h5>                      
-                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
-                                    <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                   
-                                    <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                    <li class="list-group-item"><b>Vendido por:</b> '.$empleadoN.' '.$empleadoA.'</li>
+                                    <li class="list-group-item"><b>Proveedor:</b> '.$proveedorN.'</li>                                   
+                                    <li class="list-group-item"><b>Total:</b> $'.$ItemP->total.'</li>
                                 </ul>
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Recibir Compra</button>
                                 <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
@@ -542,14 +553,13 @@ class ComprasController extends Controller
                                 $proveedorN=proveedor::where('cod_proveedor',$ItemP->cod_proveedor_fk)->value('nombre');
                                 $output .='
                                 <div class="col-sm-4">
-                                <div class="card">
+                                <div class="card border-dark mb-3">
+                                <h5 class="card-header bg-secondary mb-3">Código del pedido: '.$ItemP->cod_compra.'</h5>
                                 <div class="card-body">
-                                <h5 class="card-title">Código del pedido: '.$ItemP->cod_compra.'</h5>
-                                    <p class="card-text"></p>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
-                                        <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                     
-                                        <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                        <li class="list-group-item"><b>Vendido por:</b> '.$empleadoN.' '.$empleadoA.'</li>
+                                        <li class="list-group-item"><b>Proveedor:</b> '.$proveedorN.'</li>                                     
+                                        <li class="list-group-item"><b>Total:</b> $'.$ItemP->total.'</li>
                                     </ul>
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Recibir Compra</button>
                                     <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>
@@ -602,14 +612,13 @@ class ComprasController extends Controller
                                 $proveedorN=proveedor::where('cod_proveedor',$ItemP->cod_proveedor_fk)->value('nombre');
                                 $output .='
                                 <div class="col-sm-4">
-                                <div class="card">
+                                <div class="card border-dark mb-3">
+                                <h5 class="card-header bg-secondary mb-3">Código del pedido: '.$ItemP->cod_compra.'</h5>
                                 <div class="card-body">
-                                <h5 class="card-title">Código del pedido: '.$ItemP->cod_compra.'</h5>
-                                    <p class="card-text"></p>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
-                                        <li class="list-group-item">Proveedor: '.$proveedorN.'</li>                                       
-                                        <li class="list-group-item">Total: $'.$ItemP->total.'</li>
+                                        <li class="list-group-item"><b>Vendido por:</b> '.$empleadoN.' '.$empleadoA.'</li>
+                                        <li class="list-group-item"><b>Proveedor:</b> '.$proveedorN.'</li>                                       
+                                        <li class="list-group-item"><b>Total:</b> $'.$ItemP->total.'</li>
                                     </ul>
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-'.$ItemP->cod_compra.'" data-codigo="'.$ItemP->cod_compra.'" data-total="'.$ItemP->total.'" data-cliente="'.$proveedorN.'">Recibir Compra</button>
                                     <a href="'.$redireccion.'" class="btn btn-primary">Editar</a>

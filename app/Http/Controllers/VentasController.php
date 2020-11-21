@@ -495,6 +495,8 @@ class VentasController extends Controller
                                                   ->get();
 
                       foreach($pedidoVenta as $hventa){
+                        $estado=venta::where('cod_venta',$hventa->cod_venta_fk)->value('estado');
+
                         $Venta= venta::where('cod_venta',$hventa->cod_venta_fk)->value('cod_empleado_fk');
                         //echo($hventa->cantidad);
                         $empleadoN= empleado::where('cod_empleado',$Venta)->value('nombre');
@@ -507,7 +509,18 @@ class VentasController extends Controller
                           <td>'.\Carbon\Carbon::parse($hventa->created_at)->format('d/m/Y').'</td>
                           <td>'.$empleadoN.' '.$empleadoA.'</td>
                       ';
-                      }
+                        switch($estado){
+                          case 'Entregada':
+                              $output .='<td class="badge badge-success">'.$estado.'</td>';
+                          break;
+                          case 'cancelada':
+                              $output .='<td class="badge badge-danger">'.$estado.'</td>';
+                          break;
+                          case 'pendiente':
+                              $output .='<td class="badge badge-warning">'.$estado.'</td>';
+                          break;
+                        } 
+                    } 
                       $output .= '<tr>';
                   }
 
@@ -554,11 +567,9 @@ class VentasController extends Controller
                           $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
                           $output .='
                           <div class="col-sm-4">
-                          <div class="card">
+                          <div class="card border-dark mb-3">
+                          <h5 class="card-header bg-secondary mb-3">Código del pedido: '. $ItemP->cod_venta.'</h5>
                           <div class="card-body">
-                          <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
-                             
-                              <p class="card-text"></p>
                               <ul class="list-group list-group-flush">
                                   <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                   <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -612,10 +623,9 @@ class VentasController extends Controller
                             $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
                             $output .='
                             <div class="col-sm-4">
-                            <div class="card">
+                            <div class="card border-dark mb-3">
+                            <h5 class="card-header bg-secondary mb-3">Código del pedido: '. $ItemP->cod_venta.'</h5>
                             <div class="card-body">
-                                <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
-                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                     <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
@@ -675,10 +685,9 @@ class VentasController extends Controller
                             $clienteA=cliente::where('cod_cliente',$ItemP->cod_cliente_fk)->value('apellido');
                             $output .='
                             <div class="col-sm-4">
-                            <div class="card">
+                            <div class="card border-dark mb-3">
+                            <h5 class="card-header bg-secondary mb-3">Código del pedido: '. $ItemP->cod_venta.'</h5>
                             <div class="card-body">
-                                <h5 class="card-title">Código del pedido: '. $ItemP->cod_venta.'</h5>
-                                <p class="card-text"></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Vendido por: '.$empleadoN.' '.$empleadoA.'</li>
                                     <li class="list-group-item">Cliente: '.$clienteN.' '. $clienteA.'</li>
