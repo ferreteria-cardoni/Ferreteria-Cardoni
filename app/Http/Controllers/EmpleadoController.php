@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Auth;
 
 class EmpleadoController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('secretaria')->only(['create', 'index', 'edit']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -240,6 +247,10 @@ class EmpleadoController extends Controller
         $empleado = empleado::findOrFail($id);
         $empleado->estado="inactivo";
         $empleado->save();
+
+        $usuario = User::where('cod_empleado_fk', $id)->first();
+
+        $usuario->delete();
 
         $bitacora= new historialempleado();
         $bitacora->operacion="Eliminar";

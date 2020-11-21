@@ -54,14 +54,13 @@
         @include('compras.modalRecibir')
 
         <div class="col-sm-4">
-            <div class="card">
+            <div class="card border-dark mb-3">
+            <h5 class="card-header bg-secondary mb-3">Código del pedido: {{$pedido->cod_compra}}</h5>
             <div class="card-body">
-              <h5 class="card-title">Código del pedido: {{$pedido->cod_compra}}</h5>
-                <p class="card-text"></p>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Comprado por: {{App\empleado::find($pedido->cod_empleado_fk)->nombre}} {{App\empleado::find($pedido->cod_empleado_fk)->apellido}}</li>
-                    <li class="list-group-item">Proveedor: {{App\proveedor::find($pedido->cod_proveedor_fk)->nombre}}</li>
-                    <li class="list-group-item">Total: ${{$pedido->total}}</li>
+                    <li class="list-group-item"><b>Comprado por:</b> {{App\empleado::find($pedido->cod_empleado_fk)->nombre}} {{App\empleado::find($pedido->cod_empleado_fk)->apellido}}</li>
+                    <li class="list-group-item"><b>Proveedor:</b> {{App\proveedor::find($pedido->cod_proveedor_fk)->nombre}}</li>
+                    <li class="list-group-item"><b>Total:</b> ${{$pedido->total}}</li>
                 </ul>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalC-{{$pedido->cod_compra}}" data-codigo="{{$pedido->cod_compra}}" data-total="{{$pedido->total}}" data-cliente=" {{App\proveedor::find($pedido->cod_proveedor_fk)->nombre}}">Recibir Compra</button>
                 <a href="{{route('compras.edit', $pedido->cod_compra)}}" class="btn btn-primary">Editar</a>

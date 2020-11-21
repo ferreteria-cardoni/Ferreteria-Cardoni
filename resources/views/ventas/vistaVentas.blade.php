@@ -3,7 +3,7 @@
 @section('titulo','Ventas')
 
 @section('content')
-    <table class="table table-hover">
+    <table class="table table-hover table-condensed">
     <div class="input-group-prepend">
         <input class="form-control mr-sm-2" name="textoVenta" id="textoVenta" type="text" placeholder="Buscar Productos" aria-label="Search">
     </div>
@@ -14,6 +14,7 @@
                 <th scope="col">Unidades Vendidas</th>
                 <th scope="col">Fecha de Venta</th>
                 <th scope="col">Vendido por</th>
+                <th scope="col">Estado</th>
             </tr>
         </thead>
         <tbody id="VistaVenta">

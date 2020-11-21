@@ -15,7 +15,11 @@ class Compras
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->tieneRol()->first() != 'compras') {
+
+        if (!Auth::user()) {
+            return redirect('/login');
+        }
+        else if (Auth::user()->tieneRol()->first() != 'compras') {
             
             return redirect('/');
         }

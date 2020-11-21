@@ -2,8 +2,20 @@
 
 @section('titulo','Compras')
 
+@section('alert')
+<div class="container">
+	@if (session('datos'))
+	<div class="alert alert-danger alert-dismissible fade show" role="alert" align="center">
+		{{session('datos')}}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	@endif
+@endsection
+
 @section('content')
-    <table class="table table-hover">
+    <table class="table table-hover table-condensed">
     <div class="input-group-prepend">
         <input class="form-control mr-sm-2" name="textoCompra" id="textoCompra" type="text" placeholder="Buscar Productos" aria-label="Search">
     </div>
@@ -13,6 +25,7 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Unidades Compradas</th>
                 <th scope="col">Fecha de Compra</th>
+                <th scope="col">Estado</th>
             </tr>
         </thead>
         <tbody id="VistaCompra">

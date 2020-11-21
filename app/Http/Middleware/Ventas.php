@@ -16,7 +16,11 @@ class Ventas
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->tieneRol()->first() != 'ventas') {
+
+        if (!Auth::user()) {
+            return redirect('/login');
+        }
+        else if (Auth::user()->tieneRol()->first() != 'ventas') {
             
             return redirect('/');
         }

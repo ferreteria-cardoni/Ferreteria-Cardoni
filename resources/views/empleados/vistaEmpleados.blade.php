@@ -75,28 +75,30 @@
         </thead>
         <tbody id="ok4">
         @foreach ($empleados as $empleado)
-            <tr>
-                <td>{{$empleado->cod_empleado}}</td>
-                <td>{{$empleado->nombre}}</td>
-                <td>{{$empleado->apellido}}</td>
-                <td>{{$empleado->edad}}</td>
-                <td>{{$empleado->dui}}</td>
+          @if ($empleado->estado == 'activo')
+              <tr>
+                  <td>{{$empleado->cod_empleado}}</td>
+                  <td>{{$empleado->nombre}}</td>
+                  <td>{{$empleado->apellido}}</td>
+                  <td>{{$empleado->edad}}</td>
+                  <td>{{$empleado->dui}}</td>
 
-                @foreach (App\User::where('cod_empleado_fk', $empleado->cod_empleado)->cursor() as $usuario)
-                    <td>{{$usuario->email}}</td>
-                    <td>{{$empleado->telefono}}</td>
+                  @foreach (App\User::where('cod_empleado_fk', $empleado->cod_empleado)->cursor() as $usuario)
+                      <td>{{$usuario->email}}</td>
+                      <td>{{$empleado->telefono}}</td>
 
-                    @if ($usuario->tieneRol()->first() == "ventas")
+                      @if ($usuario->tieneRol()->first() == "ventas")
 
-                        @include('empleados.modalEliminar')
-                        
-                        <td>
-                          <a href="{{route('Empleados.edit', $empleado->cod_empleado)}}"><button type="button" class="btn btn-success">Editar</button></a>
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$empleado->cod_empleado}}" data-codigo="{{$empleado->cod_empleado}}" data-total="{{$usuario->tieneRol()->first()}}" data-cliente="{{$empleado->nombre}} {{$empleado->apellido}}">Eliminar</button>
-                        </td>
-                    @endif
-                @endforeach
-            </tr>
+                          @include('empleados.modalEliminar')
+                          
+                          <td>
+                            <a href="{{route('Empleados.edit', $empleado->cod_empleado)}}"><button type="button" class="btn btn-success">Editar</button></a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$empleado->cod_empleado}}" data-codigo="{{$empleado->cod_empleado}}" data-total="{{$usuario->tieneRol()->first()}}" data-cliente="{{$empleado->nombre}} {{$empleado->apellido}}">Eliminar</button>
+                          </td>
+                      @endif
+                  @endforeach
+              </tr>
+            @endif
         @endforeach
       </tbody>
   </table>            

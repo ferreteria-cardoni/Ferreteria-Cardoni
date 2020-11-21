@@ -34,42 +34,49 @@
         <h1>Ferretería Cardoni</h1>
     </header>
     <div class="container">
-        @foreach ($comprasRecibidas as $compra)
-            <table class="table table-hover table-dark">
-                <thead>
-                    <tr>
-                        <th colspan="7" style="text-align: center">Código de la compra: {{$compra->cod_compra}}</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Código</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Cantidad comprada</th>
-                        <th scope="col">Proveedor</th>
-                        <th scope="col">Precio compra</th>
-                        <th scope="col">Fecha de recibido</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pedidosCompras as $pedido)
-                        @if ($pedido->cod_compra_fk == $compra->cod_compra)
-                            <tr>
-                                <th scope="row">{{$pedido->cod_producto_fk}}</th>
-                                <td>{{App\producto::find($pedido->cod_producto_fk)->nombre}}</td>
-                                <td>{{$pedido->cantidad}}</td>
-                                <td>{{App\proveedor::find($compra->cod_proveedor_fk)->nombre}}</td>
-                                <td>${{$pedido->preciocompra}}</td>
-                                <td>{{\Carbon\Carbon::parse($compra->updated_at)->format('d/m/Y')}}</td>
-                            </tr>
-                        @endif
-                    @endforeach  
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="7" style="text-align: right"><strong>Total:</strong> ${{$compra->total}}</td>
-                    </tr>
-                </tfoot>
-            </table>
-        @endforeach   
+
+        @if ($existe == "no")
+            <h3>NO SE ENCONTRARON REGISTROS EN LAS FECHAS ESPECIFICADAS</h3>
+
+                
+        @else
+            @foreach ($comprasRecibidas as $compra)
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="text-align: center">Código de la compra: {{$compra->cod_compra}}</th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad comprada</th>
+                            <th scope="col">Proveedor</th>
+                            <th scope="col">Precio compra</th>
+                            <th scope="col">Fecha de recibido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pedidosCompras as $pedido)
+                            @if ($pedido->cod_compra_fk == $compra->cod_compra)
+                                <tr>
+                                    <th scope="row">{{$pedido->cod_producto_fk}}</th>
+                                    <td>{{App\producto::find($pedido->cod_producto_fk)->nombre}}</td>
+                                    <td>{{$pedido->cantidad}}</td>
+                                    <td>{{App\proveedor::find($compra->cod_proveedor_fk)->nombre}}</td>
+                                    <td>${{$pedido->preciocompra}}</td>
+                                    <td>{{\Carbon\Carbon::parse($compra->updated_at)->format('d/m/Y')}}</td>
+                                </tr>
+                            @endif
+                        @endforeach  
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" style="text-align: right"><strong>Total:</strong> ${{$compra->total}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            @endforeach   
+        @endif
     </div>
 </body>
 </html>
