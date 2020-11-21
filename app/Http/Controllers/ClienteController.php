@@ -55,30 +55,52 @@ class ClienteController extends Controller
      */
     public function store(FormClientes $request)
     {
-        $cliente = new cliente;
-        $ultimoCliente = cliente::orderBy('cod_cliente', 'desc')->first();
 
-        if ($ultimoCliente) {
-            $contador = $ultimoCliente->cod_cliente + 1;
+        $verificarNit = cliente::where('nit', $request->NIT)->first();
+
+        $verificarNumeroConsumidor = cliente::where('num_consumidor', $request->NCF)->first();
+
+        if ($verificarNit && $verificarNumeroConsumidor) {
+            
+            return redirect(route('Clientes.create'))->with('datosE', 'El NIT y el número de consumidor ya están registrados. Por favor, intente de nuevo.');
+        }
+        elseif ($verificarNit) {
+            
+            return redirect(route('Clientes.create'))->with('datosE', 'El NIT ya existe. Por favor, intente de nuevo.');
+            
+        }
+        elseif ($verificarNumeroConsumidor) {
+            return redirect(route('Clientes.create'))->with('datosE', 'El número de consumidor final ya existe. Por favor, intente de nuevo.');
+            
         }else{
-            $contador = 1;
+            $cliente = new cliente;
+            $ultimoCliente = cliente::orderBy('cod_cliente', 'desc')->first();
+
+            if ($ultimoCliente) {
+                $contador = $ultimoCliente->cod_cliente + 1;
+            }else{
+                $contador = 1;
+            }
+
+            // Generando codigo del cliente
+            $codCliente = str_pad($contador, 4, '0', STR_PAD_LEFT);
+
+            // Registrando cliente
+            $cliente->cod_cliente = $codCliente;
+            $cliente->nombre = $request->idnombreC;
+            $cliente->apellido = $request->idapellidoC;
+            $cliente->direccion = $request->DireccionC;
+            $cliente->telefono = $request->idtelefonoC;
+            $cliente->rubro = $request->idrubro;
+            $cliente->nit = $request->NIT;
+            $cliente->num_consumidor = $request->NCF;
+            $cliente->save();
+
+            return redirect(route('Clientes.create'))->with('datos','Registro exitoso');
         }
 
-        // Generando codigo del cliente
-        $codCliente = str_pad($contador, 4, '0', STR_PAD_LEFT);
 
-        // Registrando cliente
-        $cliente->cod_cliente = $codCliente;
-        $cliente->nombre = $request->idnombreC;
-        $cliente->apellido = $request->idapellidoC;
-        $cliente->direccion = $request->DireccionC;
-        $cliente->telefono = $request->idtelefonoC;
-        $cliente->rubro = $request->idrubro;
-        $cliente->nit = $request->NIT;
-        $cliente->num_consumidor = $request->NCF;
-        $cliente->save();
-
-        return redirect(route('Clientes.create'))->with('datos','Registro exitoso');
+        
     }
 
     /**
@@ -115,26 +137,54 @@ class ClienteController extends Controller
      */
     public function update(FormClientes $request, $id)
     {
+
+        $verificarNit = cliente::where('nit', $request->NIT)->first();
+
+        // dd($verificarNit);
+
+        $verificarNumeroConsumidor = cliente::where('num_consumidor', $request->NCF)->first();
+
         $searchClient = cliente::findOrFail($id);
-    //    $searchClient->cod_cliente = $codCliente;
-        $searchClient->nombre = $request->idnombreC;
-        $searchClient->apellido = $request->idapellidoC;
-        $searchClient->direccion = $request->DireccionC;
-        $searchClient->telefono = $request->idtelefonoC;
-        $searchClient->rubro = $request->idrubro;
-        $searchClient->nit = $request->NIT;
-        $searchClient->num_consumidor = $request->NCF;
-        $searchClient->save();
+
 
         
+        if ($verificarNit && $verificarNumeroConsumidor && $verificarNit->nit != $searchClient->nit && $verificarNumeroConsumidor->num_consumidor != $searchClient->num_consumidor) {
+            
+            return redirect(route('Clientes.edit', $id))->with('datosE', 'El NIT y el número de consumidor final que introdujo ya están registrados. Por favor, intente de nuevo.');
+        }
+        
+        elseif ($verificarNit && $verificarNit->nit != $searchClient->nit) {
+            return redirect(route('Clientes.edit', $id))->with('datosE', 'El NIT que introdujo ya se encuentra registrado. Por favor, intente de nuevo.');
+        }
 
-        $bitacora= new historialcliente();
-        $bitacora->operacion="Modificar";
-        $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
-        $bitacora->cod_cliente_fk=$id;
-        $bitacora->save();
+        elseif ($verificarNumeroConsumidor && $verificarNumeroConsumidor->num_consumidor != $searchClient->num_consumidor) {
+            return redirect(route('Clientes.edit', $id))->with('datosE', 'El número de consumidor que introdujo final ya se encuentra registrado. Por favor, intente de nuevo.');
+        }
+        
+        else{
 
-        return redirect(route('Clientes.index'))->with('datos','Registro actualizado exitosamente');
+            //    $searchClient->cod_cliente = $codCliente;
+                $searchClient->nombre = $request->idnombreC;
+                $searchClient->apellido = $request->idapellidoC;
+                $searchClient->direccion = $request->DireccionC;
+                $searchClient->telefono = $request->idtelefonoC;
+                $searchClient->rubro = $request->idrubro;
+                $searchClient->nit = $request->NIT;
+                $searchClient->num_consumidor = $request->NCF;
+                $searchClient->save();
+        
+                
+        
+                $bitacora= new historialcliente();
+                $bitacora->operacion="Modificar";
+                $bitacora->cod_empleado_fk=Auth::user()->cod_empleado_fk;
+                $bitacora->cod_cliente_fk=$id;
+                $bitacora->save();
+        
+                return redirect(route('Clientes.index'))->with('datos','Registro actualizado exitosamente');
+        }
+
+
     }
 
     /**

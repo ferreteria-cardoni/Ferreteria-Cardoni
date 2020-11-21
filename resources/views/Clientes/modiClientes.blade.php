@@ -14,6 +14,18 @@
 	@endif
 	@endsection
 
+@section('alert2')
+<div class="container">
+	@if (session('datosE'))
+	<div class="alert alert-danger alert-dismissible fade show" role="alert" align="center">
+		{{session('datosE')}}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	@endif
+@endsection
+
 	@section('content')
 	@if ($errors->any())
 	<div class="alert alert-danger">

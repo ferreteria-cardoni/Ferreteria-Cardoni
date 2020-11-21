@@ -248,6 +248,10 @@ class EmpleadoController extends Controller
         $empleado->estado="inactivo";
         $empleado->save();
 
+        $usuario = User::where('cod_empleado_fk', $id)->first();
+
+        $usuario->delete();
+
         $bitacora= new historialempleado();
         $bitacora->operacion="Eliminar";
         $bitacora->cod_secretaria_fk=Auth::user()->cod_empleado_fk;
