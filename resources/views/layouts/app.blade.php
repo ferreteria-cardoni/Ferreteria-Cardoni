@@ -126,14 +126,11 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                                 @else
                                 {{ Auth::user()->name }}
-                                <a class="dropdown-item active" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <a class="dropdown-item active rounded" style="color: white;" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                                     Cerrar Sesión
                                 </a>
                                 <br>
-                                <a class="dropdown-item active" href="{{ url('ayuda/download') }}">
-                               Manual Ayuda
-                                </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
@@ -427,6 +424,21 @@
                                 </ul>
                             </li>
                             @endcanany
+
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+
+                            <li class="nav-item">
+                                <a href="{{url('ayuda/download')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-exclamation-circle"></i>
+                                    <p>Manual Ayuda</p>
+                                </a>
+                            </li>
+
+                            {{-- <li class="nav-item has-treeview">
+                                <a class="dropdown-item active" href="{{ url('ayuda/download') }}">
+                                    Manual Ayuda
+                                </a>
+                            </li> --}}
 
                         </ul>
                     </nav>
