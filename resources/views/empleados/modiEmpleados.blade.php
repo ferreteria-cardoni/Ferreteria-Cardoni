@@ -54,14 +54,14 @@
 				<div class="form-group col-md-5">
 					<label>Nombre</label>
 					<input autocomplete="off" type="text" class="form-control" name="NombreEmpleado" id="NombreEmpleado"
-						placeholder="Escriba el nombre..." value="{{ $empleado->nombre }}" required>
+						placeholder="Escriba el nombre..." maxlength="25" value="{{ $empleado->nombre }}" required>
 					<span id="msgNombreEmpleado" name="msgNombreEmpleado" class="AlertaMsg"></span>
 				</div>
 
 				<div class="form-group col-md-5">
 					<label>Apellido</label>
 					<input type="text" class="form-control" id="ApellidoEmpleado" name="ApellidoEmpleado"
-						placeholder="Escriba el apellido..." value="{{ $empleado->apellido }}" required>
+						placeholder="Escriba el apellido..." maxlength="25" value="{{ $empleado->apellido }}" required>
 					<span id="msgApellidoEmpleado" name="msgApellidoEmpleado" class="AlertaMsg"></span>
 				</div>
 				<div class="form-group col-md-5">
@@ -74,7 +74,7 @@
 				<div class="form-group col-md-5">
 					<label>Edad</label>
 					<input autocomplete="off" type="number" min="18" class="form-control"
-						name="idEdadE" id="idEdadE" placeholder="Escriba la edad..." value="{{ $empleado->edad }}"
+						name="idEdadE" id="idEdadE" maxlength="2" placeholder="Escriba la edad..." value="{{ $empleado->edad }}"
 						required>
 					<span id="msgidEdadE" name="msgidEdadE" class="AlertaMsg"></span>
 				</div>

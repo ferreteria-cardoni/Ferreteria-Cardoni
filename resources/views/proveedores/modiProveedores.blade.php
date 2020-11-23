@@ -51,7 +51,7 @@
     <div class="form-row">
 		<div class="form-group col-md-5">
 			<label>Nombre del proveedor</label>
-			<input type="text" class="form-control" id="idnombreProve" name="idnombreProve" placeholder="Escriba el nombre..." value="{{ $proveedor->nombre }}">
+			<input type="text" class="form-control" id="idnombreProve" maxlength="50" name="idnombreProve" placeholder="Escriba el nombre..." value="{{ $proveedor->nombre }}">
 			<span id="msgidnombreProve" name="msgidnombreProve" class="AlertaMsg"></span>
 		</div>
 
@@ -64,7 +64,7 @@
 
 		<div class="form-group col-md-5">
 			<label>Correo electrónico</label>
-			<input type="text" class="form-control" id="idcorreoProve" name="idcorreoProve" placeholder="Email..."
+			<input type="text" class="form-control" id="idcorreoProve" maxlength="30" name="idcorreoProve" placeholder="Email..."
 				value="{{ $proveedor->correo }}">
 			<span id="msgidcorreoProve" name="msgidcorreoProve" class="AlertaMsg"></span>
 		</div>

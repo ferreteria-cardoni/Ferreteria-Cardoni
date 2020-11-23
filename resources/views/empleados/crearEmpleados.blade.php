@@ -62,14 +62,14 @@
 				<div class="form-group col-md-5">
 					<label>Nombre</label>
 					<input autocomplete="off" type="text" class="form-control" name="NombreEmpleado" id="NombreEmpleado"
-						placeholder="Escriba el nombre..." value="{{ old('NombreEmpleado') }}" required>
+						placeholder="Escriba el nombre..." maxlength="25" value="{{ old('NombreEmpleado') }}" required>
 					<span id="msgNombreEmpleado" name="msgNombreEmpleado" class="AlertaMsg"></span>
 				</div>
 
 				<div class="form-group col-md-5">
 					<label>Apellido</label>
 					<input type="text" class="form-control" id="ApellidoEmpleado" name="ApellidoEmpleado"
-						placeholder="Escriba el apellido..." value="{{ old('ApellidoEmpleado') }}" required>
+						placeholder="Escriba el apellido..." maxlength="25" value="{{ old('ApellidoEmpleado') }}" required>
 					<span id="msgApellidoEmpleado" name="msgApellidoEmpleado" class="AlertaMsg"></span>
 				</div>
 				<div class="form-group col-md-5">
@@ -114,7 +114,7 @@
 
 				<div class="form-group col-md-5">
 					<label>Correo electrónico</label>
-					<input type="email" class="form-control" id="idcorreoE" name="idcorreoE" placeholder="Email..."
+					<input type="email" class="form-control" id="idcorreoE" maxlength="250" name="idcorreoE" placeholder="Email..."
 						value="{{ old('idcorreoE') }}">
 					<span id="msgidcorreoE" name="msgidcorreoE" class="AlertaMsg"></span>
 				</div>
@@ -134,13 +134,13 @@
 				<div class="form-group col-md-5">
 					<label for="idcontraseña1">Contraseña</label>
 					<input id="idcontraseña1" name="idcontraseña1" class="form-control" min="8" type="password" placeholder="Escriba la contraseña..." required>
-					<span id="msgidcontraseña1" name="msgidcontraseña1" class="AlertaMsg"></span>
+					<span id="msgidcontraseña1" name="msgidcontraseña1" maxlength="250" class="AlertaMsg"></span>
 				</div>
 
 				<div class="form-group col-md-5">
 					<label for="idcontraseña2">Confirmar contraseña</label>
 					<input id="idcontraseña2" name="idcontraseña2" class="form-control" min="8" type="password" placeholder="Escriba la contraseña..." required>
-					<span id="msgidcontraseña2" name="msgidcontraseña2" class="AlertaMsg"></span>
+					<span id="msgidcontraseña2" name="msgidcontraseña2" maxlength="250" class="AlertaMsg"></span>
 				</div>
 
 			</div>

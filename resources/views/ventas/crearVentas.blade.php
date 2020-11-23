@@ -48,7 +48,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="iddireccion">Dirección</label>
-							<input type="text" class="form-control" id="iddireccion" name="iddireccion" placeholder="Dirección..." value="{{ old('idnombre') }}">
+							<input type="text" class="form-control" id="iddireccion" name="iddireccion" maxlength="100" placeholder="Dirección..." value="{{ old('idnombre') }}">
                       		<span id="msgiddireccion" name="msgiddireccion" class="AlertaMsg"></span>
 						</div>
 					</div>
