@@ -38,7 +38,7 @@
 				    
 				    <div class="form-group col-md-6">
 				      <label>Nombre</label>
-					  <input autocomplete="off" type="text" class="form-control" id="idnombre" name="idnombre" placeholder="Escribe el nombre..." value="{{ old('idnombre') }}">
+					  <input autocomplete="off" type="text" class="form-control" id="idnombre" maxlength="100" name="idnombre" placeholder="Escribe el nombre..." value="{{ old('idnombre') }}">
 					  <span id="msgidnombre" name="msgidnombre" class="AlertaMsg"></span>
 				    </div>
 
@@ -59,7 +59,7 @@
 				  <div class="form-row">
 				  	<div class="form-group col-md-6">
 				      <label>Presentación</label>
-				      <input autocomplete="off" type="textarea" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Escribe algo..." value="{{ old('idpresentacion') }}">
+				      <input autocomplete="off" type="textarea" maxlength="200" class="form-control" id="idpresentacion" name="idpresentacion" placeholder="Escribe algo..." value="{{ old('idpresentacion') }}">
 					  <span id="msgidpresentacion" name="msgidpresentacion" class="AlertaMsg"></span>
 					</div>
 
@@ -78,7 +78,7 @@
 				 </div> <br>
 				  <div class="form-group">
 				    <label>Descripción</label>
-					  <textarea type="text" class="form-control" id="iddescripcion" name="iddescripcion" placeholder="Escribe algo..." value="{{ old('iddescripcion') }}"></textarea>
+					  <textarea type="text" class="form-control" id="iddescripcion" maxlength="250" name="iddescripcion" placeholder="Escribe algo..." value="{{ old('iddescripcion') }}"></textarea>
 					  <span id="msgiddescripcion" name="msgiddescripcion" class="AlertaMsg"></span>
 				  </div>
 				  <button type="submit" class="btn btn-primary">Registrar Producto</button> 

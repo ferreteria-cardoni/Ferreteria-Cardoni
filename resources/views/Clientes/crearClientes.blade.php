@@ -46,14 +46,14 @@
 		<div class="form-row">
 		<div class="form-group col-md-5">
 			<label>Nombre</label>
-			<input type="text" class="form-control" id="idnombreC" name="idnombreC" placeholder="Escribe tu nombre..."
+			<input type="text" class="form-control" id="idnombreC" name="idnombreC" maxlength="25" placeholder="Escribe tu nombre..."
 				value="{{ old('idnombreC') }}">
 			<span id="msgidnombreC" name="msgidnombreC" class="AlertaMsg"></span>
 		</div>
 
 		<div class="form-group col-md-5">
 			<label>Apellido</label>
-			<input type="text" class="form-control" id="idapellidoC" name="idapellidoC" placeholder="Escribe tu apellido..."
+			<input type="text" class="form-control" id="idapellidoC" name="idapellidoC" maxlength="25" placeholder="Escribe tu apellido..."
 				value="{{ old('idapellidoC') }}">
 			<span id="msgidapellidoC" name="msgidapellidoC" class="AlertaMsg"></span>
 		</div>
@@ -67,7 +67,7 @@
 
 		<div class="form-group col-md-5">
 			<label>Rubro</label>
-			<input type="text" class="form-control" id="idrubro" name="idrubro" placeholder="Rubro..."
+			<input type="text" class="form-control" id="idrubro" name="idrubro" maxlength="50" placeholder="Rubro..."
 				value="{{ old('idrubro') }}">
 			<span id="msgidrubro" name="msgidrubro" class="AlertaMsg"></span>
 		</div>
@@ -92,7 +92,7 @@
 <div class="form-row">
 	<div class="form-group col-md-6">
 		<label>Dirección</label>
-		<input type="textarea" class="form-control" id="DireccionC" name="DireccionC" placeholder="Direccion..."
+		<input type="textarea" class="form-control" id="DireccionC" name="DireccionC" maxlength="250" placeholder="Direccion..."
 			value="{{ old('DireccionC') }}">
 		<span id="msgDireccionC" name="msgDireccionC" class="AlertaMsg"></span>
 	</div>
